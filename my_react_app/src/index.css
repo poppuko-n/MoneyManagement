@@ -1,5 +1,3 @@
-.fottoer {
-  background-color: green;
-  color: white;
-  font-size: 30px;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
