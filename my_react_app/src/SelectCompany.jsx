@@ -133,8 +133,8 @@ const SelectCompany = () => {
             .map((company) => (
               <tr key={company.code} className="text-center">
                 <td className="p-3 border-b">{company.code}</td>
-                <td className="p-3 border-b">{company.name}</td>
-                <td className="p-3 border-b">{company.sector_name}</td>
+                <td className="p-3 border-b text-left">{company.name}</td>
+                <td className="p-3 border-b text-left">{company.sector_name}</td>
                 <td className="p-3 border-b">{company.latest_price} 円</td>
                 <td className="p-3 border-b">
                   <input

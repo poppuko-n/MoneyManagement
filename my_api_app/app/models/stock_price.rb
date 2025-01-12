@@ -5,9 +5,10 @@ class StockPrice < ApplicationRecord
   validates :date, presence: true
   validates :close_price, presence: true
 
-  def self.latest_for_company(company_code)
-    where(company_code: company_code).order(date: :desc).first&.close_price
+  def self.latest_two_for_company(company_code)
+    StockPrice.where(company_code: company_code)
+    .order(date: :desc)
+    .limit(2)
+    .pluck(:close_price)
   end
-  
-
 end
