@@ -15,9 +15,9 @@ gem "puma", ">= 5.0"
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
-gem 'httparty'
-gem 'rack-cors', require: 'rack/cors'
-gem 'pry-rails'
+gem "httparty"
+gem "rack-cors", require: "rack/cors"
+gem "pry-rails"
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cache"
@@ -49,5 +49,3 @@ group :development, :test do
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
 end
-
-

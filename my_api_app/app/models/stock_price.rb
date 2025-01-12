@@ -11,5 +11,4 @@ class StockPrice < ApplicationRecord
     .limit(2)
     .pluck(:close_price)
   end
-
 end
