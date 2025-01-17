@@ -45,4 +45,5 @@ class CompaniesController < ApplicationController
     (price_difference.to_f / latest_stock_price).round(2)
   end
 
+
 end
