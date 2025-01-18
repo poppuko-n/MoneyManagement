@@ -90,7 +90,7 @@
 
 ## テーブル定義書
 ### ER図
-![document/スクリーンショット 2025-01-14 7.00.33.png](<スクリーンショット 2025-01-14 7.00.33.png>)
+![document/スクリーンショット 2025-01-18 16.10.37.png](<スクリーンショット 2025-01-18 16.10.37.png>)
 
 ### テーブル
 Users:ユーザー
@@ -107,8 +107,8 @@ ExpenseLogs:家計簿
 |-------------|---------|-------------|-----|------|--------|---------|
 | id          | ID      | BIGINT      |     | TRUE |        | PRIMARY |
 | user_id     | ユーザーID  | BIGINT      |     | TRUE | TRUE   | FOREIGN |
-| type        | 取引ID    | INT         |     | TRUE |        | FOREIGN |
 | category_id | カテゴリーID | BIGINT      |     | TRUE |        | FOREIGN |
+| type        | 取引    | INT         |     | TRUE |        |  |
 | date        | 日付     | DATE        |     | TRUE |        |         |
 | item        | 項目      | VARCHAR(50) |     | TRUE |        |         |
 | amout       | 金額      | BIGINT      |     | TRUE |        |         |
