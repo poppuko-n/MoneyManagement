@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_18_103208) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_18_141321) do
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 50, null: false
     t.datetime "created_at", null: false
@@ -30,6 +30,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_18_103208) do
     t.index ["sector_id"], name: "index_companies_on_sector_id"
   end
 
+  create_table "expense_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.integer "transaction_type", null: false
+    t.date "date"
+    t.string "item", limit: 50
+    t.bigint "amount"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["category_id"], name: "index_expense_logs_on_category_id"
+  end
+
   create_table "sectors", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 25, null: false
     t.datetime "created_at", null: false
@@ -46,5 +57,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_18_103208) do
     t.index ["company_code"], name: "index_stock_prices_on_company_code"
   end
 
+  add_foreign_key "expense_logs", "categories"
   add_foreign_key "stock_prices", "companies", column: "company_code", primary_key: "code"
 end

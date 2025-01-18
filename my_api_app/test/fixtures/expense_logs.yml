@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  category: one
+  type: 1
+  date: 2025-01-18
+  item: MyString
+  amount: 
+
+two:
+  category: two
+  type: 1
+  date: 2025-01-18
+  item: MyString
+  amount: 
