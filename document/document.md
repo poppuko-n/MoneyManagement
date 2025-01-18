@@ -108,7 +108,7 @@ ExpenseLogs:家計簿
 | id          | ID      | BIGINT      |     | TRUE |        | PRIMARY |
 | user_id     | ユーザーID  | BIGINT      |     | TRUE | TRUE   | FOREIGN |
 | category_id | カテゴリーID | BIGINT      |     | TRUE |        | FOREIGN |
-| type        | 取引    | INT         |     | TRUE |        |  |
+| transaction_type        | 取引    | INT         |     | TRUE |        |  |
 | date        | 日付     | DATE        |     | TRUE |        |         |
 | item        | 項目      | VARCHAR(50) |     | TRUE |        |         |
 | amout       | 金額      | BIGINT      |     | TRUE |        |         |
