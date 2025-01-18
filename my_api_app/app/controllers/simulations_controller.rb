@@ -1,7 +1,7 @@
 class SimulationsController < ApplicationController
   def create
     data = params[:data]
-    simulated_results = data.map { |item| simulate(item)}
+    simulated_results = data.map { |item| simulate(item) }
     render json: { results: simulated_results }, status: :ok
   end
 
@@ -96,18 +96,18 @@ class SimulationsController < ApplicationController
     buy_price = current_price * quantity
     output    = 0
     results   = {}
-  
+
     month_average_prices.each_cons(2).with_index(1) do |(start_price, end_price), i|
       next if start_price.nil? || end_price.nil?
-  
+
       rate = (start_price / end_price)
       output = if i == 1
                  buy_price * rate
-               else
+      else
                  (output + buy_price) * rate
-               end
-  
-      if [3, 6, 12].include?(i)
+      end
+
+      if [ 3, 6, 12 ].include?(i)
         result_key = (i == 12) ? "1_year_ago" : "#{i}_months_ago"
         result_value = output.round(0) - (buy_price * i)
         results[result_key] = result_value
@@ -115,5 +115,4 @@ class SimulationsController < ApplicationController
     end
     results
   end
-  
 end

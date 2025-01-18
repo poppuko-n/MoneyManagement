@@ -1,8 +1,7 @@
 class CompaniesController < ApplicationController
-
   def index
     companies = featch_companies
-    result    = companies.map { |company| build_company_data(company)}
+    result    = companies.map { |company| build_company_data(company) }
     render json: result
   end
 
@@ -44,6 +43,4 @@ class CompaniesController < ApplicationController
   def calculate_price_difference_rate(price_difference, latest_stock_price)
     (price_difference.to_f / latest_stock_price).round(2)
   end
-
-
 end
