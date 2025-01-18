@@ -12,7 +12,7 @@ class StockPriceUpdateController < ApplicationController
       "65050", "65070", "65130", "65160", "65170",
       "65210", "65220", "65230", "65240"
       ]
-    
+
     target_codes.each do |code|
       response_data = fetch_one_weeek_stock_price(code)
 
@@ -21,7 +21,6 @@ class StockPriceUpdateController < ApplicationController
       bulk_insert_stock_prices = reject_existing_stock_price(code, one_week_stock_price)
       StockPrice.insert_all(bulk_insert_stock_prices)
     end
-
   end
 
   private
@@ -32,7 +31,6 @@ class StockPriceUpdateController < ApplicationController
     recorded_dates =  StockPrice.where(company_code: code).pluck(:date).map(&:to_date)
 
     one_week_stock_price.each do |quote|
-      
       quote_date = Date.parse(quote["Date"])
       next if recorded_dates.include?(quote_date)
 
@@ -43,7 +41,6 @@ class StockPriceUpdateController < ApplicationController
       }
     end
     bulk_insert_stock_prices
-
   end
 
   def fetch_one_weeek_stock_price(code)
@@ -54,9 +51,9 @@ class StockPriceUpdateController < ApplicationController
     from = (Date.today - 21.days).strftime("%Y%m%d") # 一週間前の日付
 
     response = HTTParty.get(
-    base_url, 
-    query: {code: code, from:from, to:to},
-    headers: {Authorization:  id_token}
+    base_url,
+    query: { code: code, from: from, to: to },
+    headers: { Authorization:  id_token }
     )
     JSON.parse(response.body)
   end
@@ -68,6 +65,5 @@ class StockPriceUpdateController < ApplicationController
     response = HTTParty.post(base_url, query: { refreshtoken: refreshtoken })
 
     JSON.parse(response.body)
-    
   end
 end

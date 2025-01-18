@@ -73,25 +73,39 @@ const SelectCompany = () => {
     ? companies.filter((company) => quantities[company.code] > 0)
     : companies;
 
+  const formatWithComma = (value) => {
+    return new Intl.NumberFormat("ja-JP").format(value);
+  };
+
   return (
     <div className="p-6 bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-bold mb-4">銘柄選択</h1>
       <h2 className="text-xl font-semibold mb-6">
-        合計購入金額: {calculateTotalCost()} 円
+        合計購入金額: {formatWithComma(calculateTotalCost())} 円
       </h2>
 
-      <div className="mb-6">
+      <div className="relative mb-6">
         <label htmlFor="search" className="block text-lg font-medium mb-2">
           銘柄検索
         </label>
-        <input
-          type="text"
-          id="search"
-          placeholder="銘柄コード、名前で検索"
-          value={filtername}
-          onChange={(e) => setFilterName(e.target.value.trim())}
-          className="border border-gray-300 p-2 rounded w-full"
-        />
+        <div className="relative">
+          <input
+            type="text"
+            id="search"
+            placeholder="銘柄コード、名前で検索"
+            value={filtername}
+            onChange={(e) => setFilterName(e.target.value.trim())}
+            className="border border-gray-300 p-2 rounded w-full pr-10"
+          />
+          {filtername && (
+            <button
+              onClick={() => setFilterName("")}
+              className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+            >
+              ✕
+            </button>
+          )}
+        </div>
       </div>
 
       <div className="flex justify-between items-center mb-6">
@@ -108,7 +122,6 @@ const SelectCompany = () => {
           シミュレーション
         </button>
       </div>
-
       <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow">
         <thead className="bg-gray-200">
           <tr>
@@ -116,6 +129,7 @@ const SelectCompany = () => {
             <th className="p-3 border-b">銘柄名</th>
             <th className="p-3 border-b">業種</th>
             <th className="p-3 border-b">株価</th>
+            <th className="p-3 border-b">増減情報</th>
             <th className="p-3 border-b">口数</th>
             <th className="p-3 border-b">合計金額</th>
             <th className="p-3 border-b">操作</th>
@@ -135,7 +149,45 @@ const SelectCompany = () => {
                 <td className="p-3 border-b">{company.code}</td>
                 <td className="p-3 border-b text-left">{company.name}</td>
                 <td className="p-3 border-b text-left">{company.sector_name}</td>
-                <td className="p-3 border-b">{company.latest_price} 円</td>
+                <td
+                  className={`p-3 border-b text-lg font-semibold ${
+                    company.price_difference > 0
+                      ? "text-red-500"
+                      : company.price_difference < 0
+                      ? "text-green-500"
+                      : ""
+                  }`}
+                >
+                  {formatWithComma(company.latest_price)} 円
+                </td>
+                <td className="p-3 border-b text-sm">
+                  <div
+                    className={`${
+                      company.price_difference > 0
+                        ? "text-red-500"
+                        : company.price_difference < 0
+                        ? "text-green-500"
+                        : ""
+                    }`}
+                  >
+                    {company.price_difference > 0
+                      ? `+${formatWithComma(company.price_difference)} 円`
+                      : `${formatWithComma(company.price_difference)} 円`}
+                  </div>
+                  <div
+                    className={`${
+                      company.price_difference_rate > 0
+                        ? "text-red-500"
+                        : company.price_difference_rate < 0
+                        ? "text-green-500"
+                        : ""
+                    }`}
+                  >
+                    {company.price_difference_rate > 0
+                      ? `+${company.price_difference_rate}%`
+                      : `${company.price_difference_rate}%`}
+                  </div>
+                </td>
                 <td className="p-3 border-b">
                   <input
                     type="number"
@@ -145,14 +197,15 @@ const SelectCompany = () => {
                       const value = e.target.value;
                       setQuantities((prevQuantities) => ({
                         ...prevQuantities,
-                        [company.code]: value === "" ? 0 : Math.max(parseInt(value, 10), 0),
+                        [company.code]:
+                          value === "" ? 0 : Math.max(parseInt(value, 10), 0),
                       }));
                     }}
                     className="border border-gray-300 rounded text-right p-1 w-20"
                   />
                 </td>
                 <td className="p-3 border-b">
-                  {quantities[company.code] * company.latest_price} 円
+                  {formatWithComma(quantities[company.code] * company.latest_price)} 円
                 </td>
                 <td className="p-3 border-b flex gap-2 justify-center">
                   <button

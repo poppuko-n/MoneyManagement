@@ -4,5 +4,4 @@ class StockPrice < ApplicationRecord
   validates :company_code, presence: true
   validates :date, presence: true
   validates :close_price, presence: true
-  
 end
