@@ -2,13 +2,11 @@ RSpec.describe CompanyListBuilder::StockPriceDifferenceCalculator, type: :model 
   describe '差分の割合を算出する' do
     let(:latest_stock_price) { 3000 }
     let(:price_difference) { 1000 }
-    let(:second_latest_stock_price) { 2000 }
 
     # Arrange = テストデータの準備
     before do
       latest_stock_price
       price_difference
-      second_latest_stock_price
     end
 
     it "株価の差分を算出する" do
