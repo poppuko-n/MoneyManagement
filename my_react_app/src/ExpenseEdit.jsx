@@ -1,7 +1,7 @@
 const ExpenseEdit = () => {
   return(
-    <>
-    </>
+    <div>
+    </div>
   )
 }
 
