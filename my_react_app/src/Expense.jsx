@@ -3,7 +3,6 @@ import ExpenseList from './ExpenseList'
 import ExpenseNew from './ExpenseNew'
 import ExpenseEdit from './ExpenseEdit'
 
-
 const Expense = () => {
   const [ isCreating, setIsCreateting ] = useState(false);
   const [ currentExpenseId, setCurrentExpenseId ] = useState(null);
@@ -21,7 +20,6 @@ const Expense = () => {
           onSelectexpense={setCurrentExpenseId}
           onCreateNew={() => setIsCreateting(true)} />
       )}
-      家計簿
     </div>
   )
 }

@@ -4,7 +4,6 @@ import "./index.css";
 import App from "./App.jsx";
 import logoImage from "./assets/logo.png";
 
-
 const Header = () => {
   return (
     <header className="bg-white shadow-md">
