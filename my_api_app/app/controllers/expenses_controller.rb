@@ -1,6 +1,6 @@
 class ExpensesController < ApplicationController
   def index
-    expenses = ExpenseLog.joins(:category)
+    expenses = ExpenseLog.joins(:category).order(date: :asc)
                      .pluck(:id, :transaction_type, :date, :item, :amount, "category.name")
                      .map do |id, transaction_type, date, item, amount, category_name|
                        {

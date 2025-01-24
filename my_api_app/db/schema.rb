@@ -10,19 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_18_141321) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_24_160807) do
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 50, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "transaction_type", null: false
     t.index ["name"], name: "index_categories_on_name", unique: true
   end
 
   create_table "companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    # int型とbigint型の場合
     t.integer "code", null: false
-    # FK = sectors.id(bigint)
-    # TODO: bigintに型を変更する
     t.integer "sector_id", null: false
     t.string "name", null: false
     t.bigint "equity"
