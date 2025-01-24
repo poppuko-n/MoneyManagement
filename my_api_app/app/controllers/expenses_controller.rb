@@ -12,7 +12,12 @@ class ExpensesController < ApplicationController
                          category_name: category_name
                        }
                      end
-render json: expenses
+    render json: expenses
+  end
 
+  def destroy
+    expense = ExpenseLog.find(params[:id])
+    expense.destroy
+    head :no_content
   end
 end

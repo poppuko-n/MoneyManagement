@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :companies, only: [ :index ]
   resources :simulations, only: [ :create ]
   resources :stock_price_update, only: [ :create ]
-  resources :expenses, only: [ :index ]
+  resources :expenses, only: [ :index, :destroy ]
 
   # Defines the root path route ("/")
   # root "posts#index"
