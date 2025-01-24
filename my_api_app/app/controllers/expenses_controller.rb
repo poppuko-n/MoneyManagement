@@ -1,0 +1,18 @@
+class ExpensesController < ApplicationController
+  def index
+    expenses = ExpenseLog.joins(:category)
+                     .pluck(:id, :transaction_type, :date, :item, :amount, "category.name")
+                     .map do |id, transaction_type, date, item, amount, category_name|
+                       {
+                         id: id,
+                         transaction_type: transaction_type,
+                         date: date,
+                         item: item,
+                         amount: amount,
+                         category_name: category_name
+                       }
+                     end
+render json: expenses
+
+  end
+end

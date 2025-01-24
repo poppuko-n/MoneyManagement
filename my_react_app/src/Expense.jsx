@@ -17,7 +17,7 @@ const Expense = () => {
           onBack = {() => setCurrentExpenseId(null)} />
       ) : (
         <ExpenseList 
-          onSelectexpense={setCurrentExpenseId}
+          onSelectExpense={setCurrentExpenseId}
           onCreateNew={() => setIsCreateting(true)} />
       )}
     </div>
