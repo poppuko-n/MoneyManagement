@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import editImage from "./assets/edit.svg";
 import deleteImage from "./assets/delete.svg";
+import addImage from "./assets/add.svg";
+
 
 const ExpenseList = ({ onSelectExpense, onCreateNew }) => {
   const [expenses, setExpense] = useState([]);
@@ -42,14 +44,20 @@ const ExpenseList = ({ onSelectExpense, onCreateNew }) => {
 
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">家計簿一覧</h1>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-2xl border-b border-black pb-2">月次収支</h1>
+        <div
+          onClick={onCreateNew}
+          className="cursor-pointer hover:bg-red-300 bg-red-400 rounded-full p-4 transition duration-700 flex items-center justify-center"
+        >
+          <img 
+            src={addImage} 
+            alt="add"
+            className="w-6 h-6" 
+          />
+        </div>
+      </div>
 
-      <button
-        className="bg-blue-500 text-white py-2 px-4 rounded mb-4 hover:bg-blue-600"
-        onClick={onCreateNew}
-      >
-        新規登録
-      </button>
 
       <div className="flex justify-around items-center bg-gray-100 p-4 rounded shadow mb-4 text-center">
         <div>
