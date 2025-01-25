@@ -26,8 +26,8 @@ const SimulationResult = () => {
     totalProfitLoss > 0 ? "text-red-500" : totalProfitLoss < 0 ? "text-blue-500" : "text-gray-500";
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold mb-6">シミュレーション結果</h1>
+    <div className="container mx-auto p-4">
+      <h1 className="text-2xl border-b border-black pb-2 inline-block mb-10">シミュレーション結果</h1>
 
       <div className="flex gap-4 mb-4">
         <button

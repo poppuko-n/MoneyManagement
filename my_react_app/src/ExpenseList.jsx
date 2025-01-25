@@ -45,7 +45,7 @@ const ExpenseList = ({ onSelectExpense, onCreateNew }) => {
   return (
     <div className="container mx-auto p-4">
       <div className="flex items-center justify-between mb-4">
-        <h1 className="text-2xl border-b border-black pb-2">月次収支</h1>
+        <h1 className="text-2xl border-b border-black pb-2 inline-block">月次収支</h1>
         <div
           onClick={onCreateNew}
           className="cursor-pointer hover:bg-red-300 bg-red-400 rounded-full p-4 transition duration-700 flex items-center justify-center"

@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import playImage from './assets/play.svg'
+import toggleOfImage from './assets/toggle_off.svg'
+import toggleOnImage from './assets/toggle_on.svg'
+import addImage from './assets/add_circle.svg'
+import subtractImage from './assets/subtract_circle.svg'
+
 
 const SelectCompany = () => {
   const [companies, setCompanies] = useState([]);
@@ -78,20 +84,32 @@ const SelectCompany = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-100 min-h-screen">
-      <h1 className="text-2xl font-bold mb-4">銘柄選択</h1>
-      <h2 className="text-xl font-semibold mb-6">
-        合計購入金額: {formatWithComma(calculateTotalCost())} 円
-      </h2>
+    <div className="container mx-auto p-4">
+      <div className="flex items-center justify-between mb-10">
+        <h1 className="text-2xl border-b border-black pb-2 inline-block">銘柄選択</h1>
+        <div
+        onClick={sendQuantitiesToServer}
+          className="cursor-pointer hover:bg-red-300 bg-red-400 rounded-full p-4 transition duration-700 flex items-center justify-center"
+        >
+          <img 
+            src={playImage}
+            alt="play"
+            className="w-6 h-6" 
+          />
+        </div>
+      </div>
 
-      <div className="relative mb-6">
-        <label htmlFor="search" className="block text-lg font-medium mb-2">
-          銘柄検索
-        </label>
-        <div className="relative">
+      <div className="bg-gray-100 shadow-md rounded p-4 mb-8">
+        <h2 className="text-xl">
+          買付金額: {formatWithComma(calculateTotalCost())} 円
+        </h2>
+      </div>
+
+
+      <div className="flex items-center justify-between mb-6 gap-4">
+        <div className="relative flex-1">
           <input
             type="text"
-            id="search"
             placeholder="銘柄コード、名前で検索"
             value={filtername}
             onChange={(e) => setFilterName(e.target.value.trim())}
@@ -100,39 +118,42 @@ const SelectCompany = () => {
           {filtername && (
             <button
               onClick={() => setFilterName("")}
-              className="absolute right-5 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
             >
               ✕
             </button>
           )}
         </div>
+        <div className="flex items-center gap-2 w-48">
+          <div
+            onClick={toggleShowFiltered}
+            className="cursor-pointer transition duration-300 flex items-center justify-center"
+          >
+            <img
+              src={showFiltered ? toggleOnImage : toggleOfImage}
+              alt={showFiltered ? "toggleon" : "toggleoff"}
+              className="w-10 h-10"
+            />
+          </div>
+          <span className="text-gray-700 truncate">
+            {showFiltered ? "すべて表示" : "選択銘柄のみ表示"}
+          </span>
+        </div>
       </div>
 
-      <div className="flex justify-between items-center mb-6">
-        <button
-          onClick={toggleShowFiltered}
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          {showFiltered ? "すべての銘柄を表示" : "選択した銘柄のみ表示"}
-        </button>
-        <button
-          onClick={sendQuantitiesToServer}
-          className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-        >
-          シミュレーション
-        </button>
-      </div>
+
+
       <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow">
         <thead className="bg-gray-200">
           <tr>
-            <th className="p-3 border-b">銘柄コード</th>
-            <th className="p-3 border-b">銘柄名</th>
-            <th className="p-3 border-b">業種</th>
-            <th className="p-3 border-b">株価</th>
-            <th className="p-3 border-b">増減情報</th>
-            <th className="p-3 border-b">口数</th>
-            <th className="p-3 border-b">合計金額</th>
-            <th className="p-3 border-b">操作</th>
+            <th className="border px-4 py-2 text-left">コード</th>
+            <th className="border px-4 py-2 text-left">銘柄名</th>
+            <th className="border px-4 py-2 text-left">業種</th>
+            <th className="border px-4 py-2 text-left">株価(円)</th>
+            <th className="border px-4 py-2 text-left"></th>
+            <th className="border px-4 py-2 text-left">口数</th>
+            <th className="border px-4 py-2 text-left">買付金額</th>
+            <th className="border px-4 py-2 text-left"></th>
           </tr>
         </thead>
         <tbody>
@@ -158,7 +179,7 @@ const SelectCompany = () => {
                       : ""
                   }`}
                 >
-                  {formatWithComma(company.latest_price)} 円
+                  {formatWithComma(company.latest_price)} 
                 </td>
                 <td className="p-3 border-b text-sm">
                   <div
@@ -171,8 +192,8 @@ const SelectCompany = () => {
                     }`}
                   >
                     {company.price_difference > 0
-                      ? `+${formatWithComma(company.price_difference)} 円`
-                      : `${formatWithComma(company.price_difference)} 円`}
+                      ? `+${formatWithComma(company.price_difference)} `
+                      : `${formatWithComma(company.price_difference)} `}
                   </div>
                   <div
                     className={`${
@@ -204,29 +225,33 @@ const SelectCompany = () => {
                     className="border border-gray-300 rounded text-right p-1 w-20"
                   />
                 </td>
+
                 <td className="p-3 border-b">
-                  {formatWithComma(quantities[company.code] * company.latest_price)} 円
+                  {formatWithComma(quantities[company.code] * company.latest_price)} 
                 </td>
-                <td className="p-3 border-b flex gap-2 justify-center">
-                  <button
-                    onClick={() => handleQuantityChange(company.code, 1)}
-                    className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
-                  >
-                    +
-                  </button>
-                  <button
-                    onClick={() => handleQuantityChange(company.code, -1)}
-                    className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-                  >
-                    -
-                  </button>
-                  <button
-                    onClick={() => resetQuantity(company.code)}
-                    className="px-2 py-1 bg-gray-500 text-white rounded hover:bg-gray-600"
-                  >
-                    リセット
-                  </button>
+                <td className="p-3 border-b">
+                  <div className="flex items-center gap-2 justify-center h-full">
+                    <img 
+                      src={addImage}
+                      alt="add"
+                      onClick={() => handleQuantityChange(company.code, 1)}
+                      className="cursor-pointer hover:bg-gray-300 rounded p-1 transition duration-700"
+                    />
+                    <img 
+                      src={subtractImage} 
+                      alt="subtract"
+                      onClick={() => handleQuantityChange(company.code, -1)}
+                      className="cursor-pointer hover:bg-gray-300 rounded p-1 transition duration-700"
+                    />
+                    <button
+                      onClick={() => resetQuantity(company.code)}
+                      className="px-2 py-1 bg-gray-400 text-white rounded hover:bg-gray-700"
+                    >
+                      リセット
+                    </button>
+                  </div>
                 </td>
+
               </tr>
             ))}
         </tbody>
