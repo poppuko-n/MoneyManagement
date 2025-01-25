@@ -1,27 +1,34 @@
-import { useState } from 'react'
-import ExpenseList from './ExpenseList'
-import ExpenseNew from './ExpenseNew'
-import ExpenseEdit from './ExpenseEdit'
+import { useEffect, useState } from 'react';
+import ExpenseList from './ExpenseList';
+import ExpenseNew from './ExpenseNew';
+import ExpenseEdit from './ExpenseEdit';
+import Modal from './Modal';
 
 const Expense = () => {
-  const [ isCreating, setIsCreateting ] = useState(false);
-  const [ currentExpenseId, setCurrentExpenseId ] = useState(null);
+  const [isCreating, setIsCreating] = useState(false);
+  const [currentExpenseId, setCurrentExpenseId] = useState(null);
 
-  return(
+  return (
     <div>
-      {isCreating?(
-        <ExpenseNew onBack = { () => setIsCreateting(false)} />
-      ) : currentExpenseId? (
-        <ExpenseEdit 
-          expenseId={currentExpenseId}
-          onBack = {() => setCurrentExpenseId(null)} />
-      ) : (
-        <ExpenseList 
-          onSelectExpense={setCurrentExpenseId}
-          onCreateNew={() => setIsCreateting(true)} />
+      {isCreating && (
+        <Modal onClose={() => setIsCreating(false)}>
+          <ExpenseNew onBack={() => setIsCreating(false)} />
+        </Modal>
       )}
+      {currentExpenseId && (
+        <Modal onClose={() => setCurrentExpenseId(null)}>
+          <ExpenseEdit
+            expenseId={currentExpenseId}
+            onBack={() => setCurrentExpenseId(null)}
+          />
+        </Modal>
+      )} 
+        <ExpenseList
+          onSelectExpense={setCurrentExpenseId}
+          onCreateNew={() => setIsCreating(true)}
+        />
     </div>
-  )
-}
+  );
+};
 
 export default Expense;

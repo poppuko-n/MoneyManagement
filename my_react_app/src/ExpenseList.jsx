@@ -4,7 +4,6 @@ import axios from "axios";
 const ExpenseList = ({ onSelectExpense, onCreateNew }) => {
   const [expenses, setExpense] = useState([]);
 
-  // 収入、支出、収支の計算
   const incomeTotal = expenses
     .filter((expense) => expense.transaction_type === "収入")
     .reduce((total, expense) => total + expense.amount, 0);
