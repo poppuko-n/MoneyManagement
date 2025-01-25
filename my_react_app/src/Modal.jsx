@@ -1,13 +1,15 @@
+import canselImage from './assets/cancel.svg'
+
 const Modal = ({ children, onClose }) => {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg relative">
-        <button
-          className="absolute top-3 right-3 text-gray-500 hover:text-gray-700"
+        <img
+          src={canselImage}
+          alt="cansel"
+          className="absolute top-1 right-1 cursor-pointer hover:bg-gray-100 rounded p-1 transition duration-700"
           onClick={onClose}
-        >
-          ×
-        </button>
+        />
         {children}
       </div>
     </div>
