@@ -49,6 +49,5 @@ RSpec.describe CompanyListBuilder::StockPriceDifferenceCalculator, type: :model 
         expect(price_defference_rate).to eq(1000)
       end
     end
-
   end
 end

@@ -4,7 +4,7 @@ class CategoriesController < ApplicationController
                                  .select(:id, :name, :transaction_type)
     income_categories = Category.where(transaction_type: "収入")
                                  .select(:id, :name, :transaction_type)
-    
+
     render json: {
       expense_categories: expense_categories,
       income_categories: income_categories

@@ -20,15 +20,15 @@ class ExpensesController < ApplicationController
     if expense.save
       render joson: expense, status: :created
     else
-      render joson: {errors: expense.errors.full_messages}, status: :unprocessable_entity
+      render joson: { errors: expense.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def show
-    expense = ExpenseLog.find(params[:id]) 
+    expense = ExpenseLog.find(params[:id])
     render json: expense
   end
-  
+
 
   def destroy
     expense = ExpenseLog.find(params[:id])

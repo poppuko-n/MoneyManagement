@@ -18,10 +18,10 @@ RSpec.describe CompanyListBuilder::StockPriceDifferenceCalculator, type: :model 
 
       aggregate_failures do
         expect(price_defference.is_a?(Float)).to eq(true)
-        expect(price_defference).to eq(0.33) 
+        expect(price_defference).to eq(0.33)
 
         expect(price_defference_rate.is_a?(Integer)).to eq(true)
-        expect(price_defference_rate).to eq(1000) 
+        expect(price_defference_rate).to eq(1000)
       end
     end
   end

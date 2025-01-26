@@ -3,11 +3,11 @@ RSpec.describe StockPrice, type: :model do
     # Arrange = テストデータの準備
     before do
       sector = Sector.create!(name: "テスト業種")
-      company = Company.create!(code: 1,sector: sector,  name: "テスト会社", equity: 2000  )
+      company = Company.create!(code: 1, sector: sector,  name: "テスト会社", equity: 2000)
 
-      StockPrice.create!(company: company, date:"2025-01-01", close_price: 1000)
-      StockPrice.create!(company: company, date:"2025-01-02", close_price: 2000)
-      StockPrice.create!(company: company, date:"2025-01-03", close_price: 3000)
+      StockPrice.create!(company: company, date: "2025-01-01", close_price: 1000)
+      StockPrice.create!(company: company, date: "2025-01-02", close_price: 2000)
+      StockPrice.create!(company: company, date: "2025-01-03", close_price: 3000)
     end
 
     it "日付上位２つの株価が返ってくる" do
@@ -26,7 +26,7 @@ RSpec.describe StockPrice, type: :model do
     end
   end
 end
-#株価のテーブルから新しい日付の上位2つの株価をとってくる
+# 株価のテーブルから新しい日付の上位2つの株価をとってくる
 # def self.fetch_latest_two_price(code)
 #   StockPrice.where(company_code: code)
 #             .order(date: :desc)

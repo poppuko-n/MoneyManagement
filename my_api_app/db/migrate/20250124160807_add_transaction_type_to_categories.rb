@@ -3,4 +3,3 @@ class AddTransactionTypeToCategories < ActiveRecord::Migration[7.0]
     add_column :categories, :transaction_type, :integer, null: false
   end
 end
-

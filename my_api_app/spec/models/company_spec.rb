@@ -20,9 +20,9 @@ RSpec.describe Company, type: :model do
         expect(result.size).to eq(3)
 
         # NOTE: equity（純資産）の大きい順に並び替えられていることを検証する
-        expect(result[0]).to eq([1, "Beta Ltd", "Finance"])
-        expect(result[1]).to eq([2, "Gamma Inc", "Technology"])
-        expect(result[2]).to eq([0, "Alpha Corp", "Technology"])
+        expect(result[0]).to eq([ 1, "Beta Ltd", "Finance" ])
+        expect(result[1]).to eq([ 2, "Gamma Inc", "Technology" ])
+        expect(result[2]).to eq([ 0, "Alpha Corp", "Technology" ])
       end
     end
   end
