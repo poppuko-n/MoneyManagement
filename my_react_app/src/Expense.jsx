@@ -34,12 +34,15 @@ const Expense = () => {
           <ExpenseEdit
             expenseId={currentExpenseId}
             onBack={() => setCurrentExpenseId(null)}
+            expense_categories={expense_categories}
+            income_categories={income_categories}
           />
         </Modal>
       )} 
         <ExpenseList
           onSelectExpense={setCurrentExpenseId}
           onCreateNew={() => setIsCreating(true)}
+
         />
     </div>
   );

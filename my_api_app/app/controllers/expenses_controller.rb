@@ -25,22 +25,8 @@ class ExpensesController < ApplicationController
   end
 
   def show
-    expense = ExpenseLog
-               .joins(:category)
-               .select(:id, :transaction_type, :date, :item, :amount, "categories.name AS category_name")
-               .find(params[:id]) 
-  
-    formatted_expense =
-      {
-        id: expense.id,
-        transaction_type: expense.transaction_type,
-        date: expense.date,
-        item: expense.item,
-        amount: expense.amount,
-        category_name: expense.category_name
-      }
-  
-    render json: formatted_expense
+    expense = ExpenseLog.find(params[:id]) 
+    render json: expense
   end
   
 
