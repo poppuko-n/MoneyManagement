@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const ExpenseNew = ({ onBack }) => {
+const ExpenseNew = ({ onBack,expense_categories,income_categories }) => {
   const [expense, setExpense] = useState({
     transaction_type: '',
     category_id: '',
@@ -9,6 +9,16 @@ const ExpenseNew = ({ onBack }) => {
     item: '',
     amount: ''
   });
+
+  const getCategries = () => {
+    if (expense.transaction_type === '支出'){
+      return expense_categories;
+    }else if(expense.transaction_type === '収入'){
+      return income_categories;
+    }
+    return[];
+  };
+
 
   const handleCreate = () => {
     axios
@@ -33,22 +43,30 @@ const ExpenseNew = ({ onBack }) => {
 
         <div>
           <label className="block text-sm font-medium text-gray-700">種類</label>
-          <input
-            type="text"
+          <select
             className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             value={expense.transaction_type}
             onChange={(e) => setExpense({ ...expense, transaction_type: e.target.value })}
-          />
+          >
+            <option value="">選択してください</option>
+            <option value="支出">支出</option>
+            <option value="収入">収入</option>
+          </select>
         </div>
 
         <div>
           <label className="block text-sm font-medium text-gray-700">カテゴリ</label>
-          <input
-            type="text"
+          <select
             className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={expense.category_id}
             onChange={(e) => setExpense({ ...expense, category_id: e.target.value })}
-          />
+          >
+            <option value="">選択してください</option>
+            {getCategries().map((category) => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+          </select>
         </div>
 
         <div>
