@@ -3,9 +3,12 @@ import axios from "axios";
 import editImage from "./assets/edit.svg";
 import deleteImage from "./assets/delete.svg";
 import addImage from "./assets/add.svg";
+import ExpensePieChart from "./ExpensePieChart";
 
 
-const ExpenseList = ({ onSelectExpense, onCreateNew }) => {
+const ExpenseList = ({ onSelectExpense, onCreateNew,
+  expense_categories
+ }) => {
   const [expenses, setExpense] = useState([]);
 
   const incomeTotal = expenses
@@ -76,6 +79,10 @@ const ExpenseList = ({ onSelectExpense, onCreateNew }) => {
         </div>
       </div>
 
+      <ExpensePieChart expenses={expenses} expense_categories={expense_categories} />
+
+      <h2 className="text-xl font-bold text-center mb-4 mt-08">収支一覧</h2>
+      
       <table className="min-w-full border border-gray-300 bg-white">
         <thead>
           <tr className="bg-gray-100">

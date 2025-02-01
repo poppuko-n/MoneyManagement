@@ -42,7 +42,7 @@ const Expense = () => {
         <ExpenseList
           onSelectExpense={setCurrentExpenseId}
           onCreateNew={() => setIsCreating(true)}
-
+          expense_categories={expense_categories}
         />
     </div>
   );
