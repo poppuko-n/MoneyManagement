@@ -10,6 +10,7 @@ const Expense = () => {
   const [currentExpenseId, setCurrentExpenseId] = useState(null);
   const [expense_categories, setExpenseCategories] = useState([]);
   const [income_categories, setIncomCategories] = useState([]);
+  const [expenses, setExpense] = useState([]);
 
   useEffect(()=>{
     axios.get('http://localhost:3000/categories')
@@ -18,6 +19,17 @@ const Expense = () => {
           setIncomCategories(response.data.income_categories);
          })
   },[])
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:3000/expenses")
+      .then((response) => {
+        setExpense(response.data);
+      })
+      .catch(() => {
+        alert("データの取得に失敗しました。");
+      });
+  }, []);
 
   return (
     <div>
@@ -43,6 +55,7 @@ const Expense = () => {
           onSelectExpense={setCurrentExpenseId}
           onCreateNew={() => setIsCreating(true)}
           expense_categories={expense_categories}
+          expenses={expenses}
         />
     </div>
   );
