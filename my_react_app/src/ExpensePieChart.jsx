@@ -4,8 +4,9 @@ import lifeCost from "./assets/lifecost.svg";
 import personCost from "./assets/personcost.svg";
 import trafficCost from "./assets/trafficcost.svg";
 import fiexdCost from "./assets/fixedcost.svg";
+import arrowImage from "./assets/arrow.svg";
 
-const ExpensePieChart = ({expenses, expense_categories})=> {
+const ExpensePieChart = ({expenses, expense_categories,setIsDetail})=> {
 
   const images = [foodCost, lifeCost, personCost, trafficCost, fiexdCost]
 
@@ -21,36 +22,44 @@ const ExpensePieChart = ({expenses, expense_categories})=> {
   
   const COLORS = ["#FF6B6B", "#3B82F6", "#F4A261", "#2EC4B6", "#9B5DE5"];
 
+  const toggleIsDetail = () => setIsDetail((prev)=>!prev);
+
   return(
-    <>
-    {console.log({expenseData: expenseData})}
     <div className="container mx-auto p-4">
       
-      <h2 className="text-xl font-bold text-center mb-2">支出別カテゴリ</h2>
+      <h2 className="text-xl font-bold text-center mb-2">カテゴリ支出</h2>
 
       <div className="flex flex-col md:flex-row justify-center items-center gap-8">
 
-      <div className="w-full md:w-1/2 flex justify-center">
-      <PieChart width={400} height={400}>
-        <Pie
-            data={expenseData}
-            cx="50%"
-            cy="50%"
-            label={({ name, value }) => `${value.toLocaleString()}`} 
-            labelLine={false}
-            outerRadius={120}
-            fill="#8884d8"
-            dataKey="value">
-            {expenseData.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
+        <div className="w-full md:w-1/2 flex justify-center">
+          <PieChart width={400} height={400}>
+            <Pie
+                data={expenseData}
+                cx="50%"
+                cy="50%"
+                label={({ name, value }) => `${value.toLocaleString()}`} 
+                labelLine={false}
+                outerRadius={120}
+                fill="#8884d8"
+                dataKey="value">
+                {expenseData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
           </Pie>
           <Tooltip />
           <Legend verticalAlign="top" align="center" />
-        </PieChart>
-
+          </PieChart>
         </div>
+
         <div className="w-full md:w-1/2">
+
+          <div className='flex justify-end mb-4'>
+            <button onClick={toggleIsDetail} className='flex items-center'>
+              詳細一覧へ
+              <img src={arrowImage} alt="arrow" className='w-5 h-5 ml-2' />
+            </button>
+          </div>
+
           <table className="w-full border border-gray-300 bg-white">
             <thead>
               <tr className="bg-gray-100">
@@ -76,10 +85,9 @@ const ExpensePieChart = ({expenses, expense_categories})=> {
           </table>
         </div>
 
-
       </div>
+
     </div>
-    </>
   )
 }
 
