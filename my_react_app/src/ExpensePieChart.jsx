@@ -1,17 +1,25 @@
 import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
+import foodCost from "./assets/foodcost.svg";
+import lifeCost from "./assets/lifecost.svg";
+import personCost from "./assets/personcost.svg";
+import trafficCost from "./assets/trafficcost.svg";
+import fiexdCost from "./assets/fixedcost.svg";
 
 const ExpensePieChart = ({expenses, expense_categories})=> {
 
-  const expenseData = expense_categories.map((category) => {
-    const totalAmount = expenses
-    .filter((expense) => expense.category_name === category.name)
-    .reduce((sum, expense) => sum + expense.amount, 0);
+  const images = [foodCost, lifeCost, personCost, trafficCost, fiexdCost]
 
-    return {name: category.name, value: totalAmount}
-  })
+  const expenseData = expense_categories.map((category, index) => ({
+    name: category.name,
+    value: expenses
+      .filter((expense) => expense.category_name === category.name)
+      .reduce((sum, expense) => sum + expense.amount, 0),
+    image: images[index]
+  }));
 
-  const COLORS = ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0", "#9966FF"];
-
+  const totalExpense = expenseData.reduce((sum, data)=> sum + data.value, 0);
+  
+  const COLORS = ["#FF6B6B", "#3B82F6", "#F4A261", "#2EC4B6", "#9B5DE5"];
 
   return(
     <>
@@ -33,12 +41,12 @@ const ExpensePieChart = ({expenses, expense_categories})=> {
             outerRadius={120}
             fill="#8884d8"
             dataKey="value">
-            {expenseData.map((_, index) => (
+            {expenseData.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
           <Tooltip />
-          <Legend verticalAlign="bottom" align="center" />
+          <Legend verticalAlign="top" align="center" />
         </PieChart>
 
         </div>
@@ -53,10 +61,17 @@ const ExpensePieChart = ({expenses, expense_categories})=> {
             <tbody>
               {expenseData.map((data, index) => (
                 <tr key={index} className="hover:bg-gray-50 transition duration-200">
-                  <td className="border px-4 py-2">{data.name}</td>
+                  <td className="border px-4 py-2 font-bold flex items-center">
+                    <img src={data.image} alt={data.name} className="w-6 h-6 mr-2" />
+                    <span style={{ color: COLORS[index % COLORS.length] }}>{data.name}</span>
+                  </td>
                   <td className="border px-4 py-2 text-right">{data.value.toLocaleString()}</td>
                 </tr>
               ))}
+               <tr className="bg-gray-200 font-bold">
+                  <td className="border px-4 py-2 text-left">合計</td>
+                  <td className="border px-4 py-2 text-right">{totalExpense.toLocaleString()} 円</td>
+                </tr>
             </tbody>
           </table>
         </div>
@@ -67,7 +82,5 @@ const ExpensePieChart = ({expenses, expense_categories})=> {
     </>
   )
 }
-
-
 
 export default ExpensePieChart;
