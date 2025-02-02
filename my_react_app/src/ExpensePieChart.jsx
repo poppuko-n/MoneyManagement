@@ -27,21 +27,23 @@ const ExpensePieChart = ({expenses, expense_categories,setIsDetail})=> {
   return(
     <div className="container mx-auto p-4">
       
-      <h2 className="text-xl font-bold text-center mb-2">カテゴリ支出</h2>
+      <h2 className="text-xl font-bold text-center mb-2">カテゴリ別支出</h2>
 
       <div className="flex flex-col md:flex-row justify-center items-center gap-8">
 
         <div className="w-full md:w-1/2 flex justify-center">
-          <PieChart width={400} height={400}>
+          <PieChart width={450} height={400}>
             <Pie
                 data={expenseData}
                 cx="50%"
                 cy="50%"
                 label={({ name, value }) => `${value.toLocaleString()}`} 
                 labelLine={false}
-                outerRadius={120}
+                outerRadius={150}
                 fill="#8884d8"
-                dataKey="value">
+                dataKey="value"
+                startAngle={90}
+                endAngle={-270} >
                 {expenseData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                 ))}
@@ -70,14 +72,14 @@ const ExpensePieChart = ({expenses, expense_categories,setIsDetail})=> {
             <tbody>
               {expenseData.map((data, index) => (
                 <tr key={index} className="hover:bg-gray-50 transition duration-200">
-                  <td className="border px-4 py-2 font-bold flex items-center">
+                  <td className="border px-4 py-2 flex items-center">
                     <img src={data.image} alt={data.name} className="w-6 h-6 mr-2" />
                     <span style={{ color: COLORS[index % COLORS.length] }}>{data.name}</span>
                   </td>
                   <td className="border px-4 py-2 text-right">{data.value.toLocaleString()}</td>
                 </tr>
               ))}
-               <tr className="bg-gray-200 font-bold">
+               <tr className="font-bold">
                   <td className="border px-4 py-2 text-left">合計</td>
                   <td className="border px-4 py-2 text-right">{totalExpense.toLocaleString()} 円</td>
                 </tr>
