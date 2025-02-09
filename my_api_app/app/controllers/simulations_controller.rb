@@ -1,37 +1,30 @@
 class SimulationsController < ApplicationController
   def create
     data = params[:data]
-    simulated_results = data.map { |item| simulate(item) }
+    simulated_results = data.map { |item| build_simulate_data(item) }
     render json: { results: simulated_results }, status: :ok
   end
 
   private
 
-  def simulate(item)
+  def build_simulate_data(item)
     company_code  = item[:code]
     name          = item[:name]
     current_price = item[:price]
     quantity      = item[:quantity]
 
-    latest_price_data = fetch_latest_data(company_code)
-    latest_date       = latest_price_data[:date]
-    latest_price      = latest_price_data[:price]
+    latest_date       = fetch_latest_data(company_code)[:date]
+    latest_price      = fetch_latest_data(company_code)[:price]
 
-    prices            = fetch_history_prices(company_code, latest_date)
-
-    rates             = calculate_rates(latest_price, prices)
-
-    simulation        = calculate_simulation(latest_price, quantity, rates)
-
-    accumulation_simulation = calculate_accumulation_simulation(company_code, latest_date, current_price, quantity)
+    rates             = calculate_rates(latest_price, company_code, latest_date)
 
     {
       code: company_code,
       name: name,
       current_price: current_price,
       quantity: quantity,
-      simulation: simulation,
-      accumulation_simulation: accumulation_simulation
+      simulation: calculate_simulation(latest_price, quantity, rates),
+      accumulation_simulation: calculate_accumulation_simulation(company_code, latest_date, current_price, quantity)
     }
   end
 
@@ -45,26 +38,19 @@ class SimulationsController < ApplicationController
     }
   end
 
-  def fetch_history_prices(company_code, latest_date)
-    {
-      three_months_ago: fetch_price_at_date_range(company_code, (latest_date - 3.months)..latest_date),
-      six_months_ago: fetch_price_at_date_range(company_code,  (latest_date - 6.months)..latest_date),
-      one_year_ago: fetch_price_at_date_range(company_code,  (latest_date - 12.months)..latest_date)
-    }
+  def fetch_price_n_months_ago(company_code, latest_date, n)
+    date_range = (latest_date - n.months)..latest_date
+    StockPrice
+    .where(company_code: company_code, date: date_range)
+    .order(date: :asc)
+    .first&.close_price
   end
 
-  def fetch_price_at_date_range(company_code, date_range)
-    StockPrice.where(company_code: company_code, date: date_range)
-              .order(date: :asc)
-              .first&.close_price
-  end
-
-
-  def calculate_rates(latest_price, prices)
+  def calculate_rates(latest_price, company_code, latest_date)
     {
-      "3_months_ago": calculate_rate(latest_price, prices[:three_months_ago]),
-      "6_months_ago": calculate_rate(latest_price, prices[:six_months_ago]),
-      "1_year_ago": calculate_rate(latest_price, prices[:one_year_ago])
+      "3_months_ago": calculate_rate(latest_price, fetch_price_n_months_ago(company_code, latest_date, 3)),
+      "6_months_ago": calculate_rate(latest_price, fetch_price_n_months_ago(company_code, latest_date, 6)),
+      "1_year_ago": calculate_rate(latest_price, fetch_price_n_months_ago(company_code, latest_date, 12))
     }
   end
 
