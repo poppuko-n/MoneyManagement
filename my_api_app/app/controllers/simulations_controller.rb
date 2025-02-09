@@ -12,7 +12,6 @@ class SimulationsController < ApplicationController
     name          = item[:name]
     current_price = item[:price]
     quantity      = item[:quantity]
-
     latest_date       = fetch_latest_date(company_code)
 
     {
@@ -20,8 +19,8 @@ class SimulationsController < ApplicationController
       name: name,
       current_price: current_price,
       quantity: quantity,
-      simulation: calculate_simulation(current_price, company_code, latest_date, * quantity),
-      accumulation_simulation: calculate_accumulation_simulation(company_code, latest_date, current_price, quantity)
+      simulation: calculate_simulation(current_price, company_code, latest_date, quantity),
+      accumulation_simulation: calculate_accumulation_simulation(current_price, quantity, company_code, latest_date)
     }
 
   end
@@ -40,6 +39,11 @@ class SimulationsController < ApplicationController
     .first&.close_price
   end
 
+  def simulate_price(current_price, past_price)
+    rate = (current_price - past_price) / past_price.to_f
+    (current_price * (1 + rate)).round(0)
+  end
+
   def calculate_simulation(current_price, company_code, latest_date, quantity)
     {
       "3_months_ago" => simulate_price(current_price, fetch_price_n_months_ago(company_code, latest_date, 3)) * quantity,
@@ -47,47 +51,44 @@ class SimulationsController < ApplicationController
       "1_year_ago"   => simulate_price(current_price, fetch_price_n_months_ago(company_code, latest_date, 12)) * quantity
     }
   end
-  
-  def simulate_price(current_price, past_price)
-    rate = (current_price - past_price) / past_price.to_f
-    (current_price * (1 + rate)).round(2)
-  end
-  
-  # 積み立てロジック
-  def calculate_accumulation_simulation(company_code, latest_date, current_price, quantity)
-    month_average_prices = fetch_monthly_average_prices(company_code, latest_date)
-    simulate_accumulation(month_average_prices, current_price, quantity)
-  end
-
-  def fetch_monthly_average_prices(company_code, latest_date)
-    target_periods = (0..13).map { |i| latest_date - i.months }
-    target_periods.each_cons(2).map do |start_date, end_date|
-      StockPrice.where(company_code: company_code, date: (end_date + 1)..start_date)
-                .average(:close_price)
+ 
+  def fetch_n_monthly_average_prices(company_code, latest_date, n)
+    target_periods = (0..(n + 1)).map { |i| latest_date - i.months }
+    target_periods.reverse.each_cons(2).map do |start_date, end_date|
+      StockPrice.where(company_code: company_code, date: start_date..end_date).average(:close_price)
     end
   end
-
-  def simulate_accumulation(month_average_prices, current_price, quantity)
-    buy_price = current_price * quantity
-    output    = 0
-    results   = {}
-
-    month_average_prices.each_cons(2).with_index(1) do |(start_price, end_price), i|
-      next if start_price.nil? || end_price.nil?
-
-      rate = (start_price / end_price)
-      output = if i == 1
-                 buy_price * rate
-      else
-                 (output + buy_price) * rate
-      end
-
-      if [ 3, 6, 12 ].include?(i)
-        result_key = (i == 12) ? "1_year_ago" : "#{i}_months_ago"
-        result_value = output.round(0) - (buy_price * i)
-        results[result_key] = result_value
-      end
+  
+  def calculate_growth_rates(monthly_average_prices)
+    monthly_average_prices.each_cons(2).map do |previous_price, current_price|
+      (current_price - previous_price) / previous_price.to_f
     end
-    results
   end
+  
+  def calculate_accumulation_price(current_price, quantity, company_code, latest_date, n)
+    accumulated_price = current_price * quantity
+    result = []
+    accumulated_value = 0
+  
+    monthly_average_prices = fetch_n_monthly_average_prices(company_code, latest_date, n)
+    monthly_growth_rates = calculate_growth_rates(monthly_average_prices)
+  
+    monthly_growth_rates.each do |growth_rate|
+      accumulated_value = (accumulated_value + accumulated_price) * (1 + growth_rate)
+      result << accumulated_value.round(0)
+    end
+  
+    result
+  end
+  
+  def calculate_accumulation_simulation(current_price, quantity, company_code, latest_date)
+    accumulated_prices = calculate_accumulation_price(current_price, quantity, company_code, latest_date, 12)
+  
+    {
+      "3_months_ago" => accumulated_prices[2],
+      "6_months_ago" => accumulated_prices[5],
+      "1_year_ago"   => accumulated_prices[11]
+    }
+  end
+  
 end
