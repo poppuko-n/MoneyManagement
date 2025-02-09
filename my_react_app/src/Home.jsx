@@ -11,7 +11,7 @@ import checkbox from "./assets/checkbox.png";
 const Home = () => {
   return (
     <>
-      <div className="relative flex items-center justify-center">
+      <div className="relative flex items-center justify-center mb-20">
         <img 
           src={homeImage} 
           alt="Home" 
