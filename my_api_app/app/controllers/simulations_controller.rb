@@ -40,14 +40,15 @@ class SimulationsController < ApplicationController
   end
 
   def simulate_price(current_price, past_price)
-    rate = (current_price - past_price) / past_price.to_f
-    (current_price * (1 + rate)).round(0)
+    rate = current_price  / past_price.to_f
+    (current_price * rate).round(0)
   end
 
   def calculate_simulation(current_price, company_code, latest_date, quantity)
     {
       "3_months_ago" => simulate_price(current_price, fetch_price_n_months_ago(company_code, latest_date, 3)) * quantity,
       "6_months_ago" => simulate_price(current_price, fetch_price_n_months_ago(company_code, latest_date, 6)) * quantity,
+      "9_months_ago" => simulate_price(current_price, fetch_price_n_months_ago(company_code, latest_date, 9)) * quantity,
       "1_year_ago"   => simulate_price(current_price, fetch_price_n_months_ago(company_code, latest_date, 12)) * quantity
     }
   end
@@ -61,7 +62,7 @@ class SimulationsController < ApplicationController
   
   def calculate_growth_rates(monthly_average_prices)
     monthly_average_prices.each_cons(2).map do |previous_price, current_price|
-      (current_price - previous_price) / previous_price.to_f
+      current_price / previous_price.to_f
     end
   end
   
@@ -74,7 +75,7 @@ class SimulationsController < ApplicationController
     monthly_growth_rates = calculate_growth_rates(monthly_average_prices)
   
     monthly_growth_rates.each do |growth_rate|
-      accumulated_value = (accumulated_value + accumulated_price) * (1 + growth_rate)
+      accumulated_value = (accumulated_value + accumulated_price) * growth_rate
       result << accumulated_value.round(0)
     end
   
@@ -87,6 +88,7 @@ class SimulationsController < ApplicationController
     {
       "3_months_ago" => accumulated_prices[2],
       "6_months_ago" => accumulated_prices[5],
+      "9_months_ago" => accumulated_prices[8],
       "1_year_ago"   => accumulated_prices[11]
     }
   end
