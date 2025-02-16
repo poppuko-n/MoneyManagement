@@ -61,7 +61,8 @@ const SimulationResult = () => {
     <div className="container mx-auto p-4">
       <h1 className="text-2xl border-b border-black pb-2 inline-block mb-6">シミュレーション結果</h1>
 
-      <div className="flex gap-4 mb-4">
+      <div className="flex gap-4 mb-4 items-center">
+        <p className="text-gray-800 font-bold tracking-wide px-4 py-2 rounded ">運用期間</p>
         {Object.keys(periodMonths).map((period) => (
           <button
             key={period}
@@ -75,7 +76,8 @@ const SimulationResult = () => {
         ))}
       </div>
 
-      <div className="flex gap-4 mb-6">
+      <div className="flex gap-4 mb-6 items-center">
+        <p className="text-gray-800 font-bold tracking-wide px-4 py-2 rounde">運用方法</p>
         <button
           onClick={() => setSelectedType("simulation")}
           className={`px-4 py-2 rounded ${
@@ -90,17 +92,18 @@ const SimulationResult = () => {
             selectedType === "accumulation_simulation" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-800 hover:bg-gray-300"
           }`}
         >
-          積み立て
+          積立
         </button>
       </div>
 
+
       <div className="flex flex-wrap justify-between mb-6 p-4 bg-white rounded shadow">
         <div className="w-1/4 text-center">
-          <h2 className="text-lg font-semibold mb-2">買付金額</h2>
+          <h2 className="text-lg font-semibold mb-2">運用額</h2>
           <p className="text-2xl font-bold">{formatAmount(totalInvestment)} 円</p>
         </div>
         <div className="w-1/4 text-center">
-          <h2 className="text-lg font-semibold mb-2">合計評価額</h2>
+          <h2 className="text-lg font-semibold mb-2">評価額</h2>
           <p className="text-2xl font-bold">{formatAmount(totalEvaluation)} 円</p>
         </div>
         <div className="w-1/4 text-center">
@@ -133,7 +136,7 @@ const SimulationResult = () => {
             <th className="p-3 border-b">銘柄名</th>
             <th className="p-3 border-b">現在価格 (円)</th>
             <th className="p-3 border-b">保有数量</th>
-            <th className="p-3 border-b">買付金額 (円)</th>
+            <th className="p-3 border-b">運用額 (円)</th>
             <th className="p-3 border-b">評価額 (円)</th>
             <th className="p-3 border-b">損益額 (増減率 %)</th>
           </tr>

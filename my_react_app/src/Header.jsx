@@ -2,7 +2,7 @@ import logoImage from "./assets/logo.png";
 
 const Header = ({ setIsLogin, setIsSignUp }) => {
   return (
-    <header className="bg-white mb-6">
+    <header className="bg-white mb-2">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
         <div className="flex items-center">
           <img src={logoImage} alt="Logo" className="h-10 mr-2" />

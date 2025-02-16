@@ -101,7 +101,7 @@ const SelectCompany = () => {
 
       <div className="bg-gray-100 shadow-md rounded p-4 mb-8">
         <h2 className="text-xl">
-          買付金額: {formatWithComma(calculateTotalCost())} 円
+          運用金額: {formatWithComma(calculateTotalCost())} 円
         </h2>
       </div>
 
