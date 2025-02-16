@@ -19,7 +19,7 @@ const Navigation = () => {
         <Route path="/" element={<Home />}/>
         <Route path="/expense" element={<Expense />} />
         <Route path="/selectcompany" element={<SelectCompany />} />
-        <Route path="/about" element={<SimulationResult />} />
+        <Route path="/simulation_result" element={<SimulationResult />} />
       </Routes>
     </HashRouter>
   );
