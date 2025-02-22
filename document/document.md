@@ -1,5 +1,5 @@
 ## 一言サービスコンセプト
-![alt text](<スクリーンショット 2025-01-14 6.55.52.png>)
+![document/img/コンセプト.png](img/コンセプト.png)
 
 ## 誰のどんな課題を解決するのか
 ### 対象   
@@ -83,14 +83,14 @@
 - テストコードが書かれている
 
 ## 業務フロー
-![alt text](image-3-1-1.png)
+![document/img/業務フロー.png](img/業務フロー.png)
 
 ## 画面遷移図,ワイヤーフレーム
-![alt text](image-2-1.png)
+![document/img/画面遷移図.png](img/画面遷移図.png)
 
 ## テーブル定義書
 ### ER図
-![document/スクリーンショット 2025-01-18 16.10.37.png](<スクリーンショット 2025-01-18 16.10.37.png>)
+![document/img/ER図.png](img/ER図.png)
 
 ### テーブル
 Users:ユーザー
@@ -144,4 +144,4 @@ Sectors:業種
 | name | 名前 | VARCHAR(25) |     | TRUE |
 
 ## システム構成図
-![document/システム構成図.png](システム構成図.png)
+![document/img/システム構成図.png](img/システム構成図.png)
