@@ -144,4 +144,4 @@ Sectors:業種
 | name | 名前 | VARCHAR(25) |     | TRUE |
 
 ## システム構成図
-![document/システム構成図.drawio.png](システム構成図.drawio.png)
+![document/システム構成図.png](システム構成図.png)
