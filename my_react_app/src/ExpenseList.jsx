@@ -4,7 +4,7 @@ import ExpensePieChart from "./ExpensePieChart";
 import ExpenseDetail from "./ExpenseDetail";
 
 
-const ExpenseList = ({ onSelectExpense, onCreateNew,expense_categories,expenses
+const ExpenseList = ({ onSelectExpense, onCreateNew,expense_categories,expenses,apiBaseUrl
  }) => {
   const [isDetail, setIsDetail] = useState(false);
 
@@ -56,7 +56,8 @@ const ExpenseList = ({ onSelectExpense, onCreateNew,expense_categories,expenses
         <ExpenseDetail onSelectExpense={onSelectExpense}
                      expenses={expenses} 
                      expense_categories={expense_categories}
-                     onBack={()=>setIsDetail(false)} />
+                     onBack={()=>setIsDetail(false)} 
+                     apiBaseUrl={apiBaseUrl}/>
       ) : (
         <ExpensePieChart expenses={expenses} 
         expense_categories={expense_categories}

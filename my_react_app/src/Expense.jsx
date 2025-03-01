@@ -5,7 +5,7 @@ import ExpenseEdit from './ExpenseEdit';
 import Modal from './Modal';
 import axios from 'axios';
 
-const Expense = () => {
+const Expense = ({apiBaseUrl}) => {
   const [isCreating, setIsCreating] = useState(false);
   const [currentExpenseId, setCurrentExpenseId] = useState(null);
   const [expense_categories, setExpenseCategories] = useState([]);
@@ -13,7 +13,7 @@ const Expense = () => {
   const [expenses, setExpense] = useState([]);
 
   useEffect(()=>{
-    axios.get('http://localhost:3000/categories')
+    axios.get(`${apiBaseUrl}/categories`)
          .then((response) => {
           setExpenseCategories(response.data.expense_categories);
           setIncomCategories(response.data.income_categories);
@@ -22,7 +22,7 @@ const Expense = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:3000/expenses")
+      .get(`${apiBaseUrl}/expenses`)
       .then((response) => {
         setExpense(response.data);
       })
@@ -38,7 +38,9 @@ const Expense = () => {
           <ExpenseNew 
             onBack={() => setIsCreating(false)}
             expense_categories={expense_categories}
-            income_categories={income_categories} />
+            income_categories={income_categories}
+            apiBaseUrl = {apiBaseUrl} 
+          />
         </Modal>
       )}
       {currentExpenseId && (
@@ -48,6 +50,7 @@ const Expense = () => {
             onBack={() => setCurrentExpenseId(null)}
             expense_categories={expense_categories}
             income_categories={income_categories}
+            apiBaseUrl = {apiBaseUrl} 
           />
         </Modal>
       )} 
@@ -56,6 +59,7 @@ const Expense = () => {
           onCreateNew={() => setIsCreating(true)}
           expense_categories={expense_categories}
           expenses={expenses}
+          apiBaseUrl = {apiBaseUrl} 
         />
     </div>
   );

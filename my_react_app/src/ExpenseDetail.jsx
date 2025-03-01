@@ -4,7 +4,7 @@ import deleteImage from "./assets/delete.svg";
 import arrowImage from "./assets/arrow.svg";
 
 
-const ExpenseDetail =  ({ onSelectExpense,expenses,setExpense,onBack
+const ExpenseDetail =  ({ onSelectExpense,expenses,setExpense,onBack,apiBaseUrl
  }) => {
 
   const incomeTotal = expenses
@@ -20,7 +20,7 @@ const ExpenseDetail =  ({ onSelectExpense,expenses,setExpense,onBack
   const handleDelete = (id) => {
     if (window.confirm("本当に削除しますか")) {
       axios
-        .delete(`http://localhost:3000/expenses/${id}`)
+        .delete(`${apiBaseUrl}/expenses/${id}`)
         .then(() => {
           setExpense(expenses.filter((expense) => expense.id !== id));
         })
