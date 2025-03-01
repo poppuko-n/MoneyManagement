@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const ExpenseEdit = ({ onBack, expenseId,expense_categories,income_categories }) => {
+const ExpenseEdit = ({ onBack, expenseId,expense_categories,income_categories,apiBaseUrl }) => {
 
   const [expense, setExpense] = useState({
     transaction_type: '',
@@ -29,7 +29,7 @@ const ExpenseEdit = ({ onBack, expenseId,expense_categories,income_categories })
   
   useEffect(() => {
     axios
-      .get(`http://localhost:3000/expenses/${expenseId}`)
+      .get(`${apiBaseUrl}/expenses/${expenseId}`)
       .then((response) => {
         setExpense(response.data);
       })

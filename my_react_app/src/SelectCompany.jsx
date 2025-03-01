@@ -8,7 +8,7 @@ import addImage from './assets/add_circle.svg'
 import subtractImage from './assets/subtract_circle.svg'
 
 
-const SelectCompany = () => {
+const SelectCompany = ({apiBaseUrl}) => {
   const [companies, setCompanies] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [showFiltered, setShowFiltered] = useState(false);
@@ -17,7 +17,7 @@ const SelectCompany = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("http://localhost:3000/companies/").then((response) => {
+    axios.get(`${apiBaseUrl}/companies/`).then((response) => {
       setCompanies(response.data);
       const initialQuantities = response.data.reduce((acc, company) => {
         acc[company.code] = 0;
@@ -63,7 +63,7 @@ const SelectCompany = () => {
       }));
 
     axios
-      .post("http://localhost:3000/simulations", { data: selectedCompanies })
+      .post(`${apiBaseUrl}/simulations`, { data: selectedCompanies })
       .then((response) => {
         navigate("/simulation_result", {
           state: { results: response.data.results },
@@ -101,7 +101,7 @@ const SelectCompany = () => {
 
       <div className="bg-gray-100 shadow-md rounded p-4 mb-8">
         <h2 className="text-xl">
-          運用金額: {formatWithComma(calculateTotalCost())} 円
+          金額: {formatWithComma(calculateTotalCost())} 円
         </h2>
       </div>
 

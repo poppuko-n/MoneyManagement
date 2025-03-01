@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const ExpenseNew = ({ onBack,expense_categories,income_categories }) => {
+const ExpenseNew = ({ onBack,expense_categories,income_categories,apiBaseUrl }) => {
   const [expense, setExpense] = useState({
     transaction_type: '',
     category_id: '',
@@ -22,7 +22,7 @@ const ExpenseNew = ({ onBack,expense_categories,income_categories }) => {
 
   const handleCreate = () => {
     axios
-      .post('http://localhost:3000/expenses', expense)
+      .post(`${apiBaseUrl}/expenses`, expense)
       .then(() => {
         alert('登録が完了しました！');
         onBack();
