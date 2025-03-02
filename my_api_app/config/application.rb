@@ -28,5 +28,19 @@ module MyApiApp
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # CORSの設定を追加
+    config.middleware.insert_before 0, Rack::Cors do
+      allow do
+        origins 'https://moneymanagement.jp' # フロントエンドのドメインを許可
+        resource '*',
+                 headers: :any,
+                 methods: [:get, :post, :put, :patch, :delete, :options, :head],
+                 expose: ['Authorization']
+      end
+    end
+
+    config.eager_load_paths -= Dir[Rails.root.join("app/services")]
+
   end
 end
