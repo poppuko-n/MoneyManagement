@@ -41,22 +41,6 @@ codes.each do |code|
   end
 end
 
-# codes.each do |code|
-#   price_url = "https://api.jquants.com/v1/prices/daily_quotes?code=#{code}&from=#{from}&to=#{to}"
-#   price_data = fetch_api_data(price_url, auth_token)
-
-#   if price_data['daily_quotes'].blank?
-#     puts "No daily_quotes data for code #{code}"
-#     next
-#   end
-
-#   price_data['daily_quotes'].each do |quote|
-#     if quote['Close'].nil?
-#       puts "Missing close_price for code #{code} on date #{quote['Date']}"
-#     end
-#   end
-# end
-
 if bulk_insert_stock_prices.any?
   StockPrice.insert_all(bulk_insert_stock_prices)
 end
