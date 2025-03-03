@@ -17,9 +17,10 @@
 
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins "https://moneymanagement.jp"
+    origins Rails.env.production? ? "https://moneymanagement.jp" : "http://localhost:5000"
+
     resource "*",
       headers: :any,
-      methods: [ :get, :post, :put, :patch, :delete, :options, :head ]
+      methods: [:get, :post, :put, :patch, :delete, :options, :head]
   end
 end
