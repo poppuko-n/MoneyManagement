@@ -50,19 +50,22 @@ test:
 #
 production:
   primary: &primary_production
-    <<: *default
-    database: my_api_app_production
-    username: my_api_app
-    password: <%= ENV["MY_API_APP_DATABASE_PASSWORD"] %>
+    adapter: mysql2
+    encoding: utf8mb4
+    pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+    username: <%= Rails.application.credentials.production_db[:username] %>
+    password: <%= Rails.application.credentials.production_db[:password] %>
+    host: <%= Rails.application.credentials.production_db[:host] %>
+    port: <%= Rails.application.credentials.production_db[:port] %>
+    database: <%= Rails.application.credentials.production_db[:database] %>
   cache:
     <<: *primary_production
     database: my_api_app_production_cache
-    migrations_paths: db/cache_migrate
+
   queue:
     <<: *primary_production
     database: my_api_app_production_queue
-    migrations_paths: db/queue_migrate
+
   cable:
     <<: *primary_production
     database: my_api_app_production_cable
-    migrations_paths: db/cable_migrate
