@@ -147,4 +147,4 @@ Sectors:業種
 | name | 名前 | VARCHAR(25) |     | TRUE |
 
 ## ■　システム構成図
-![/Users/murakamifuuta/Desktop/MoneyManagement/document/img/システム構成図.png](img/システム構成図.png)
+![document/img/システム構成図.png](img/システム構成図.png)
