@@ -5,30 +5,37 @@ import ExpenseEdit from './ExpenseEdit';
 import Modal from './Modal';
 import axios from 'axios';
 
-const Expense = ({apiBaseUrl}) => {
+const Expense = ({ apiBaseUrl }) => {
   const [isCreating, setIsCreating] = useState(false);
   const [currentExpenseId, setCurrentExpenseId] = useState(null);
   const [expense_categories, setExpenseCategories] = useState([]);
-  const [income_categories, setIncomCategories] = useState([]);
-  const [expenses, setExpense] = useState([]);
-
-  useEffect(()=>{
-    axios.get(`${apiBaseUrl}/categories`)
-         .then((response) => {
-          setExpenseCategories(response.data.expense_categories);
-          setIncomCategories(response.data.income_categories);
-         })
-  },[])
+  const [income_categories, setIncomeCategories] = useState([]);
+  const [expenses, setExpenses] = useState([]);
 
   useEffect(() => {
+    axios.get(`${apiBaseUrl}/categories`)
+      .then((response) => {
+        setExpenseCategories(response.data.expense_categories);
+        setIncomeCategories(response.data.income_categories);
+      })
+      .catch(() => {
+        alert("カテゴリの取得に失敗しました。");
+      });
+  }, []);
+
+  const refreshExpenses = () => {
     axios
       .get(`${apiBaseUrl}/expenses`)
       .then((response) => {
-        setExpense(response.data);
+        setExpenses(response.data);
       })
       .catch(() => {
         alert("データの取得に失敗しました。");
       });
+  };
+
+  useEffect(() => {
+    refreshExpenses();
   }, []);
 
   return (
@@ -36,10 +43,13 @@ const Expense = ({apiBaseUrl}) => {
       {isCreating && (
         <Modal onClose={() => setIsCreating(false)}>
           <ExpenseNew 
-            onBack={() => setIsCreating(false)}
+            onBack={() => {
+              setIsCreating(false);
+              refreshExpenses(); 
+            }}
             expense_categories={expense_categories}
             income_categories={income_categories}
-            apiBaseUrl = {apiBaseUrl} 
+            apiBaseUrl={apiBaseUrl} 
           />
         </Modal>
       )}
@@ -47,20 +57,23 @@ const Expense = ({apiBaseUrl}) => {
         <Modal onClose={() => setCurrentExpenseId(null)}>
           <ExpenseEdit
             expenseId={currentExpenseId}
-            onBack={() => setCurrentExpenseId(null)}
+            onBack={() => {
+              setCurrentExpenseId(null);
+              refreshExpenses();
+            }}
             expense_categories={expense_categories}
             income_categories={income_categories}
-            apiBaseUrl = {apiBaseUrl} 
+            apiBaseUrl={apiBaseUrl} 
           />
         </Modal>
       )} 
-        <ExpenseList
-          onSelectExpense={setCurrentExpenseId}
-          onCreateNew={() => setIsCreating(true)}
-          expense_categories={expense_categories}
-          expenses={expenses}
-          apiBaseUrl = {apiBaseUrl} 
-        />
+      <ExpenseList
+        onSelectExpense={setCurrentExpenseId}
+        onCreateNew={() => setIsCreating(true)}
+        expense_categories={expense_categories}
+        expenses={expenses}
+        apiBaseUrl={apiBaseUrl} 
+      />
     </div>
   );
 };
