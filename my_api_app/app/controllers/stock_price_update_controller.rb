@@ -1,10 +1,8 @@
 class StockPriceUpdateController < ApplicationController
   def create
     StockPrice::WeeklyStockFetcher::TARGET_CODES.each do |code|
-      response_data = StockPrice::WeeklyStockFetcher.call(code)
-
+      response_data = StockPrice::WeeklyStockFetcher.fetch_weekend_stock_price(code)
       one_week_stock_price = response_data["daily_quotes"]
-
       bulk_insert_stock_prices = reject_existing_stock_price(code, one_week_stock_price)
       StockPrice.insert_all(bulk_insert_stock_prices)
     end
