@@ -12,10 +12,15 @@ class StockPriceUpdateController < ApplicationController
 
   private
 
+  # @note 更新処理をしたいので、DBに存在するものは取り除く
+  # @todo Bulk Upsertにするとより効率がいいので変更する。
+  #         @see https://journal.lampetty.net/entry/mysql-bulk-insert-and-on-duplicate-key-update
+  #       StockPriceの[company_code, date]で複合ユニーク制約を貼る
+  #         @see https://lei900.github.io/22/07/unique-constraint-and-unique-index/
   def reject_existing_stock_price(code, one_week_stock_price)
     bulk_insert_stock_prices = []
 
-    recorded_dates =  StockPrice.where(company_code: code).pluck(:date).map(&:to_date)
+    recorded_dates = StockPrice.where(company_code: code).pluck(:date).map(&:to_date)
 
     one_week_stock_price.each do |quote|
       quote_date = Date.parse(quote["Date"])
