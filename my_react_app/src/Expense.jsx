@@ -4,6 +4,7 @@ import ExpenseNew from './ExpenseNew';
 import ExpenseEdit from './ExpenseEdit';
 import Modal from './Modal';
 import axios from 'axios';
+import ExpenseApi from './lib/ExpenseApi';
 
 const Expense = ({ apiBaseUrl }) => {
   const [isCreating, setIsCreating] = useState(false);
@@ -12,16 +13,12 @@ const Expense = ({ apiBaseUrl }) => {
   const [income_categories, setIncomeCategories] = useState([]);
   const [expenses, setExpenses] = useState([]);
 
-  useEffect(() => {
-    axios.get(`${apiBaseUrl}/categories`)
-      .then((response) => {
-        setExpenseCategories(response.data.expense_categories);
-        setIncomeCategories(response.data.income_categories);
-      })
-      .catch(() => {
-        alert("カテゴリの取得に失敗しました。");
-      });
-  }, []);
+  useEffect(()=> {
+    ExpenseApi.getCategories().then(data => {
+      setExpenseCategories(data.expense_categories);
+      setIncomeCategories(data.income_categories);
+    })
+  },[]);
 
   const refreshExpenses = () => {
     axios
