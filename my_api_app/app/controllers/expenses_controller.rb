@@ -19,9 +19,9 @@ class ExpensesController < ApplicationController
   def create
     expense = ExpenseLog.new(expense_params)
     if expense.save
-      render joson: expense, status: :created
+      render json: expense, status: :created
     else
-      render joson: { errors: expense.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: expense.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
