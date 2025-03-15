@@ -1,17 +1,18 @@
 class ExpensesController < ApplicationController
   def index
-    expenses = ExpenseLog.joins(:category).order(date: :asc)
-                     .pluck(:id, :transaction_type, :date, :item, :amount, "category.name")
-                     .map do |id, transaction_type, date, item, amount, category_name|
-                       {
-                         id: id,
-                         transaction_type: transaction_type,
-                         date: date,
-                         item: item,
-                         amount: amount,
-                         category_name: category_name
-                       }
-                     end
+    expenses = ExpenseLog.joins(:category)
+                         .order(date: :asc)
+                         .pluck(:id, :transaction_type, :date, :item, :amount, "category.name")
+                         .map do |id, transaction_type, date, item, amount, category_name|
+                           {
+                             id: id,
+                             transaction_type: transaction_type,
+                             date: date,
+                             item: item,
+                             amount: amount,
+                             category_name: category_name
+                           }
+                         end
     render json: expenses
   end
 
@@ -29,7 +30,6 @@ class ExpensesController < ApplicationController
     render json: expense
   end
 
-
   def destroy
     expense = ExpenseLog.find(params[:id])
     expense.destroy
@@ -37,6 +37,7 @@ class ExpensesController < ApplicationController
   end
 
   private
+
   def expense_params
     params.require(:expense).permit(:transaction_type, :category_id, :date, :item, :amount)
   end
