@@ -2,6 +2,17 @@ require "httparty"
 
 class StockPrice
   module WeeklyStockFetcher
+    TARGET_CODES = [
+      "72030", "83060", "61780", "83160", "99840",
+      "72670", "94320", "84110", "80580", "71820",
+      "80310", "67580", "45020", "72010", "62010",
+      "87660", "77510", "94330", "80010", "80530",
+      "70110", "65010", "72020", "77520", "70130",
+      "69020", "65030", "65060", "65040", "65080",
+      "65050", "65070", "65130", "65160", "65170",
+      "65210", "65220", "65230", "65240"
+    ].freeze
+
     class << self
       def call(code)
         id_token = fetch_token["idToken"]
@@ -11,9 +22,9 @@ class StockPrice
         from = (Date.today - 21.days).strftime("%Y%m%d") # 一週間前の日付
 
         response = HTTParty.get(
-        base_url,
-        query: { code: code, from: from, to: to },
-        headers: { Authorization:  id_token }
+          base_url,
+          query: { code: code, from: from, to: to },
+          headers: { Authorization:  id_token }
         )
         JSON.parse(response.body)
       end
