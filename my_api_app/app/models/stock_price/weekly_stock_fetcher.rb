@@ -15,7 +15,7 @@ class StockPrice
     ].freeze
 
     class << self
-      def fetch_weekend_stock_price(code)
+      def call(code)
         get_stock_prices(code, last_week, today)
       end
 
