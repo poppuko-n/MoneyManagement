@@ -27,7 +27,7 @@ class StockPrice
           query: { code: code, from: from, to: to },
           headers: { Authorization: fetch_token }
         )
-        JSON.parse(response.body)
+        JSON.parse(response.body)["daily_quotes"]
       end
 
       def fetch_token
