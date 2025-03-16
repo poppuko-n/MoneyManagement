@@ -1,5 +1,6 @@
 class StockPriceUpdateController < ApplicationController
   def create
-    StockPrice.bulk_update_prices
+    StockPrice::Importer.call
+    render json: { message: "Stock prices updated" }, status: :ok
   end
 end
