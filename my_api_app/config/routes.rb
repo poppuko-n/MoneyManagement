@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :stock_price_update, only: [ :create ]
   resources :expenses, only: [ :index, :show, :create, :destroy ]
   resources :categories, only: [ :index ]
+  resources :users, only: [ :create ]
 
   # Defines the root path route ("/")
   # root "posts#index"
