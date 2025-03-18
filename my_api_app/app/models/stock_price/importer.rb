@@ -26,12 +26,12 @@ class StockPrice
         stock_prices.each_slice(BASE_SIZE) do |batch|
           valid_stprice, unvalid_stprice = batch.partition(&:valid?)
           log_errors(unvalid_stprice) unless unvalid_stprice.empty?
-          StockPrice.import valid_stprice, on_duplicate_key_update: [:close_price]
+          StockPrice.import valid_stprice, on_duplicate_key_update: [ :close_price ]
         end
       end
 
       def log_errors(records)
-        records.each {|record| puts record.errors.full_messages}
+        records.each { |record| puts record.errors.full_messages }
       end
     end
   end
