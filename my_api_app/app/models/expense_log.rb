@@ -12,5 +12,4 @@ class ExpenseLog < ApplicationRecord
             .order(date: :asc)
             .select(:id, :transaction_type, :date, :item, :amount, "categories.name AS category_name")
  end
-
 end
