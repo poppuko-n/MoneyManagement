@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   resources :categories, only: [ :index ]
   resources :users, only: [ :create ]
 
+  post "/login", to: "users#login"
+
   # Defines the root path route ("/")
   # root "posts#index"
 end
