@@ -19,3 +19,26 @@
 ].each do |attrs|
   Category.find_or_create_by!(attrs)
 end
+
+[
+  { id: 1, name: "食品" },
+  { id: 2, name: "エネルギー資源" },
+  { id: 3, name: "建設・資材" },
+  { id: 4, name: "素材・化学" },
+  { id: 5, name: "医薬品" },
+  { id: 6, name: "自動車・輸送機" },
+  { id: 7, name: "鉄鋼・非鉄" },
+  { id: 8, name: "機械" },
+  { id: 9, name: "電機・精密" },
+  { id: 10, name: "情報通信・サービスその他" },
+  { id: 11, name: "電気・ガス" },
+  { id: 12, name: "運輸・物流" },
+  { id: 13, name: "商社・卸売" },
+  { id: 14, name: "小売" },
+  { id: 15, name: "銀行" },
+  { id: 16, name: "金融（除く銀行）" },
+  { id: 17, name: "不動産" },
+  { id: 99, name: "その他" }
+].each do |attrs|
+  Sector.find_or_create_by!(attrs)
+end
