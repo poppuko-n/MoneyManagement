@@ -82,5 +82,29 @@ Company.import(
   on_duplicate_key_update: [ :sector_id, :name, :equity ]
 )
 
-
 # Note: ここからStockPriceテーブルの初期設定。
+FROM_DATE = "20230101"
+TO_DATE = "20250401"
+
+def fetch_stock_price(code)
+  response = HTTParty.get(
+    "#{StockPrice::WeeklyStockFetcher::BASE_URL}/prices/daily_quotes",
+    query: { code: code, from: FROM_DATE, to: TO_DATE },
+    headers: { Authorization: AUTH_TOKEN }
+  )
+  JSON.parse(response.body)["daily_quotes"]
+end
+
+stock_prices = StockPrice::WeeklyStockFetcher::TARGET_CODES.map do |code|
+  daily_quotes = fetch_stock_price(code)
+  StockPrice.new(
+    company_code: daily_quotes[0]["Code"].to_i,
+    date: daily_quotes[0]["Date"],
+    close_price: daily_quotes[0]["Close"].to_i
+  )
+end
+
+StockPrice.import(
+  stock_prices,
+  on_duplicate_key_update: [ :close_price ]
+)
