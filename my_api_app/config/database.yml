@@ -58,14 +58,14 @@ production:
     host: <%= Rails.application.credentials.production_db[:host] %>
     port: <%= Rails.application.credentials.production_db[:port] %>
     database: <%= Rails.application.credentials.production_db[:database] %>
-  cache:
-    <<: *primary_production
-    database: my_api_app_production_cache
+  # cache:
+  #   <<: *primary_production
+  #   database: my_api_app_production_cache
 
-  queue:
-    <<: *primary_production
-    database: my_api_app_production_queue
+  # queue:
+  #   <<: *primary_production
+  #   database: my_api_app_production_queue
 
-  cable:
-    <<: *primary_production
-    database: my_api_app_production_cable
+  # cable:
+  #   <<: *primary_production
+  #   database: my_api_app_production_cable
