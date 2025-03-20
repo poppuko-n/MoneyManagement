@@ -7,7 +7,7 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-TransactionCategory.create!([
+Category.create!([
   { name: "給与", transaction_type: 0 },
   { name: "副業", transaction_type: 0 },
   { name: "その他", transaction_type: 0 },
