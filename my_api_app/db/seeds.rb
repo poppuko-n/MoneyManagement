@@ -7,6 +7,8 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+# Note: ここからCategoryテーブルの初期設定。
 [
   { name: "給与", transaction_type: 0 },
   { name: "副業", transaction_type: 0 },
@@ -20,6 +22,7 @@
   Category.find_or_create_by!(attrs)
 end
 
+# Note: ここからSectorテーブルの初期設定。
 [
   { id: 1, name: "食品" },
   { id: 2, name: "エネルギー資源" },
@@ -42,3 +45,42 @@ end
 ].each do |attrs|
   Sector.find_or_create_by!(attrs)
 end
+
+# Note: ここからCompanyテーブルの初期設定。
+AUTH_TOKEN = StockPrice::WeeklyStockFetcher.fetch_token
+
+def fetch_company_info(code)
+  response = HTTParty.get(
+    "#{StockPrice::WeeklyStockFetcher::BASE_URL}/listed/info",
+    query: { code: code },
+    headers: { Authorization: AUTH_TOKEN }
+  )
+  JSON.parse(response.body)["info"]
+end
+
+def fetch_company_equity(code)
+  response = HTTParty.get(
+    "#{StockPrice::WeeklyStockFetcher::BASE_URL}/fins/statements",
+    query: { code: code },
+    headers: { Authorization: AUTH_TOKEN }
+  )
+  JSON.parse(response.body)["statements"][0]["Equity"].to_i
+end
+
+companies = StockPrice::WeeklyStockFetcher::TARGET_CODES.map do |code|
+  info = fetch_company_info(code)
+  Company.new(
+    code: info[0]["Code"].to_i,
+    sector_id: info[0]["Sector17Code"].to_i,
+    name: info[0]["CompanyName"],
+    equity: fetch_company_equity(code)
+  )
+end
+
+Company.import(
+  companies,
+  on_duplicate_key_update: [ :sector_id, :name, :equity ]
+)
+
+
+# Note: ここからStockPriceテーブルの初期設定。
