@@ -95,13 +95,16 @@ def fetch_stock_price(code)
   JSON.parse(response.body)["daily_quotes"]
 end
 
-stock_prices = StockPrice::WeeklyStockFetcher::TARGET_CODES.map do |code|
+stock_prices = StockPrice::WeeklyStockFetcher::TARGET_CODES.flat_map do |code|
   daily_quotes = fetch_stock_price(code)
-  StockPrice.new(
-    company_code: daily_quotes[0]["Code"].to_i,
-    date: daily_quotes[0]["Date"],
-    close_price: daily_quotes[0]["Close"].to_i
-  )
+
+  daily_quotes.map do |quote|
+    StockPrice.new(
+      company_code: quote["Code"].to_i,
+      date: quote["Date"],
+      close_price: quote["Close"].to_i
+    )
+  end
 end
 
 StockPrice.import(
