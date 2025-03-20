@@ -19,6 +19,14 @@ class StockPrice
         get_stock_prices(code, last_week, today)
       end
 
+      def fetch_token
+        refresh_token = Rails.application.credentials.jqunts[:refresh_token]
+        response = HTTParty.post(
+          "#{BASE_URL}/token/auth_refresh",
+          query: { refreshtoken: refresh_token })
+        JSON.parse(response.body)["idToken"]
+      end
+
       private
 
       def get_stock_prices(code, from, to)
@@ -28,14 +36,6 @@ class StockPrice
           headers: { Authorization: fetch_token }
         )
         JSON.parse(response.body)["daily_quotes"]
-      end
-
-      def fetch_token
-        refresh_token = Rails.application.credentials.jqunts[:refresh_token]
-        response = HTTParty.post(
-          "#{BASE_URL}/token/auth_refresh",
-          query: { refreshtoken: refresh_token })
-        JSON.parse(response.body)["idToken"]
       end
 
       def today
