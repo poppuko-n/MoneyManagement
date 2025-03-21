@@ -3,7 +3,6 @@ import ExpenseList from './ExpenseList';
 import ExpenseNew from './ExpenseNew';
 import ExpenseEdit from './ExpenseEdit';
 import Modal from './Modal';
-import axios from 'axios';
 import ExpenseApi from './lib/ExpenseApi';
 
 const Expense = ({ apiBaseUrl }) => {
@@ -21,16 +20,11 @@ const Expense = ({ apiBaseUrl }) => {
   },[]);
 
   const refreshExpenses = () => {
-    axios
-      .get(`${apiBaseUrl}/expenses`)
-      .then((response) => {
-        setExpenses(response.data);
-      })
-      .catch(() => {
-        alert("データの取得に失敗しました。");
-      });
+    ExpenseApi.getExpenses().then(data => {
+      setExpenses(data.expenses)
+    })
   };
-
+    
   useEffect(() => {
     refreshExpenses();
   }, []);
