@@ -30,6 +30,17 @@ class ExpenseApi {
         alert(`${error.response.data.errors.join(', ')}`)
       })
   }
+
+  static showExpense(expenseId){
+    return axios
+      .get(`${this.apiBaseUrl}/expenses/${expenseId}`)
+      .then(response => ({
+        selectExpense: response.data
+      }))
+      .catch(error => {
+        alert("データの取得に失敗しました。")
+      })
+  }
 }
 
 export default ExpenseApi;
