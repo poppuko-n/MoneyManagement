@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import ExpenseApi from './lib/ExpenseApi';
 
-const ExpenseEdit = ({ onBack, expenseId,expense_categories,income_categories,apiBaseUrl }) => {
+const ExpenseEdit = ({ onBack, expenseId,expense_categories,income_categories }) => {
 
   const [expense, setExpense] = useState({
     transaction_type: '',
@@ -26,17 +26,11 @@ const ExpenseEdit = ({ onBack, expenseId,expense_categories,income_categories,ap
     return category ? category.name : '選択してください'; 
   };
   
-  
   useEffect(() => {
-    axios
-      .get(`${apiBaseUrl}/expenses/${expenseId}`)
-      .then((response) => {
-        setExpense(response.data);
-      })
-      .catch(() => {
-        alert('データの取得に失敗しました。');
-      });
-  }, [expenseId]);
+    ExpenseApi.showExpense(expenseId).then(data => {
+      setExpense(data.selectExpense)
+    })
+  },[]);
 
   return (
     <div>

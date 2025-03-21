@@ -40,7 +40,6 @@ const Expense = ({ apiBaseUrl }) => {
             }}
             expense_categories={expense_categories}
             income_categories={income_categories}
-            apiBaseUrl={apiBaseUrl} 
           />
         </Modal>
       )}
