@@ -8,8 +8,16 @@ class ExpenseApi {
       .get(`${this.apiBaseUrl}/categories`)
       .then(response => ({
         expense_categories: response.data.expense_categories,
-        income_categories: response.income_categories
-      }));
+        income_categories: response.data.income_categories
+      }))
+  }
+
+  static getExpenses() {
+    return axios
+      .get(`${this.apiBaseUrl}/expenses`)
+      .then(response => ({
+        expenses: response.data
+      }))
   }
 }
 
