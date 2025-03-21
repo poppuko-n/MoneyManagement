@@ -19,6 +19,17 @@ class ExpenseApi {
         expenses: response.data
       }))
   }
+
+  static createExpense(expense) {
+    return axios
+      .post(`${this.apiBaseUrl}/expenses`, expense)
+      .then(() =>{
+        alert("登録が完了しました。")
+      })
+      .catch(error => {
+        alert(`${error.response.data.errors.join(', ')}`)
+      })
+  }
 }
 
 export default ExpenseApi;
