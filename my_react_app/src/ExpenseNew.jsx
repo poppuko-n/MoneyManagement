@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useState } from 'react';
+import ExpenseApi from './lib/ExpenseApi';
 
 const ExpenseNew = ({ onBack,expense_categories,income_categories,apiBaseUrl }) => {
   const [expense, setExpense] = useState({
@@ -19,21 +19,10 @@ const ExpenseNew = ({ onBack,expense_categories,income_categories,apiBaseUrl }) 
     return[];
   };
 
-
   const handleCreate = () => {
-    axios
-      .post(`${apiBaseUrl}/expenses`, expense)
-      .then(() => {
-        alert('登録が完了しました！');
-        onBack();
-      })
-      .catch((error) => {
-        if (error.response && error.response.data.errors) {
-          alert(`エラー: ${error.response.data.errors.join(', ')}`);
-        } else {
-          alert('エラーが発生しました。');
-        }
-      });
+    ExpenseApi.createExpense(expense).then(() => {
+      onBack()
+    })
   };
 
   return (
@@ -107,12 +96,6 @@ const ExpenseNew = ({ onBack,expense_categories,income_categories,apiBaseUrl }) 
           className="bg-indigo-600 text-white px-4 py-2 rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           登録
-        </button>
-        <button
-          onClick={onBack}
-          className="bg-gray-300 text-gray-700 px-4 py-2 rounded-md shadow hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400"
-        >
-          戻る
         </button>
       </div>
     </div>
