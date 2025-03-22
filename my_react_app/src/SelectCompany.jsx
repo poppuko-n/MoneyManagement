@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import playImage from './assets/play.svg'
+import SelectCompanyHeader from "./SelectCompanyHeader.jsx";
 import toggleOfImage from './assets/toggle_off.svg'
 import toggleOnImage from './assets/toggle_on.svg'
 import addImage from './assets/add_circle.svg'
@@ -79,26 +79,10 @@ const SelectCompany = () => {
 
   return (
     <div className="container mx-auto p-4">
-      <div className="flex items-center justify-between mb-10">
-        <h1 className="text-2xl border-b border-black pb-2 inline-block">銘柄選択</h1>
-        <div
-        onClick={sendQuantitiesToServer}
-          className="cursor-pointer hover:bg-red-300 bg-red-400 rounded-full p-4 transition duration-700 flex items-center justify-center"
-        >
-          <img 
-            src={playImage}
-            alt="play"
-            className="w-6 h-6" 
-          />
-        </div>
-      </div>
-
-      <div className="bg-gray-100 shadow-md rounded p-4 mb-8">
-        <h2 className="text-xl">
-          金額: {formatWithComma(calculateTotalCost())} 円
-        </h2>
-      </div>
-
+      <SelectCompanyHeader
+        totalCost={calculateTotalCost}
+        onSubmit={sendQuantitiesToServer}
+      />
 
       <div className="flex items-center justify-between mb-6 gap-4">
         <div className="relative flex-1">
@@ -134,8 +118,6 @@ const SelectCompany = () => {
           </span>
         </div>
       </div>
-
-
 
       <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow">
         <thead className="bg-gray-200">
