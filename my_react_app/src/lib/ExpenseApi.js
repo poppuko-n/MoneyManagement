@@ -31,7 +31,7 @@ class ExpenseApi {
       })
   }
 
-  static showExpense(expenseId){
+  static editExpense(expenseId){
     return axios
       .get(`${this.apiBaseUrl}/expenses/${expenseId}`)
       .then(response => ({

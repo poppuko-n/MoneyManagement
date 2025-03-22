@@ -12,6 +12,17 @@ const Expense = ({ apiBaseUrl }) => {
   const [income_categories, setIncomeCategories] = useState([]);
   const [expenses, setExpenses] = useState([]);
 
+  const getCategoriesBySelectType = (expense) => {
+    switch(expense.transaction_type){
+      case "支出":
+        return expense_categories;
+      case "収入":
+        return income_categories;
+      default:
+        return [];
+    }
+  };
+
   useEffect(()=> {
     ExpenseApi.getCategories().then(data => {
       setExpenseCategories(data.expense_categories);
@@ -51,9 +62,7 @@ const Expense = ({ apiBaseUrl }) => {
               setCurrentExpenseId(null);
               refreshExpenses();
             }}
-            expense_categories={expense_categories}
-            income_categories={income_categories}
-            apiBaseUrl={apiBaseUrl} 
+            getCategoriesBySelectType={getCategoriesBySelectType}
           />
         </Modal>
       )} 
