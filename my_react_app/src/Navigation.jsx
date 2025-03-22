@@ -18,7 +18,7 @@ const Navigation = () => {
       </div>
       <Routes>
         <Route path="/" element={<Home />}/>
-        <Route path="/expense" element={<Expense apiBaseUrl={API_BASE_URL}/>} />
+        <Route path="/expense" element={<Expense />} />
         <Route path="/selectcompany" element={<SelectCompany apiBaseUrl={API_BASE_URL}/>} />
         <Route path="/simulation_result" element={<SimulationResult />} />
       </Routes>
