@@ -49,8 +49,7 @@ const Expense = ({ apiBaseUrl }) => {
               setIsCreating(false);
               refreshExpenses(); 
             }}
-            expense_categories={expense_categories}
-            income_categories={income_categories}
+            getCategoriesBySelectType={getCategoriesBySelectType}
           />
         </Modal>
       )}
