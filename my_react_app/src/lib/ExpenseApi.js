@@ -41,6 +41,17 @@ class ExpenseApi {
         alert("データの取得に失敗しました。")
       })
   }
+
+  static updateExpense(expenseId, expense) {
+    return axios
+      .patch(`${this.apiBaseUrl}/expenses/${expenseId}`, expense)
+      .then(() => {
+        alert("更新が完了しました。")
+      })
+      .catch(error => {
+        alert(`${error.response.data.errors.join(', ')}`)
+      })
+  }
 }
 
 export default ExpenseApi;

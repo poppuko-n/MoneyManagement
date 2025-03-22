@@ -27,6 +27,15 @@ class ExpensesController < ApplicationController
     render json: expense
   end
 
+  def update
+    expense = ExpenseLog.find(params[:id])
+    if expense.update(expense_params)
+      render json: expense, status: :ok
+    else
+      render json: { errors: expense.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   def destroy
     expense = ExpenseLog.find(params[:id])
     expense.destroy
