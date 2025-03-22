@@ -1,28 +1,30 @@
 import { useEffect, useState } from 'react';
-import ExpenseList from './ExpenseList';
+import ExpenseTop from './ExpenseTop';
+import ExpensePieChart from "./ExpensePieChart";
+import ExpenseDetail from "./ExpenseDetail";
 import ExpenseNew from './ExpenseNew';
 import ExpenseEdit from './ExpenseEdit';
-import Modal from './Modal';
 import ExpenseApi from './lib/ExpenseApi';
-import ExpenseTop from './ExpenseTop';
+import Modal from './Modal';
 
 const Expense = () => {
   const [isCreating, setIsCreating] = useState(false);
+  const [isDetail, setIsDetail] = useState(false);
+  const [isPieChart, setIsPieChart] = useState(true);
   const [currentExpenseId, setCurrentExpenseId] = useState(null);
   const [expense_categories, setExpenseCategories] = useState([]);
   const [income_categories, setIncomeCategories] = useState([]);
   const [expenses, setExpenses] = useState([]);
+ 
 
   useEffect(()=> {
     ExpenseApi.getCategories().then(data => {
       setExpenseCategories(data.expense_categories);
       setIncomeCategories(data.income_categories);
-    })
-  },[]);
+    });
 
-  useEffect(() => {
     refreshExpenses();
-  }, []);
+  },[]);
 
   const refreshExpenses = () => {
     ExpenseApi.getExpenses().then(data => {
@@ -47,31 +49,50 @@ const Expense = () => {
         expenses={expenses}
         onCreateNew={() => setIsCreating(true)}
       />
-      <ExpenseList
-        onSelectExpense={setCurrentExpenseId}
-        expense_categories={expense_categories}
-        expenses={expenses}
-      />
+      {isPieChart && (
+        <ExpensePieChart
+          expenses={expenses} 
+          expense_categories={expense_categories}
+          onChange={() =>{
+            setIsDetail(true);
+            setIsPieChart(false);
+            refreshExpenses();
+          }}
+        />
+      )}
+      {isDetail && (
+        <ExpenseDetail
+          expenses={expenses} 
+          onSelectExpense={setCurrentExpenseId}
+          onBack={() => {
+            setIsPieChart(true);
+            setIsDetail(false);
+            refreshExpenses();
+          }} 
+        />
+      )}
       {isCreating && (
         <Modal onClose={() => setIsCreating(false)}>
-          <ExpenseNew 
+          <ExpenseNew
+            getCategoriesBySelectType={getCategoriesBySelectType}
             onBack={() => {
+              setIsPieChart(true);
               setIsCreating(false);
               refreshExpenses(); 
             }}
-            getCategoriesBySelectType={getCategoriesBySelectType}
           />
         </Modal>
       )}
       {currentExpenseId && (
         <Modal onClose={() => setCurrentExpenseId(null)}>
           <ExpenseEdit
+            getCategoriesBySelectType={getCategoriesBySelectType}
             expenseId={currentExpenseId}
             onBack={() => {
+              setIsPieChart(true);
               setCurrentExpenseId(null);
               refreshExpenses();
             }}
-            getCategoriesBySelectType={getCategoriesBySelectType}
           />
         </Modal>
       )} 
