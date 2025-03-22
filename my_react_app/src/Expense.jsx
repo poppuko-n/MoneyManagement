@@ -4,6 +4,7 @@ import ExpenseNew from './ExpenseNew';
 import ExpenseEdit from './ExpenseEdit';
 import Modal from './Modal';
 import ExpenseApi from './lib/ExpenseApi';
+import ExpenseTop from './ExpenseTop';
 
 const Expense = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -42,9 +43,12 @@ const Expense = () => {
 
   return (
     <div>
+      <ExpenseTop
+        expenses={expenses}
+        onCreateNew={() => setIsCreating(true)}
+      />
       <ExpenseList
         onSelectExpense={setCurrentExpenseId}
-        onCreateNew={() => setIsCreating(true)}
         expense_categories={expense_categories}
         expenses={expenses}
       />
