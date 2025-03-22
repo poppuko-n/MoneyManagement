@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import playImage from './assets/play.svg'
 import toggleOfImage from './assets/toggle_off.svg'
 import toggleOnImage from './assets/toggle_on.svg'
@@ -8,8 +7,7 @@ import addImage from './assets/add_circle.svg'
 import subtractImage from './assets/subtract_circle.svg'
 import CompanyApi from './lib/CompanyApi.js'
 
-
-const SelectCompany = ({apiBaseUrl}) => {
+const SelectCompany = () => {
   const [companies, setCompanies] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [showFiltered, setShowFiltered] = useState(false);
@@ -63,17 +61,12 @@ const SelectCompany = ({apiBaseUrl}) => {
         quantity: quantities[company.code],
       }));
 
-    axios
-      .post(`${apiBaseUrl}/simulations`, { data: selectedCompanies })
+    CompanyApi.getSimulations({data: selectedCompanies})
       .then((response) => {
         navigate("/simulation_result", {
           state: { results: response.data.results },
         });
       })
-      .catch((error) => {
-        console.error("データ送信エラー:", error);
-        alert("データの送信または受信に失敗しました。");
-      });
   };
 
   const filteredCompanies = showFiltered

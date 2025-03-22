@@ -10,6 +10,14 @@ class CompanyApi {
         alert("データの取得に失敗しました。")
       })
   }
+
+  static getSimulations(payload) {
+    return axios
+      .post(`${this.apiBaseUrl}/simulations`, payload)
+      .catch(error => {
+        alert("データの送信に失敗しました。")
+      })
+  }
 }
 
 export default CompanyApi;

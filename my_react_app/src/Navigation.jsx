@@ -5,7 +5,6 @@ import SimulationResult from "./SimulationResult";
 import Home from "./Home";
 
 const Navigation = () => {
-  const API_BASE_URL = window.env?.API_BASE_URL || "http://localhost:3000";
   return (
     <HashRouter>
       <div className="bg-green-600 py-4">
@@ -19,7 +18,7 @@ const Navigation = () => {
       <Routes>
         <Route path="/" element={<Home />}/>
         <Route path="/expense" element={<Expense />} />
-        <Route path="/selectcompany" element={<SelectCompany apiBaseUrl={API_BASE_URL}/>} />
+        <Route path="/selectcompany" element={<SelectCompany />} />
         <Route path="/simulation_result" element={<SimulationResult />} />
       </Routes>
     </HashRouter>
