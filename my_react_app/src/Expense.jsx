@@ -54,8 +54,8 @@ const Expense = () => {
           expenses={expenses} 
           expense_categories={expense_categories}
           onChange={() =>{
-            setIsDetail(true);
             setIsPieChart(false);
+            setIsDetail(true);
             refreshExpenses();
           }}
         />
@@ -77,6 +77,7 @@ const Expense = () => {
             getCategoriesBySelectType={getCategoriesBySelectType}
             onBack={() => {
               setIsPieChart(true);
+              setIsDetail(false);
               setIsCreating(false);
               refreshExpenses(); 
             }}
@@ -90,6 +91,7 @@ const Expense = () => {
             expenseId={currentExpenseId}
             onBack={() => {
               setIsPieChart(true);
+              setIsDetail(false);
               setCurrentExpenseId(null);
               refreshExpenses();
             }}
