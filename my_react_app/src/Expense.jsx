@@ -12,6 +12,23 @@ const Expense = () => {
   const [income_categories, setIncomeCategories] = useState([]);
   const [expenses, setExpenses] = useState([]);
 
+  useEffect(()=> {
+    ExpenseApi.getCategories().then(data => {
+      setExpenseCategories(data.expense_categories);
+      setIncomeCategories(data.income_categories);
+    })
+  },[]);
+
+  useEffect(() => {
+    refreshExpenses();
+  }, []);
+
+  const refreshExpenses = () => {
+    ExpenseApi.getExpenses().then(data => {
+      setExpenses(data.expenses)
+    })
+  };
+
   const getCategoriesBySelectType = (expense) => {
     switch(expense.transaction_type){
       case "支出":
@@ -23,25 +40,14 @@ const Expense = () => {
     }
   };
 
-  useEffect(()=> {
-    ExpenseApi.getCategories().then(data => {
-      setExpenseCategories(data.expense_categories);
-      setIncomeCategories(data.income_categories);
-    })
-  },[]);
-
-  const refreshExpenses = () => {
-    ExpenseApi.getExpenses().then(data => {
-      setExpenses(data.expenses)
-    })
-  };
-    
-  useEffect(() => {
-    refreshExpenses();
-  }, []);
-
   return (
     <div>
+      <ExpenseList
+        onSelectExpense={setCurrentExpenseId}
+        onCreateNew={() => setIsCreating(true)}
+        expense_categories={expense_categories}
+        expenses={expenses}
+      />
       {isCreating && (
         <Modal onClose={() => setIsCreating(false)}>
           <ExpenseNew 
@@ -65,12 +71,6 @@ const Expense = () => {
           />
         </Modal>
       )} 
-      <ExpenseList
-        onSelectExpense={setCurrentExpenseId}
-        onCreateNew={() => setIsCreating(true)}
-        expense_categories={expense_categories}
-        expenses={expenses}
-      />
     </div>
   );
 };
