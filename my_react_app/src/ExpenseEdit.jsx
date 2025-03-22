@@ -10,7 +10,13 @@ const ExpenseEdit = ({ onBack, expenseId, getCategoriesBySelectType }) => {
     item: '',
     amount: '',
   });
-    
+
+  const handleUpdate = () => {
+    ExpenseApi.updateExpense(expenseId, editExpense).then(() => {
+      onBack()
+    })
+  };
+
   useEffect(() => {
     ExpenseApi.editExpense(expenseId).then(data => {
       setEditExpense(data.selectExpense)
@@ -87,6 +93,7 @@ const ExpenseEdit = ({ onBack, expenseId, getCategoriesBySelectType }) => {
 
       <div className="mt-6 flex justify-end space-x-4">
         <button
+          onClick={handleUpdate}
           className="bg-indigo-600 text-white px-4 py-2 rounded-md shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
         >
           登録
