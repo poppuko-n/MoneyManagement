@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import ExpenseApi from './lib/ExpenseApi';
 
-const ExpenseNew = ({ onBack,expense_categories,income_categories,apiBaseUrl }) => {
-  const [expense, setExpense] = useState({
+const ExpenseNew = ({ onBack,getCategoriesBySelectType }) => {
+  const [createExpense, setExpense] = useState({
     transaction_type: '',
     category_id: '',
     date: '',
@@ -10,17 +10,8 @@ const ExpenseNew = ({ onBack,expense_categories,income_categories,apiBaseUrl }) 
     amount: ''
   });
 
-  const getCategries = () => {
-    if (expense.transaction_type === '支出'){
-      return expense_categories;
-    }else if(expense.transaction_type === '収入'){
-      return income_categories;
-    }
-    return[];
-  };
-
   const handleCreate = () => {
-    ExpenseApi.createExpense(expense).then(() => {
+    ExpenseApi.createExpense(createExpense).then(() => {
       onBack()
     })
   };
@@ -34,8 +25,8 @@ const ExpenseNew = ({ onBack,expense_categories,income_categories,apiBaseUrl }) 
           <label className="block text-sm font-medium text-gray-700">種類</label>
           <select
             className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={expense.transaction_type}
-            onChange={(e) => setExpense({ ...expense, transaction_type: e.target.value })}
+            value={createExpense.transaction_type}
+            onChange={(e) => setExpense({ ...createExpense, transaction_type: e.target.value })}
           >
             <option value="">選択してください</option>
             <option value="支出">支出</option>
@@ -47,10 +38,10 @@ const ExpenseNew = ({ onBack,expense_categories,income_categories,apiBaseUrl }) 
           <label className="block text-sm font-medium text-gray-700">カテゴリ</label>
           <select
             className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            onChange={(e) => setExpense({ ...expense, category_id: e.target.value })}
+            onChange={(e) => setExpense({ ...createExpense, category_id: e.target.value })}
           >
             <option value="">選択してください</option>
-            {getCategries().map((category) => (
+            {getCategoriesBySelectType(createExpense).map((category) => (
             <option key={category.id} value={category.id}>
               {category.name}
             </option>
@@ -63,8 +54,8 @@ const ExpenseNew = ({ onBack,expense_categories,income_categories,apiBaseUrl }) 
           <input
             type="date"
             className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={expense.date}
-            onChange={(e) => setExpense({ ...expense, date: e.target.value })}
+            value={createExpense.date}
+            onChange={(e) => setExpense({ ...createExpense, date: e.target.value })}
           />
         </div>
 
@@ -74,8 +65,8 @@ const ExpenseNew = ({ onBack,expense_categories,income_categories,apiBaseUrl }) 
             type="text"
             className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder="内容をご入力ください"
-            value={expense.item}
-            onChange={(e) => setExpense({ ...expense, item: e.target.value })}
+            value={createExpense.item}
+            onChange={(e) => setExpense({ ...createExpense, item: e.target.value })}
           />
         </div>
 
@@ -84,8 +75,8 @@ const ExpenseNew = ({ onBack,expense_categories,income_categories,apiBaseUrl }) 
           <input
             type="number"
             className="mt-1 block w-full rounded-md border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={expense.amount}
-            onChange={(e) => setExpense({ ...expense, amount: e.target.value })}
+            value={createExpense.amount}
+            onChange={(e) => setExpense({ ...createExpense, amount: e.target.value })}
           />
         </div>
       </div>
