@@ -6,7 +6,7 @@ import trafficCost from "./assets/trafficcost.svg";
 import fiexdCost from "./assets/fixedcost.svg";
 import arrowImage from "./assets/arrow.svg";
 
-const ExpensePieChart = ({expenses, expense_categories,setIsDetail})=> {
+const ExpensePieChart = ({expenses, expense_categories, onChange})=> {
 
   const images = [foodCost, lifeCost, personCost, trafficCost, fiexdCost]
 
@@ -22,8 +22,10 @@ const ExpensePieChart = ({expenses, expense_categories,setIsDetail})=> {
   
   const COLORS = ["#FF6B6B", "#3B82F6", "#F4A261", "#2EC4B6", "#9B5DE5"];
 
-  const toggleIsDetail = () => setIsDetail((prev)=>!prev);
-
+  const toggleIsDetail = () => {
+    setIsDetail((prev)=>!prev);
+  };
+  
   return(
     <div className="container mx-auto p-4">
       
@@ -56,7 +58,7 @@ const ExpensePieChart = ({expenses, expense_categories,setIsDetail})=> {
         <div className="w-full md:w-1/2">
 
           <div className='flex justify-end mb-4'>
-            <button onClick={toggleIsDetail} className='flex items-center'>
+            <button onClick={onChange} className='flex items-center'>
               詳細一覧へ
               <img src={arrowImage} alt="arrow" className='w-5 h-5 ml-2' />
             </button>

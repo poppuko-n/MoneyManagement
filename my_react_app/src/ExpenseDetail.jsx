@@ -3,7 +3,7 @@ import deleteImage from "./assets/delete.svg";
 import arrowImage from "./assets/arrow.svg";
 import ExpenseApi from './lib/ExpenseApi';
 
-const ExpenseDetail =  ({ onSelectExpense, expenses, onBack }) => {
+const ExpenseDetail =  ({ expenses, onSelectExpense, onBack }) => {
   const handleDelete = (id) => {
     if (window.confirm("本当に削除しますか")) {
       ExpenseApi.deleteExpense(id).then(() => {
