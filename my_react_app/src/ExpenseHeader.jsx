@@ -1,6 +1,6 @@
 import addImage from "./assets/add.svg";
 
-const ExpenseTop = ({expenses, onCreateNew}) => {
+const ExpenseHeader = ({expenses, onCreateNew}) => {
   const incomeTotal = expenses
     .filter((expense) => expense.transaction_type === "収入")
     .reduce((total, expense) => total + expense.amount, 0);
@@ -48,4 +48,4 @@ const ExpenseTop = ({expenses, onCreateNew}) => {
   );
 };
 
-export default ExpenseTop;
+export default ExpenseHeader;

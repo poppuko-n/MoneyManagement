@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import ExpenseTop from './ExpenseTop';
+import ExpenseHeader from './ExpenseHeader';
 import ExpensePieChart from "./ExpensePieChart";
 import ExpenseDetail from "./ExpenseDetail";
 import ExpenseNew from './ExpenseNew';
@@ -45,7 +45,7 @@ const Expense = () => {
 
   return (
     <div>
-      <ExpenseTop
+      <ExpenseHeader
         expenses={expenses}
         onCreateNew={() => setIsCreating(true)}
       />
