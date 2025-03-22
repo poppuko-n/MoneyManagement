@@ -5,7 +5,7 @@ import ExpenseEdit from './ExpenseEdit';
 import Modal from './Modal';
 import ExpenseApi from './lib/ExpenseApi';
 
-const Expense = ({ apiBaseUrl }) => {
+const Expense = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [currentExpenseId, setCurrentExpenseId] = useState(null);
   const [expense_categories, setExpenseCategories] = useState([]);
@@ -70,7 +70,6 @@ const Expense = ({ apiBaseUrl }) => {
         onCreateNew={() => setIsCreating(true)}
         expense_categories={expense_categories}
         expenses={expenses}
-        apiBaseUrl={apiBaseUrl} 
       />
     </div>
   );

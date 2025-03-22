@@ -3,8 +3,7 @@ import addImage from "./assets/add.svg";
 import ExpensePieChart from "./ExpensePieChart";
 import ExpenseDetail from "./ExpenseDetail";
 
-
-const ExpenseList = ({ onSelectExpense, onCreateNew,expense_categories,expenses,apiBaseUrl
+const ExpenseList = ({ onSelectExpense, onCreateNew,expense_categories,expenses
  }) => {
   const [isDetail, setIsDetail] = useState(false);
 
@@ -53,15 +52,17 @@ const ExpenseList = ({ onSelectExpense, onCreateNew,expense_categories,expenses,
       </div>
 
       {isDetail ? (
-        <ExpenseDetail onSelectExpense={onSelectExpense}
-                     expenses={expenses} 
-                     expense_categories={expense_categories}
-                     onBack={()=>setIsDetail(false)} 
-                     apiBaseUrl={apiBaseUrl}/>
+        <ExpenseDetail 
+          onSelectExpense={onSelectExpense}
+          expenses={expenses} 
+          onBack={()=>setIsDetail(false)} 
+        />
       ) : (
-        <ExpensePieChart expenses={expenses} 
-        expense_categories={expense_categories}
-        setIsDetail={setIsDetail} />
+        <ExpensePieChart 
+          expenses={expenses} 
+          expense_categories={expense_categories}
+          setIsDetail={setIsDetail}
+        />
       )}
     </div>
   );

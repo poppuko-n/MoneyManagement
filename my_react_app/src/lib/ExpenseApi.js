@@ -52,6 +52,17 @@ class ExpenseApi {
         alert(`${error.response.data.errors.join(', ')}`)
       })
   }
+
+  static deleteExpense(expenseId) {
+    return axios
+      .delete(`${this.apiBaseUrl}/expenses/${expenseId}`)
+      .then(() => {
+        alert("削除が完了しました。")
+      })
+      .catch(error => {
+        alert("削除に失敗しました。")
+      })
+  }
 }
 
 export default ExpenseApi;

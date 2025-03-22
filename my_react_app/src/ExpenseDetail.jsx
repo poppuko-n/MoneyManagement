@@ -2,31 +2,16 @@ import axios from 'axios';
 import editImage from "./assets/edit.svg";
 import deleteImage from "./assets/delete.svg";
 import arrowImage from "./assets/arrow.svg";
+import ExpenseApi from './lib/ExpenseApi';
 
-
-const ExpenseDetail =  ({ onSelectExpense,expenses,setExpense,onBack,apiBaseUrl
+const ExpenseDetail =  ({ onSelectExpense,expenses,onBack
  }) => {
-
-  const incomeTotal = expenses
-    .filter((expense) => expense.transaction_type === "収入")
-    .reduce((total, expense) => total + expense.amount, 0);
-
-  const expenseTotal = expenses
-    .filter((expense) => expense.transaction_type === "支出")
-    .reduce((total, expense) => total + expense.amount, 0);
-
-  const balance = incomeTotal - expenseTotal;
 
   const handleDelete = (id) => {
     if (window.confirm("本当に削除しますか")) {
-      axios
-        .delete(`${apiBaseUrl}/expenses/${id}`)
-        .then(() => {
-          setExpense(expenses.filter((expense) => expense.id !== id));
-        })
-        .catch(() => {
-          alert("削除に失敗しました。");
-        });
+      ExpenseApi.deleteExpense(id).then(() => {
+        onBack()
+      })
     }
   };
 
