@@ -6,6 +6,7 @@ import toggleOfImage from './assets/toggle_off.svg'
 import toggleOnImage from './assets/toggle_on.svg'
 import addImage from './assets/add_circle.svg'
 import subtractImage from './assets/subtract_circle.svg'
+import CompanyApi from './lib/CompanyApi.js'
 
 
 const SelectCompany = ({apiBaseUrl}) => {
@@ -17,7 +18,7 @@ const SelectCompany = ({apiBaseUrl}) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${apiBaseUrl}/companies/`).then((response) => {
+    CompanyApi.getCompanies().then((response) => {
       setCompanies(response.data);
       const initialQuantities = response.data.reduce((acc, company) => {
         acc[company.code] = 0;
