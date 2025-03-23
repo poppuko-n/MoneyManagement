@@ -4,26 +4,26 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import Header from "./Header.jsx";
 import Navigation from "./Navigation.jsx";
-import LoginForm from "./LoginForm.jsx";
+import SignIn from "./SignIn.jsx";
 import SignUp from "./SignUp.jsx";
 import Modal from "./Modal.jsx";
 
 const AppContainer = () => {
 
-  const [isLogin, setIsLogin] = useState(false);
+  const [isSignIn, setIsSignIN] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
 
   return (
     <StrictMode>
       <div className="flex flex-col min-h-screen">
         <Header
-          setIsLogin={setIsLogin}
+          setIsSignIN={setIsSignIN}
           setIsSignUp={setIsSignUp}
         />
 
-        {isLogin && (
-          <Modal onClose={() => setIsLogin(false)}>
-            <LoginForm />
+        {isSignIn && (
+          <Modal onClose={() => setIsSignIN(false)}>
+            <SignIn />
           </Modal>
         )}
         {isSignUp && (
