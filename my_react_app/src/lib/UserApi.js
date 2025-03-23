@@ -6,7 +6,9 @@ class UserApi {
   static createUser(user) {
     return axios
       .post(`${this.apiBaseUrl}/users`, {user: user})
-      .then(() => {
+      .then((response) => {
+        const token = response.data.token;
+        localStorage.getItem('token', token);
         alert("登録が完了しました。")
       })
       .catch(error => {
@@ -17,7 +19,9 @@ class UserApi {
   static signUpUser(user) {
     return axios
       .post(`${this.apiBaseUrl}/login`, user)
-      .then(() => {
+      .then((response) => {
+        const token = response.data.token;
+        localStorage.setItem(`token`, token);
         alert("ログインが成功しました。")
       })
       .catch(error => {
