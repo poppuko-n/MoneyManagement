@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import SelectCompanyHeader from "./SelectCompanyHeader.jsx";
-import toggleOfImage from './assets/toggle_off.svg'
-import toggleOnImage from './assets/toggle_on.svg'
+import SelectCompanyFilterBar from "./SelectCompanyFilterBar.jsx";
 import addImage from './assets/add_circle.svg'
 import subtractImage from './assets/subtract_circle.svg'
 import CompanyApi from './lib/CompanyApi.js'
@@ -47,10 +46,6 @@ const SelectCompany = () => {
     }, 0);
   };
 
-  const toggleShowFiltered = () => {
-    setShowFiltered((prev) => !prev);
-  };
-
   const sendQuantitiesToServer = () => {
     const selectedCompanies = companies
       .filter((company) => quantities[company.code] > 0)
@@ -84,40 +79,12 @@ const SelectCompany = () => {
         onSubmit={sendQuantitiesToServer}
       />
 
-      <div className="flex items-center justify-between mb-6 gap-4">
-        <div className="relative flex-1">
-          <input
-            type="text"
-            placeholder="銘柄コード、名前で検索"
-            value={filtername}
-            onChange={(e) => setFilterName(e.target.value.trim())}
-            className="border border-gray-300 p-2 rounded w-full pr-10"
-          />
-          {filtername && (
-            <button
-              onClick={() => setFilterName("")}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-            >
-              ✕
-            </button>
-          )}
-        </div>
-        <div className="flex items-center gap-2 w-48">
-          <div
-            onClick={toggleShowFiltered}
-            className="cursor-pointer transition duration-300 flex items-center justify-center"
-          >
-            <img
-              src={showFiltered ? toggleOnImage : toggleOfImage}
-              alt={showFiltered ? "toggleon" : "toggleoff"}
-              className="w-10 h-10"
-            />
-          </div>
-          <span className="text-gray-700 truncate">
-            {showFiltered ? "すべて表示" : "選択銘柄のみ表示"}
-          </span>
-        </div>
-      </div>
+      <SelectCompanyFilterBar 
+        filtername = {filtername}
+        setFilterName = {setFilterName}
+        showFiltered={showFiltered}
+        toggleShowFiltered={()=>setShowFiltered((prev) => !prev)}
+      />
 
       <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow">
         <thead className="bg-gray-200">
@@ -128,7 +95,7 @@ const SelectCompany = () => {
             <th className="border px-4 py-2 text-left">株価(円)</th>
             <th className="border px-4 py-2 text-left"></th>
             <th className="border px-4 py-2 text-left">口数</th>
-            <th className="border px-4 py-2 text-left">買付金額</th>
+            <th className="border px-4 py-2 text-left">金額</th>
             <th className="border px-4 py-2 text-left"></th>
           </tr>
         </thead>
