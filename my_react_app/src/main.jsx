@@ -10,20 +10,22 @@ import Modal from "./Modal.jsx";
 
 const AppContainer = () => {
 
-  const [isSignIn, setIsSignIN] = useState(false);
+  const [isSignIn, setIsSignIn] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
 
   return (
     <StrictMode>
       <div className="flex flex-col min-h-screen">
         <Header
-          setIsSignIN={setIsSignIN}
+          setIsSignIN={setIsSignIn}
           setIsSignUp={setIsSignUp}
         />
 
         {isSignIn && (
-          <Modal onClose={() => setIsSignIN(false)}>
-            <SignIn />
+          <Modal onClose={() => setIsSignIn(false)}>
+            <SignIn 
+              onBack = { () => setIsSignIn(false)}
+            />
           </Modal>
         )}
         {isSignUp && (

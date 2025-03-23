@@ -12,7 +12,7 @@ const SignUp = ({ onBack }) => {
     UserApi.createUser(createUser).then(() => {
       onBack()
     })
-  }
+  };
 
   return(
   <div>
