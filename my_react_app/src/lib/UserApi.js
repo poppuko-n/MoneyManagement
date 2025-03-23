@@ -8,7 +8,7 @@ class UserApi {
       .post(`${this.apiBaseUrl}/users`, {user: user})
       .then((response) => {
         const token = response.data.token;
-        localStorage.getItem('token', token);
+        localStorage.setItem('token', token);
         alert("登録が完了しました。")
       })
       .catch(error => {
