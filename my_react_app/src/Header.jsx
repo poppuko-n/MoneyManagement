@@ -1,6 +1,6 @@
 import logoImage from "./assets/logo.png";
 
-const Header = ({ setIsLogin, setIsSignUp }) => {
+const Header = ({ setIsSignIN, setIsSignUp }) => {
   return (
     <header className="bg-white mb-2">
       <div className="container mx-auto flex items-center justify-between py-4 px-6">
@@ -15,7 +15,7 @@ const Header = ({ setIsLogin, setIsSignUp }) => {
           <button
             className="text-gray-600 hover:text-green-500"
             onClick={() => {
-              setIsLogin(true);
+              setIsSignIN(true);
             }}
           >
             ログイン

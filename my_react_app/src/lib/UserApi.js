@@ -14,6 +14,15 @@ class UserApi {
       })
   };
 
+  static signUpUser(user) {
+    return axios
+      .post(`${this.apiBaseUrl}/login`, user)
+      .then(() => {})
+      .catch(error => {
+        alert(`${error.response.data.errors}`)
+      })
+  }
+
 };
 
 export default UserApi;
