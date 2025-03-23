@@ -16,7 +16,10 @@ const AppContainer = () => {
   return (
     <StrictMode>
       <div className="flex flex-col min-h-screen">
-        <Header setIsLogin={setIsLogin} setIsSignUp={setIsSignUp} />
+        <Header
+          setIsLogin={setIsLogin}
+          setIsSignUp={setIsSignUp}
+        />
 
         {isLogin && (
           <Modal onClose={() => setIsLogin(false)}>
@@ -25,7 +28,9 @@ const AppContainer = () => {
         )}
         {isSignUp && (
           <Modal onClose={() => setIsSignUp(false)}>
-            <SignUp />
+            <SignUp 
+              onBack = { ()=> setIsSignUp(false)}
+            />
           </Modal>
         )}
 
