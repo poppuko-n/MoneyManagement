@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useAuth } from "./contexts/Authcontext.jsx"
 import ExpenseHeader from './ExpenseHeader';
 import ExpensePieChart from "./ExpensePieChart";
 import ExpenseDetail from "./ExpenseDetail";
@@ -15,19 +16,19 @@ const Expense = () => {
   const [expense_categories, setExpenseCategories] = useState([]);
   const [income_categories, setIncomeCategories] = useState([]);
   const [expenses, setExpenses] = useState([]);
+  const { token } = useAuth();
  
-
   useEffect(()=> {
     ExpenseApi.getCategories().then(data => {
       setExpenseCategories(data.expense_categories);
       setIncomeCategories(data.income_categories);
     });
 
-    refreshExpenses();
+    refreshExpenses(token);
   },[]);
 
-  const refreshExpenses = () => {
-    ExpenseApi.getExpenses().then(data => {
+  const refreshExpenses = (token) => {
+    ExpenseApi.getExpenses(token).then(data => {
       setExpenses(data.expenses)
     })
   };

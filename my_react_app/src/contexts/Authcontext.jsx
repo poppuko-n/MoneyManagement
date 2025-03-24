@@ -3,7 +3,7 @@ import { createContext, useContext, useEffect, useState } from 'react';
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(() => localStorage.getItem('token'));
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');

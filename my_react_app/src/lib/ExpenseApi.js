@@ -12,17 +12,26 @@ class ExpenseApi {
       }))
   }
 
-  static getExpenses() {
+  static getExpenses(token) {
     return axios
-      .get(`${this.apiBaseUrl}/expenses`)
+      .get(`${this.apiBaseUrl}/expenses`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       .then(response => ({
         expenses: response.data
       }))
   }
 
-  static createExpense(expense) {
+  static createExpense(expense, token) {
     return axios
-      .post(`${this.apiBaseUrl}/expenses`, expense)
+      .post(`${this.apiBaseUrl}/expenses`,
+        expense, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
       .then(() =>{
         alert("登録が完了しました。")
       })
@@ -31,9 +40,14 @@ class ExpenseApi {
       })
   }
 
-  static editExpense(expenseId){
+  static editExpense(expenseId, token){
     return axios
-      .get(`${this.apiBaseUrl}/expenses/${expenseId}`)
+      .get(`${this.apiBaseUrl}/expenses/${expenseId}`,{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+      )
       .then(response => ({
         selectExpense: response.data
       }))
@@ -42,9 +56,14 @@ class ExpenseApi {
       })
   }
 
-  static updateExpense(expenseId, expense) {
+  static updateExpense(expenseId, expense, token) {
     return axios
-      .patch(`${this.apiBaseUrl}/expenses/${expenseId}`, expense)
+      .patch(`${this.apiBaseUrl}/expenses/${expenseId}`,
+        expense, {
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        })
       .then(() => {
         alert("更新が完了しました。")
       })
@@ -53,9 +72,14 @@ class ExpenseApi {
       })
   }
 
-  static deleteExpense(expenseId) {
+  static deleteExpense(expenseId, token) {
     return axios
-      .delete(`${this.apiBaseUrl}/expenses/${expenseId}`)
+      .delete(`${this.apiBaseUrl}/expenses/${expenseId}`,{
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+      )
       .then(() => {
         alert("削除が完了しました。")
       })

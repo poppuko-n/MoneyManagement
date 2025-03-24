@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import ExpenseApi from './lib/ExpenseApi';
+import { useAuth } from "./contexts/Authcontext"
 
 const ExpenseNew = ({ onBack, getCategoriesBySelectType }) => {
   const today = new Date().toISOString().split('T')[0]; 
+  const { token } = useAuth();
   const [createExpense, setExpense] = useState({
     transaction_type: '',
     category_id: '',
@@ -12,7 +14,7 @@ const ExpenseNew = ({ onBack, getCategoriesBySelectType }) => {
   });
 
   const handleCreate = () => {
-    ExpenseApi.createExpense(createExpense).then(() => {
+    ExpenseApi.createExpense(createExpense, token).then(() => {
       onBack();
     });
   };
