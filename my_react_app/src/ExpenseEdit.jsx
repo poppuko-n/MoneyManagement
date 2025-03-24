@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import ExpenseApi from './lib/ExpenseApi';
+import { useAuth } from "./contexts/Authcontext"
 
 const ExpenseEdit = ({ onBack, expenseId, getCategoriesBySelectType }) => {
   const [editExpense, setEditExpense] = useState({
@@ -9,15 +10,17 @@ const ExpenseEdit = ({ onBack, expenseId, getCategoriesBySelectType }) => {
     item: '',
     amount: '',
   });
+  
+  const { token } = useAuth();
 
   const handleUpdate = () => {
-    ExpenseApi.updateExpense(expenseId, editExpense).then(() => {
+    ExpenseApi.updateExpense(expenseId, editExpense, token).then(() => {
       onBack();
     });
   };
 
   useEffect(() => {
-    ExpenseApi.editExpense(expenseId).then(data => {
+    ExpenseApi.editExpense(expenseId, token).then(data => {
       setEditExpense(data.selectExpense);
     });
   }, []);
