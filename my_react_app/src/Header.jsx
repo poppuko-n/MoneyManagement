@@ -18,7 +18,7 @@ const Header = ({ setIsSignIN, setIsSignUp }) => {
 
         {isLoggedIn ? (
           <button
-            className="text-gray-600 hover:text-green-500"
+            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
             onClick={logout}
           >
             ログアウト
@@ -26,7 +26,7 @@ const Header = ({ setIsSignIN, setIsSignUp }) => {
         ) : (
           <div className="hidden md:flex items-center space-x-4">
             <button
-              className="text-gray-600 hover:text-green-500"
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
               onClick={() => setIsSignIN(true)}
             >
               ログイン
