@@ -3,8 +3,11 @@ import Expense from "./Expense";
 import SelectCompany from "./SelectCompany";
 import SimulationResult from "./SimulationResult";
 import Home from "./Home";
+import { useAuth } from "./contexts/Authcontext";
 
 const Navigation = () => {
+  const { token } = useAuth();
+
   return (
     <HashRouter>
       <div className="bg-green-600 py-4">
@@ -16,8 +19,8 @@ const Navigation = () => {
         </div>
       </div>
       <Routes>
-        <Route path="/" element={<Home />}/>
-        <Route path="/expense" element={<Expense />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/expense" element={<Expense key={token} />} />
         <Route path="/selectcompany" element={<SelectCompany />} />
         <Route path="/simulation_result" element={<SimulationResult />} />
       </Routes>
