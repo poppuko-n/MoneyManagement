@@ -1,11 +1,9 @@
 import logoImage from "./assets/logo.png";
+import { useAuth } from "./contexts/Authcontext.jsx"
 
 const Header = ({ setIsSignIN, setIsSignUp }) => {
-  const isLoggedIn = !!localStorage.getItem('token');
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    alert("ログアウトしました");
-  };
+
+  const { logout, isLoggedIn } = useAuth();
   
   return (
     <header className="bg-white mb-2">
@@ -18,35 +16,28 @@ const Header = ({ setIsSignIN, setIsSignUp }) => {
           </a>
         </div>
 
-        {!isLoggedIn && (
+        {isLoggedIn ? (
+          <button
+            className="text-gray-600 hover:text-green-500"
+            onClick={logout}
+          >
+            ログアウト
+          </button>
+        ) : (
           <div className="hidden md:flex items-center space-x-4">
             <button
               className="text-gray-600 hover:text-green-500"
-              onClick={() => {
-                setIsSignIN(true);
-              }}
+              onClick={() => setIsSignIN(true)}
             >
               ログイン
             </button>
             <button
               className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-              onClick={() => {
-                setIsSignUp(true);
-              }}
+              onClick={() => setIsSignUp(true)}
             >
               新規会員登録
             </button>
           </div>
-        )}
-        {isLoggedIn && (
-          <button
-          className="text-gray-600 hover:text-green-500"
-          onClick={() => {
-            handleLogout();
-          }}
-        >
-          ログアウト
-        </button>
         )}
       </div>
     </header>

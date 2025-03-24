@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import UserApi from './lib/UserApi';
+import { useAuth } from "./contexts/Authcontext.jsx"
 
 const SignIn = ({ onBack }) => {
   const [siginInUser, setSiginInUser] = useState({
@@ -7,8 +8,12 @@ const SignIn = ({ onBack }) => {
     password: "",
   });
 
+  const { login } = useAuth();
+
   const handleSignIn = () => {
-    UserApi.signUpUser(siginInUser).then(() => {
+    UserApi.signUpUser(siginInUser)
+    .then((response) => {
+      login(response.data.token)
       onBack();
     });
   };

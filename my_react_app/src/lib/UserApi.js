@@ -7,9 +7,8 @@ class UserApi {
     return axios
       .post(`${this.apiBaseUrl}/users`, {user: user})
       .then((response) => {
-        const token = response.data.token;
-        localStorage.setItem('token', token);
         alert("登録が完了しました。")
+        return response;
       })
       .catch(error => {
         alert(`${error.response.data.errors.join(', ')}`)
@@ -20,9 +19,8 @@ class UserApi {
     return axios
       .post(`${this.apiBaseUrl}/login`, user)
       .then((response) => {
-        const token = response.data.token;
-        localStorage.setItem(`token`, token);
-        alert("ログインが成功しました。")
+        alert("ログインしました。")
+        return response;
       })
       .catch(error => {
         alert(`${error.response.data.errors}`)
