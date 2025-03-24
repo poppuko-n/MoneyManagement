@@ -1,4 +1,6 @@
 class ExpensesController < ApplicationController
+  before_action :authenticate_user, {only: [:index, :create, :show, :update, :destroy ]}
+
   def index
     expenses = ExpenseLog.fetch_expense_log.map do |expense|
       {
