@@ -4,9 +4,9 @@ class UsersController < ApplicationController
     if user.save
       render_token_response(user, :created)
     else
-      render json: { 
-        user: user, 
-        errors: user.errors.full_messages 
+      render json: {
+        user: user,
+        errors: user.errors.full_messages
         }, status: :unprocessable_entity
     end
   end
@@ -16,9 +16,9 @@ class UsersController < ApplicationController
     if user && user.authenticate(params[:password])
       render_token_response(user, :ok)
     else
-      render json: { 
-        user: {name: params[:name]}, 
-        errors: ['名前またはパスワードが違います。']
+      render json: {
+        user: { name: params[:name] },
+        errors: [ "名前またはパスワードが違います。" ]
         }, status: :unauthorized
     end
   end
@@ -31,6 +31,6 @@ class UsersController < ApplicationController
 
   def render_token_response(user, status)
     token = create_token(user.id)
-    render json: {token: token}, status: status
+    render json: { token: token }, status: status
   end
 end

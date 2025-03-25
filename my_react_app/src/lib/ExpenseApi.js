@@ -40,7 +40,7 @@ class ExpenseApi {
       })
   }
 
-  static editExpense(expenseId, token){
+  static showExpense(expenseId, token){
     return axios
       .get(`${this.apiBaseUrl}/expenses/${expenseId}`,{
         headers: {
