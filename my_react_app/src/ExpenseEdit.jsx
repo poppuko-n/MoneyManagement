@@ -20,7 +20,7 @@ const ExpenseEdit = ({ onBack, expenseId, getCategoriesBySelectType }) => {
   };
 
   useEffect(() => {
-    ExpenseApi.editExpense(expenseId, token).then(data => {
+    ExpenseApi.showExpense(expenseId, token).then(data => {
       setEditExpense(data.selectExpense);
     });
   }, []);

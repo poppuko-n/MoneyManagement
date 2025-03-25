@@ -1,9 +1,8 @@
 class ApplicationController < ActionController::API
-
   def authenticate_user
     authorization_header = request.headers[:Authorization]
     unless authorization_header
-      return render_unauthorized('ログインが必要です。')
+      return render_unauthorized("ログインが必要です。")
     end
 
     token = authorization_header.split(" ")[1]
@@ -14,11 +13,10 @@ class ApplicationController < ActionController::API
       @current_user = User.find(decoded_code[0]["user_id"])
     rescue
       ActiveRecord::RecordNotFound
-      render_unauthorized('ユーザーが見つかりません。')
+      render_unauthorized("ユーザーが見つかりません。")
     rescue JWT::DecodeError => e
       render_unauthorized("#{e.message}")
     end
-
   end
 
   def create_token(user_id)
@@ -29,8 +27,7 @@ class ApplicationController < ActionController::API
   end
 
   private
-  def render_unauthorized(message = 'Unauthorized')
-    render json: { errors: [message] }, status: :unauthorized
+  def render_unauthorized(message = "Unauthorized")
+    render json: { errors: [ message ] }, status: :unauthorized
   end
-
 end
