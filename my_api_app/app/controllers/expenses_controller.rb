@@ -2,7 +2,7 @@ class ExpensesController < ApplicationController
   before_action :authenticate_user, {only: [:index, :create, :show, :update, :destroy ]}
 
   def index
-    expenses = ExpenseLog.fetch_expense_log.map do |expense|
+    expenses = ExpenseLog.fetch_expense_log(@current_user.id).map do |expense|
       {
         id: expense.id,
         transaction_type: expense.transaction_type,
@@ -17,6 +17,7 @@ class ExpensesController < ApplicationController
 
   def create
     expense = ExpenseLog.new(expense_params)
+    expense.user = @current_user
     if expense.save
       render json: expense, status: :created
     else
