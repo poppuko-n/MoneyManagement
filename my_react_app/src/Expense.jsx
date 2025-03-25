@@ -57,7 +57,7 @@ const Expense = () => {
           onChange={() =>{
             setIsPieChart(false);
             setIsDetail(true);
-            refreshExpenses();
+            refreshExpenses(token);
           }}
         />
       )}
@@ -68,7 +68,7 @@ const Expense = () => {
           onBack={() => {
             setIsPieChart(true);
             setIsDetail(false);
-            refreshExpenses();
+            refreshExpenses(token);
           }} 
         />
       )}
@@ -80,7 +80,7 @@ const Expense = () => {
               setIsPieChart(true);
               setIsDetail(false);
               setIsCreating(false);
-              refreshExpenses(); 
+              refreshExpenses(token); 
             }}
           />
         </Modal>
@@ -94,7 +94,7 @@ const Expense = () => {
               setIsPieChart(true);
               setIsDetail(false);
               setCurrentExpenseId(null);
-              refreshExpenses();
+              refreshExpenses(token);
             }}
           />
         </Modal>
