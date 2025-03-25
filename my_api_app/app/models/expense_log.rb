@@ -1,5 +1,5 @@
 class ExpenseLog < ApplicationRecord
-  belongs_to :category
+  belongs_to :category, :user
   enum :transaction_type, { 収入: 0, 支出: 1 }
 
   validates :transaction_type, presence: true
