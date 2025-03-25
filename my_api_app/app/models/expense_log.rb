@@ -14,4 +14,11 @@ class ExpenseLog < ApplicationRecord
             .order(date: :asc)
             .select(:id, :transaction_type, :date, :item, :amount, "categories.name AS category_name")
  end
+
+ def self.fetch_one_expense_log(user_id, expense_id)
+  ExpenseLog.joins(:category)
+            .where(user_id: user_id, id: expense_id)
+            .select(:transaction_type, :category_id, :date, :item, :amount)
+            .first
+ end
 end
