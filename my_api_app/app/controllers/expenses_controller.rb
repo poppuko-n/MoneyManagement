@@ -26,8 +26,18 @@ class ExpensesController < ApplicationController
   end
 
   def show
-    expense = ExpenseLog.find(params[:id])
-    render json: expense
+    expense = ExpenseLog.fetch_one_expense_log(@current_user.id, params[:id])
+    if expense
+      render json: {
+        transaction_type: expense.transaction_type,
+        category_id: expense.category_id,
+        date: expense.date,
+        item: expense.item,
+        amount: expense.amount
+      }
+    else
+      render json: { error: "指定された支出ログが見つかりません。" }, status: :not_found
+    end
   end
 
   def update
