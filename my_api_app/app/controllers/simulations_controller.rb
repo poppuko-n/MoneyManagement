@@ -43,7 +43,7 @@ class SimulationsController < ApplicationController
   def fetch_n_monthly_average_prices(company_code, latest_date, n)
     target_periods = (0..(n + 1)).map { |i| latest_date - i.months }
     target_periods.reverse.each_cons(2).map do |start_date, end_date|
-      StockPrice.where(company_code: company_code, date: start_date..end_date).average(:close_price)
+      StockPrice.fetch_average_close_price(company_code, start_date, end_date)
     end
   end
 
