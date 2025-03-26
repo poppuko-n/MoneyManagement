@@ -28,4 +28,8 @@ class StockPrice < ApplicationRecord
               &.close_price
   end
 
+  def self.fetch_average_close_price(code, start_date, end_date)
+    StockPrice.where(company_code: code, date: start_date..end_date)
+              .average(:close_price)
+  end
 end
