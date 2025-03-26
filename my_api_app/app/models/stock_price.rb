@@ -12,4 +12,20 @@ class StockPrice < ApplicationRecord
               .limit(2)
               .pluck(:close_price)
   end
+
+  def self.fetch_latest_date(code)
+    StockPrice.where(company_code: code)
+              .order(date: :desc)
+              .first
+              &.date
+  end
+
+  def self.fetch_price_n_months_ago(code, latest_date, n)
+    date_range = (latest_date - n.months)..latest_date
+    StockPrice.where(company_code: code, date: date_range)
+              .order(date: :asc)
+              .first
+              &.close_price
+  end
+
 end

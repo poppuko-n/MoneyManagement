@@ -13,7 +13,7 @@ class SimulationsController < ApplicationController
     name          = item[:name]
     current_price = item[:price]
     quantity      = item[:quantity]
-    latest_date       = fetch_latest_date(company_code)
+    latest_date       = StockPrice.fetch_latest_date(company_code)
 
     {
       code: company_code,
@@ -25,21 +25,6 @@ class SimulationsController < ApplicationController
     }
   end
 
-  def fetch_latest_date(company_code)
-    StockPrice.where(company_code: company_code)
-              .order(date: :desc)
-              .first
-              &.date
-  end
-
-  def fetch_price_n_months_ago(company_code, latest_date, n)
-    date_range = (latest_date - n.months)..latest_date
-    StockPrice
-      .where(company_code: company_code, date: date_range)
-      .order(date: :asc)
-      .first&.close_price
-  end
-
   def simulate_price(current_price, past_price)
     rate = current_price  / past_price.to_f
     (current_price * rate).round(0)
@@ -47,10 +32,10 @@ class SimulationsController < ApplicationController
 
   def calculate_simulation(current_price, company_code, latest_date, quantity)
     {
-      "3_months_ago" => simulate_price(current_price, fetch_price_n_months_ago(company_code, latest_date, 3)) * quantity,
-      "6_months_ago" => simulate_price(current_price, fetch_price_n_months_ago(company_code, latest_date, 6)) * quantity,
-      "9_months_ago" => simulate_price(current_price, fetch_price_n_months_ago(company_code, latest_date, 9)) * quantity,
-      "1_year_ago"   => simulate_price(current_price, fetch_price_n_months_ago(company_code, latest_date, 12)) * quantity
+      "3_months_ago" => simulate_price(current_price, StockPrice.fetch_price_n_months_ago(company_code, latest_date, 3)) * quantity,
+      "6_months_ago" => simulate_price(current_price, StockPrice.fetch_price_n_months_ago(company_code, latest_date, 6)) * quantity,
+      "9_months_ago" => simulate_price(current_price, StockPrice.fetch_price_n_months_ago(company_code, latest_date, 9)) * quantity,
+      "1_year_ago"   => simulate_price(current_price, StockPrice.fetch_price_n_months_ago(company_code, latest_date, 12)) * quantity
     }
   end
 
