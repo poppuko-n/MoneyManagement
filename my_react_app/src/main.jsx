@@ -33,7 +33,32 @@ const AppContainer = () => {
           />
         </Modal>
       )}
-      { isLoggedIn ? ( <Navigation /> ) : ( <Home /> )}
+      {isLoggedIn ? (
+        <Navigation />
+      ) : (
+        <>
+          <div className="bg-green-100 text-green-900 text-center py-4 px-6 my-6 rounded-md mx-4 shadow-md">
+            家計管理と投資体験を、今ここから。
+            <button
+              onClick={() => setIsSignIn(true)}
+              className="font-semibold underline text-green-800 hover:text-green-600 mx-1"
+            >
+              ログイン
+            </button>
+            または
+            <button
+              onClick={() => setIsSignUp(true)}
+              className="font-semibold underline text-green-800 hover:text-green-600 mx-1"
+            >
+              登録
+            </button>
+            して始めましょう。
+          </div>
+          <Home />
+        </>
+      )}
+
+
     </div>
   );
 };
