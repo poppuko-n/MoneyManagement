@@ -14,7 +14,7 @@ const SignUp = ({ onBack }) => {
   const handleCreate = () => {
     UserApi.createUser(createUser)
     .then((response) => {
-      login(response.data)
+      login(response.data.token)
       onBack();
     })
   };
