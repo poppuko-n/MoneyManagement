@@ -1,0 +1,9 @@
+ja:
+  activerecord:
+    attributes:
+      user:
+        name: "名前"
+        password: "パスワード"
+    errors:
+      messages:
+        blank: "を入力してください"
