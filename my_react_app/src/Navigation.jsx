@@ -1,4 +1,4 @@
-import { HashRouter, Route, Routes, Link } from 'react-router-dom';
+import { HashRouter, Route, Routes, NavLink } from 'react-router-dom';
 import Expense from "./Expense";
 import SelectCompany from "./SelectCompany";
 import SimulationResult from "./SimulationResult";
@@ -12,12 +12,58 @@ const Navigation = () => {
     <HashRouter>
       <div className="bg-green-600 py-4">
         <div className="container mx-auto flex justify-around items-center">
-          <Link to="/" className="text-white hover:text-green-100 px-6">サービス</Link>
-          <Link to="/expense" className="text-white hover:text-green-100 px-6">家計簿</Link>
-          <Link to="/selectcompany" className="text-white hover:text-green-100 px-6">シミュレーション</Link>
-          <Link to="/about" className="text-white hover:text-green-100 px-6">ユーザー情報</Link>
+          <NavLink
+            to="/"
+            end
+            className={({ isActive }) =>
+              `px-5 py-2 rounded-md font-semibold transition duration-200 ${
+                isActive
+                  ? 'bg-white text-green-600 shadow-md'
+                  : 'text-white hover:bg-green-500 hover:bg-opacity-30'
+              }`
+            }
+          >
+            サービス
+          </NavLink>
+          <NavLink
+            to="/expense"
+            className={({ isActive }) =>
+              `px-5 py-2 rounded-md font-semibold transition duration-200 ${
+                isActive
+                  ? 'bg-white text-green-600 shadow-md'
+                  : 'text-white hover:bg-green-500 hover:bg-opacity-30'
+              }`
+            }
+          >
+            家計簿
+          </NavLink>
+          <NavLink
+            to="/selectcompany"
+            className={({ isActive }) =>
+              `px-5 py-2 rounded-md font-semibold transition duration-200 ${
+                isActive
+                  ? 'bg-white text-green-600 shadow-md'
+                  : 'text-white hover:bg-green-500 hover:bg-opacity-30'
+              }`
+            }
+          >
+            シミュレーション
+          </NavLink>
+          <NavLink
+            to="/about"
+            className={({ isActive }) =>
+              `px-5 py-2 rounded-md font-semibold transition duration-200 ${
+                isActive
+                  ? 'bg-white text-green-600 shadow-md'
+                  : 'text-white hover:bg-green-500 hover:bg-opacity-30'
+              }`
+            }
+          >
+            ユーザー情報
+          </NavLink>
         </div>
       </div>
+
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/expense" element={<Expense key={token} />} />
