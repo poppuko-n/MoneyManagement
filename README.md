@@ -18,10 +18,10 @@ https://moneymanagement.jp/
   </tr>
   <tr>
     <td align="center">
-      <img src="./document/img/home_scroll.gif"  />
+      <img src="./document/img/home_scroll.gif" width="500"  />
     </td>
     <td align="center">
-      <img src="./document/img/signup_scrreen.png" />
+      <img src="./document/img/signup_scrreen.png" width="500" />
     </td>
   </tr>
   <tr>
