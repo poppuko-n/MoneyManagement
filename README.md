@@ -11,17 +11,17 @@ https://moneymanagement.jp/
 
 ## 画面キャプチャ
 
-<table>
+<table style="width: 100%;">
   <tr>
     <th style="width: 50%; text-align: center;">トップ画面</th>
     <th style="width: 50%; text-align: center;">ログイン/新規登録画面</th>
   </tr>
   <tr>
     <td align="center">
-      <img src="./document/img/home_scroll.gif" width="300" />
+      <img src="./document/img/home_scroll.gif"  />
     </td>
     <td align="center">
-      <img src="./document/img/signup_scrreen.png" width="300" />
+      <img src="./document/img/signup_scrreen.png" />
     </td>
   </tr>
   <tr>
@@ -29,6 +29,7 @@ https://moneymanagement.jp/
     <td align="center">ユーザー名とパスワードによる認証機能を実装しました。</td>
   </tr>
 </table>
+
 
 <br />
 
@@ -39,10 +40,10 @@ https://moneymanagement.jp/
   </tr>
   <tr>
     <td align="center">
-      <img src="./document/img/expense_top_screen.png" width="300" />
+      <img src="./document/img/expense_top_screen.png"  />
     </td>
     <td align="center">
-      <img src="./document/img/expense_detail_screen.png" width="300" />
+      <img src="./document/img/expense_detail_screen.png"  />
     </td>
   </tr>
   <tr>
@@ -66,10 +67,10 @@ https://moneymanagement.jp/
   </tr>
   <tr>
     <td align="center">
-      <img src="./document/img/select_company_screen.png" width="300" />
+      <img src="./document/img/select_company_screen.png"  />
     </td>
     <td align="center">
-      <img src="./document/img/simulation_result_screen.png" width="300" />
+      <img src="./document/img/simulation_result_screen.png" />
     </td>
   </tr>
   <tr>
