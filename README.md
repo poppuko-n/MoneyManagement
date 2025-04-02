@@ -10,15 +10,21 @@ https://moneymanagement.jp/
 そんな自分の体験から、同じように迷っている人の力になりたいと思い、このサービスをつくりました。家計の見直しから始めて、安心して投資にチャレンジできる環境を整えています。お金と向き合う第一歩を、そっと後押しできたら嬉しいです。
 
 ## 画面キャプチャ
-| トップ画面 |　ログイン/新規登録画面 |
-| ---- | ---- |
-| ![ホーム画面のスクロールデモ](./document/img/home_scroll.gif) | ![ログイン画面](./document/img/signup_scrreen.png) |
-| 初めて本サービスに訪れるユーザー向けにサービス概要の説明を実装しました。 | ユーザー名とパスワードでの認証機能を実装しました。 |
 
-| 家計簿トップ画面 |　家計簿詳細画面 |
+| トップ画面 | ログイン/新規登録画面 |
 | ---- | ---- |
-| ![家計簿トップ画面](./document/img/expense_top_screen.png) | ![家計簿詳細画面](./document/img/expense_detail_screen.png) |
-| 家計簿のトップ画面にはカテゴリ別の支出が一目でわかるよう円グラフを実装しました。 | 家計簿記録の一覧より編集・削除が可能です。 |
+| <img src="./document/img/home_scroll.gif" width="300" /> | <img src="./document/img/signup_scrreen.png" width="300" /> |
+| 初めて訪れるユーザー向けに、サービス概要の説明機能を実装しました。 | ユーザー名とパスワードによる認証機能を実装しました。 |
+
+| 家計簿トップ画面 | 家計簿詳細画面 |
+| ---- | ---- |
+| <img src="./document/img/expense_top_screen.png" width="300" /> | <img src="./document/img/expense_detail_screen.png" width="300" /> |
+| カテゴリ別の支出を円グラフで表示し、家計の状況を一目で把握できるようにしました。 | 記録の編集・削除が可能な家計簿詳細画面を実装しました。 |
+
+| 銘柄選択画面 | シミュレーション結果画面 |
+| ---- | ---- |
+| <img src="./document/img/select_company_screen.png" width="300" /> | <img src="./document/img/simulation_result_screen.png" width="300" /> |
+| 実際の銘柄から選択し、投資のシミュレーションが行えます。 | 運用期間に応じた損益シミュレーション結果を表示します。 |
 
 
 ## 使用技術
