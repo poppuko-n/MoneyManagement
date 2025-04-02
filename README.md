@@ -11,20 +11,79 @@ https://moneymanagement.jp/
 
 ## 画面キャプチャ
 
-| トップ画面 | ログイン/新規登録画面 |
-| ---- | ---- |
-| <img src="./document/img/home_scroll.gif" width="300" /> | <img src="./document/img/signup_scrreen.png" width="300" /> |
-| 初めて訪れるユーザー向けに、サービス概要の説明機能を実装しました。 | ユーザー名とパスワードによる認証機能を実装しました。 |
+<table>
+  <tr>
+    <th style="width: 50%; text-align: center;">トップ画面</th>
+    <th style="width: 50%; text-align: center;">ログイン/新規登録画面</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="./document/img/home_scroll.gif" width="300" />
+    </td>
+    <td align="center">
+      <img src="./document/img/signup_scrreen.png" width="300" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">初めて訪れるユーザー向けに、サービス概要の説明機能を実装しました。</td>
+    <td align="center">ユーザー名とパスワードによる認証機能を実装しました。</td>
+  </tr>
+</table>
 
-| 家計簿トップ画面 | 家計簿詳細画面 |
-| ---- | ---- |
-| <img src="./document/img/expense_top_screen.png" width="300" /> | <img src="./document/img/expense_detail_screen.png" width="300" /> |
-| カテゴリ別の支出を円グラフで表示し、家計の状況を一目で把握できるようにしました。 | 記録の編集・削除が可能な家計簿詳細画面を実装しました。 |
+<br />
 
-| 銘柄選択画面 | シミュレーション結果画面 |
-| ---- | ---- |
-| <img src="./document/img/select_company_screen.png" width="300" /> | <img src="./document/img/simulation_result_screen.png" width="300" /> |
-| 実際の銘柄から選択し、投資のシミュレーションが行えます。 | 運用期間に応じた損益シミュレーション結果を表示します。 |
+<table>
+  <tr>
+    <th style="width: 50%; text-align: center;">家計簿トップ画面</th>
+    <th style="width: 50%; text-align: center;">家計簿詳細画面</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="./document/img/expense_top_screen.png" width="300" />
+    </td>
+    <td align="center">
+      <img src="./document/img/expense_detail_screen.png" width="300" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      カテゴリ別の支出を円グラフで表示し、<br />
+      家計の状況を一目で把握できるようにしました。
+    </td>
+    <td align="center">
+      記録の編集・削除が可能な<br />
+      家計簿詳細画面を実装しました。
+    </td>
+  </tr>
+</table>
+
+<br />
+
+<table>
+  <tr>
+    <th style="width: 50%; text-align: center;">銘柄選択画面</th>
+    <th style="width: 50%; text-align: center;">シミュレーション結果画面</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="./document/img/select_company_screen.png" width="300" />
+    </td>
+    <td align="center">
+      <img src="./document/img/simulation_result_screen.png" width="300" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      実際の銘柄から選択し、<br />
+      投資のシミュレーションが行えます。
+    </td>
+    <td align="center">
+      運用期間に応じた<br />
+      損益シミュレーション結果を表示します。
+    </td>
+  </tr>
+</table>
+
 
 
 ## 使用技術
