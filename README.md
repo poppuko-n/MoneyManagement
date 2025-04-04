@@ -30,8 +30,8 @@ https://moneymanagement.jp/
     </td>
   </tr>
   <tr>
-    <td align="center">ユーザー名とパスワードによる認証機能を実装しました。</td>
-    <td align="center">ログイン時にナビゲーションバーから各機能を選択します。</td>
+    <td align="center">ユーザー名とパスワードでログイン可能です。</td>
+    <td align="center">ログイン後にナビゲーションバーから各機能を選択します。</td>
   </tr>
 </table>
 
@@ -54,8 +54,8 @@ https://moneymanagement.jp/
       家計の状況を一目で把握できるようにしました。
     </td>
     <td align="center">
-      記録の編集・削除が可能な<br />
-      家計簿詳細画面を実装しました。
+      記録の編集・削除に対応した<br />
+      詳細画面を用意しました。
     </td>
   </tr>
 </table>
@@ -86,12 +86,26 @@ https://moneymanagement.jp/
 </table>
 
 ## 使用技術
-
+| Category          | Technology Stack                                     |
+| ----------------- | --------------------------------------------------   |
+| Frontend          | React                                                |
+| Backend           | Ruby on Rails                                        |
+| Infrastructure    | Amazon Web Services                                  |
+| Database          | MySQL                                                |
+| CI/CD             | GitHub Actions                                       |
+| etc.              | TailwindCSS, draw.io, Git, GitHub                    |
 
 ## ER 図
-
+![document/img/er_diagram.png](document/img/er_diagram.png)
 
 ## インフラ構成図
 ![document/img/システム構成図.png](document/img/システム構成図.png)
 
 ## 機能一覧
+- 会員登録、ログイン／ログアウト
+- 支出・収入の記録（カテゴリ・金額・日付・メモ）
+- 月ごとの収支サマリー表示
+- カテゴリ別の支出グラフ表示
+- 仮想投資プランの作成（銘柄・数量・期間指定）
+- 過去の株価データに基づいた運用結果の表示
+- AIによる運用結果の分析・アドバイス

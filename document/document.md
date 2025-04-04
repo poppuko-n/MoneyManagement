@@ -93,7 +93,7 @@ https://moneymanagement.jp/
 
 ## ■　テーブル定義書
 ### ER図
-![document/img/ER図.png](img/ER図.png)
+![document/img/er_diagram.png](img/er_diagram.png)
 
 ### テーブル
 Users:ユーザー
