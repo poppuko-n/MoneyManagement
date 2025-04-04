@@ -86,9 +86,17 @@ https://moneymanagement.jp/
 </table>
 
 ## 使用技術
-
+| Category          | Technology Stack                                     |
+| ----------------- | --------------------------------------------------   |
+| Frontend          | React                                                |
+| Backend           | Ruby on Rails                                        |
+| Infrastructure    | Amazon Web Services                                  |
+| Database          | MySQL                                                |
+| CI/CD             | GitHub Actions                                       |
+| etc.              | TailwindCSS, draw.io, Git, GitHub                    |
 
 ## ER 図
+
 
 
 ## インフラ構成図
