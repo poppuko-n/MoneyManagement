@@ -4,11 +4,12 @@ import SimulationTypeSelector from './SimulationTypeSelector';
 import SimulationSummary from './SimulationSummary';
 import SimulationChart from './SimulationChart';
 import SimulationResultTable from './SimulationResultTable';
+import SimulationInsight from './SimulationInsight';
 
 const SimulationResult = () => {
   const { results } = useLocation().state;
 
-  // NOTE: 運用方法の選択状態（"simulation"＝通常、"accumulation_simulation"＝積立）
+  // NOTE: 運用方法の選択状態（"simulation"＝一括、"accumulation_simulation"＝積立）
   const [selectedType, setSelectedType] = useState("simulation");
 
   // NOTE: 表示するシミュレーション期間は固定（1年間）
@@ -70,6 +71,10 @@ const SimulationResult = () => {
 
       {/* NOTE: 運用推移の折れ線グラフ（預金 vs 投資） */}
       <SimulationChart data={getChartData()} />
+
+      {/* NOTE: AIによる投資診断 */}
+      <SimulationInsight simulation_results={results} />
+
 
       {/* NOTE: 各銘柄ごとの明細テーブル */}
       <SimulationResultTable

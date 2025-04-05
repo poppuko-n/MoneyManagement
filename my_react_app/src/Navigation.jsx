@@ -6,7 +6,6 @@ import Home from "./Home";
 import { useAuth } from "./contexts/Authcontext";
 
 const Navigation = () => {
-  const { token } = useAuth();
 
   return (
     <HashRouter>
@@ -66,7 +65,7 @@ const Navigation = () => {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/expense" element={<Expense key={token} />} />
+        <Route path="/expense" element={<Expense />} />
         <Route path="/selectcompany" element={<SelectCompany />} />
         <Route path="/simulation_result" element={<SimulationResult />} />
       </Routes>
