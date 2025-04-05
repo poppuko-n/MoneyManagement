@@ -4,6 +4,7 @@ import SimulationTypeSelector from './SimulationTypeSelector';
 import SimulationSummary from './SimulationSummary';
 import SimulationChart from './SimulationChart';
 import SimulationResultTable from './SimulationResultTable';
+import SimulationInsight from './SimulationInsight';
 
 const SimulationResult = () => {
   const { results } = useLocation().state;
@@ -70,6 +71,9 @@ const SimulationResult = () => {
 
       {/* NOTE: 運用推移の折れ線グラフ（預金 vs 投資） */}
       <SimulationChart data={getChartData()} />
+
+      {/* NOTE: AIによる投資診断 */}
+      <SimulationInsight /> 
 
       {/* NOTE: 各銘柄ごとの明細テーブル */}
       <SimulationResultTable
