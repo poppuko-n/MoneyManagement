@@ -2,9 +2,7 @@ import addImage from './assets/add_circle.svg'
 import subtractImage from './assets/subtract_circle.svg'
 
 const SelectCompanyTable = ({ companies, filtername, quantities, onChange, onReset, setQuantities}) => {
-  const formatWithComma = (value) => {
-    return new Intl.NumberFormat("ja-JP").format(value);
-  };
+  const formatAmount = (value) => value.toLocaleString();
   
   return (
   <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow">
@@ -43,7 +41,7 @@ const SelectCompanyTable = ({ companies, filtername, quantities, onChange, onRes
                       : ""
                   }`}
                 >
-                  {formatWithComma(company.latest_price)} 
+                  {formatAmount(company.latest_price)} 
                 </td>
                 <td className="p-3 border-b text-sm">
                   <div
@@ -56,8 +54,8 @@ const SelectCompanyTable = ({ companies, filtername, quantities, onChange, onRes
                     }`}
                   >
                     {company.price_difference > 0
-                      ? `+${formatWithComma(company.price_difference)} `
-                      : `${formatWithComma(company.price_difference)} `}
+                      ? `+${formatAmount(company.price_difference)} `
+                      : `${formatAmount(company.price_difference)} `}
                   </div>
                   <div
                     className={`${
@@ -91,7 +89,7 @@ const SelectCompanyTable = ({ companies, filtername, quantities, onChange, onRes
                 </td>
 
                 <td className="p-3 border-b">
-                  {formatWithComma(quantities[company.code] * company.latest_price)} 
+                  {formatAmount(quantities[company.code] * company.latest_price)} 
                 </td>
                 <td className="p-3 border-b">
                   <div className="flex items-center gap-2 justify-center h-full">
