@@ -9,7 +9,7 @@ import SimulationInsight from './SimulationInsight';
 const SimulationResult = () => {
   const { results } = useLocation().state;
 
-  // NOTE: 運用方法の選択状態（"simulation"＝通常、"accumulation_simulation"＝積立）
+  // NOTE: 運用方法の選択状態（"simulation"＝一括、"accumulation_simulation"＝積立）
   const [selectedType, setSelectedType] = useState("simulation");
 
   // NOTE: 表示するシミュレーション期間は固定（1年間）
@@ -73,7 +73,8 @@ const SimulationResult = () => {
       <SimulationChart data={getChartData()} />
 
       {/* NOTE: AIによる投資診断 */}
-      <SimulationInsight /> 
+      <SimulationInsight simulation_results={results} />
+
 
       {/* NOTE: 各銘柄ごとの明細テーブル */}
       <SimulationResultTable
