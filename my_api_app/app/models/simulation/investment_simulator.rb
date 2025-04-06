@@ -1,8 +1,9 @@
-class StockPrice
-  module Simulator
+module Simulation
+  module InvestmentSimulator
     class << self
       # NOTE: フロントから送られてきた1つの銘柄データ（コード・名前・価格・数量）を使って、
       # 通常のシミュレーションと積立シミュレーションの結果をまとめたハッシュを返す。
+      # シミュレーション結果に対しての、AIによる分析・診断結果も併せて返す。
       def call(item)
         company_code  = item[:code]
         name          = item[:name]
@@ -20,7 +21,7 @@ class StockPrice
       end
 
       private
-      
+
       # NOTE: 通常シミュレーション。
       # 過去の株価と現在の成長率を用いて、保有数量に応じた評価額を月別に算出する。
       def calculate_simulation(current_price, company_code, latest_date, quantity)
@@ -31,7 +32,7 @@ class StockPrice
           "1_year_ago"   => simulate_price(current_price, StockPrice.fetch_price_n_months_ago(company_code, latest_date, 12)) * quantity
         }
       end
-      
+
       # NOTE: 現在価格と過去価格の比率をもとに、評価額（資産価値）を予測する。
       # （実際は「過去価格で買って今の価格の成長率を乗せた評価額」という計算式）
       def simulate_price(current_price, past_price)
