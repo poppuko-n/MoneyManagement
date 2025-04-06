@@ -63,14 +63,14 @@ https://moneymanagement.jp/
 <table style="width: 100%;">
   <tr>
     <th style="width: 50%; text-align: center;">銘柄選択画面</th>
-    <th style="width: 50%; text-align: center;">シミュレーション結果画面</th>
+    <th style="width: 50%; text-align: center;">シミュレーション結果画面1</th>
   </tr>
   <tr>
     <td align="center">
       <img src="./document/img/select_company_screen.png" width="500" />
     </td>
     <td align="center">
-      <img src="./document/img/simulation_result_screen.png" width="500" />
+      <img src="./document/img/simulation_result_screen1.png" width="500" />
     </td>
   </tr>
   <tr>
@@ -80,7 +80,32 @@ https://moneymanagement.jp/
     </td>
     <td align="center">
       運用期間に応じた<br />
-      損益シミュレーション結果を表示します。
+      損益シミュレーション結果をグラフで表示します。
+    </td>
+  </tr>
+</table>
+
+<table style="width: 100%;">
+  <tr>
+    <th style="width: 50%; text-align: center;">シミュレーション結果画面2</th>
+    <th style="width: 50%; text-align: center;">学習コンテンツ画面</th>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="./document/img/simulation_result_screen2.png" width="500" />
+    </td>
+    <td align="center">
+      <img src="./document/img/learning_screen.png" width="500" />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      損益シミュレーション結果に対して、<br />
+      AIが業種や運用方法の分析やアドバイスをします。
+    </td>
+    <td align="center">
+      投資未経験者を対象にした<br />
+      資産運用のノウハウを説明する動画を紹介します。
     </td>
   </tr>
 </table>
