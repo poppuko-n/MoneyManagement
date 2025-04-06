@@ -1,6 +1,6 @@
 class CompaniesController < ApplicationController
   def index
-    result = CompanyListBuilder.build
+    result = Company::ListBuilder.call
     render json: result
   end
 end
