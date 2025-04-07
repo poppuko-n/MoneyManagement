@@ -7,7 +7,7 @@ import SimulationResultTable from './SimulationResultTable';
 import SimulationInsight from './SimulationInsight';
 
 const SimulationResult = () => {
-  const { results } = useLocation().state;
+  const { results, ai_analysis } = useLocation().state;
 
   // NOTE: 運用方法の選択状態（"simulation"＝一括、"accumulation_simulation"＝積立）
   const [selectedType, setSelectedType] = useState("simulation");
@@ -73,7 +73,7 @@ const SimulationResult = () => {
       <SimulationChart data={getChartData()} />
 
       {/* NOTE: AIによる投資診断 */}
-      <SimulationInsight simulation_results={results} />
+      <SimulationInsight ai_analysis={ai_analysis} />
 
 
       {/* NOTE: 各銘柄ごとの明細テーブル */}
