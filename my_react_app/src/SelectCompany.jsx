@@ -58,7 +58,9 @@ const SelectCompany = () => {
     CompanyApi.getSimulations({data: selectedCompanies})
       .then((response) => {
         navigate("/simulation_result", {
-          state: { results: response.data.results },
+          state: {
+            results: response.data.results,
+            ai_analysis: response.data.ai_analysis },
         });
       })
   };
