@@ -121,70 +121,7 @@ https://moneymanagement.jp/
 | etc.              | TailwindCSS, draw.io, Git, GitHub                    |
 
 ## ER 図
-```mermaid　
-erDiagram
-  USERS ||--o{ EXPENSE_LOGS : has
-  CATEGORIES ||--o{ EXPENSE_LOGS : categorizes
-  USERS ||--o{ EXPENSE_LOGS : logs
-  SECTORS ||--o{ COMPANIES : includes
-  COMPANIES ||--o{ STOCK_PRICES : has
-  COMPANIES ||--o{ STOCK_PRICES : priced
 
-  USERS {
-    integer id
-    string name
-    string password_digest
-    datetime created_at
-    datetime updated_at
-  }
-
-  CATEGORIES {
-    integer id
-    string name
-    integer transaction_type
-    datetime created_at
-    datetime updated_at
-  }
-
-  EXPENSE_LOGS {
-    integer id
-    integer category_id
-    integer transaction_type
-    date date
-    string item
-    bigint amount
-    integer user_id
-    datetime created_at
-    datetime updated_at
-  }
-
-  SECTORS {
-    integer id
-    string name
-    datetime created_at
-    datetime updated_at
-  }
-
-  COMPANIES {
-    integer id
-    integer code
-    integer sector_id
-    string name
-    bigint equity
-    datetime created_at
-    datetime updated_at
-  }
-
-  STOCK_PRICES {
-    integer id
-    integer company_code
-    date date
-    integer close_price
-    datetime created_at
-    datetime updated_at
-  }
-
-```　
 
 ## インフラ構成図
 ![document/img/システム構成図.png](document/img/システム構成図.png)
