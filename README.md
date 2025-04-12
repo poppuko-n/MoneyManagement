@@ -10,7 +10,7 @@ https://moneymanagement.jp/
 ## サービスへの想い
 このプロダクトは、投資による資産形成を始めたいが、「難しそう」「損をしそう」といったイメージを抱いている人の不安を払拭したい、という想いから生まれました。
 
-ただ情報を読んだり聞いたりするだけではなく、実際の株価を用いた仮想的な投資体験とAIによる診断結果を掲示することで、行動につながる学びを促します。さらに家計簿機能により、自分の支出状況に応じた実践的なシミュレーションが可能です。
+ただ情報を読んだり聞いたりするだけではなく、実際の株価を用いた仮想的な投資体験とAIによる診断結果を掲示することで、行動につながる学びを提供します。さらに家計簿機能により、自分の支出状況に応じた実践的なシミュレーションが可能です。
 
 「貯蓄から投資」への転換により、経済成長と資産所得の拡大という好循環を生み出し、より豊かな社会の実現に貢献します。
 
@@ -111,14 +111,16 @@ https://moneymanagement.jp/
 </table>
 
 ## 使用技術
-| Category          | Technology Stack                                     |
-| ----------------- | --------------------------------------------------   |
-| Frontend          | React                                                |
-| Backend           | Ruby on Rails                                        |
-| Infrastructure    | Amazon Web Services                                  |
-| Database          | MySQL                                                |
-| CI/CD             | GitHub Actions                                       |
-| etc.              | TailwindCSS, draw.io, Git, GitHub                    |
+| Category       | Technology Stack                                                                             |
+|----------------|----------------------------------------------------------------------------------------------|
+| Frontend       | React (v18), Vite                                                                            |
+| Backend        | Ruby on Rails (v8.0)                                                                         |
+| Infrastructure | Amazon Web Services (S3, CloudFront, EC2, RDS, Route 53, ELB, CloudWatch)                    |
+| Database       | MySQL (v8.0)                                                                                 |
+| CI/CD          | GitHub Actions                                                                               |
+| etc.           | Nginx, Tailwind CSS, draw.io, Git, GitHub                                                    |
+
+
 
 ## ER 図
 ![alt text](document/img/er_diagram.png)
