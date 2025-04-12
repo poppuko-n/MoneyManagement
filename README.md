@@ -121,7 +121,7 @@ https://moneymanagement.jp/
 | etc.              | TailwindCSS, draw.io, Git, GitHub                    |
 
 ## ER 図
-
+![alt text](document/img/er_diagram.png)
 
 ## インフラ構成図
 ![document/img/システム構成図.png](document/img/システム構成図.png)

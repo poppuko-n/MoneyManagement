@@ -1,13 +1,11 @@
 erDiagram
-  USERS ||--o{ EXPENSE_LOGS : has
-  CATEGORIES ||--o{ EXPENSE_LOGS : categorizes
-  USERS ||--o{ EXPENSE_LOGS : logs
-  SECTORS ||--o{ COMPANIES : includes
-  COMPANIES ||--o{ STOCK_PRICES : has
-  COMPANIES ||--o{ STOCK_PRICES : priced
+  USERS ||--o{ EXPENSE_LOGS : "1人のユーザーが複数の家計簿を登録する"
+  CATEGORIES ||--o{ EXPENSE_LOGS : "1つのカテゴリに複数の家計簿が属する"
+  SECTORS ||--o{ COMPANIES : "1つの業種に複数の企業が属する"
+  COMPANIES ||--o{ STOCK_PRICES : "1つの企業に複数の株価データがある"
 
   USERS {
-    integer id
+    integer id PK
     string name
     string password_digest
     datetime created_at
@@ -15,7 +13,7 @@ erDiagram
   }
 
   CATEGORIES {
-    integer id
+    integer id PK
     string name
     integer transaction_type
     datetime created_at
@@ -23,28 +21,28 @@ erDiagram
   }
 
   EXPENSE_LOGS {
-    integer id
-    integer category_id
+    integer id PK
+    integer category_id　FK
     integer transaction_type
     date date
     string item
     bigint amount
-    integer user_id
+    integer user_id　FK
     datetime created_at
     datetime updated_at
   }
 
   SECTORS {
-    integer id
+    integer id PK
     string name
     datetime created_at
     datetime updated_at
   }
 
   COMPANIES {
-    integer id
-    integer code
-    integer sector_id
+    integer id PK
+    integer code PK
+    integer sector_id FK
     string name
     bigint equity
     datetime created_at
@@ -52,8 +50,8 @@ erDiagram
   }
 
   STOCK_PRICES {
-    integer id
-    integer company_code
+    integer id PK
+    integer company_code FK
     date date
     integer close_price
     datetime created_at
