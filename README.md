@@ -20,8 +20,8 @@ https://moneymanagement.jp/
 
 <table style="width: 100%;">
   <tr>
-    <th style="width: 50%; text-align: center;">新規登録画面</th>
-    <th style="width: 50%; text-align: center;">ホーム画面（ログイン時）</th>
+    <th style="width: 50%; text-align: center;">新規登録</th>
+    <th style="width: 50%; text-align: center;">ホーム（ログイン時）</th>
   </tr>
   <tr>
     <td align="center">
@@ -39,8 +39,8 @@ https://moneymanagement.jp/
 
 <table style="width: 100%;">
   <tr>
-    <th style="width: 50%; text-align: center;">家計簿トップ画面</th>
-    <th style="width: 50%; text-align: center;">家計簿詳細画面</th>
+    <th style="width: 50%; text-align: center;">家計簿トップ</th>
+    <th style="width: 50%; text-align: center;">家計簿詳細</th>
   </tr>
   <tr>
     <td align="center">
@@ -53,19 +53,19 @@ https://moneymanagement.jp/
   <tr>
     <td align="center">
       カテゴリ別の支出を円グラフで表示し、<br />
-      家計の状況を一目で把握できるようにしました。
+      家計の状況を一目で把握が可能です。
     </td>
     <td align="center">
-      記録の編集・削除に対応した<br />
-      詳細画面を用意しました。
+      記録の詳細が確認できるとともに<br />
+      編集・削除が可能です。
     </td>
   </tr>
 </table>
 
 <table style="width: 100%;">
   <tr>
-    <th style="width: 50%; text-align: center;">銘柄選択画面</th>
-    <th style="width: 50%; text-align: center;">シミュレーション結果画面1（グラフ表示）</th>
+    <th style="width: 50%; text-align: center;">銘柄選択</th>
+    <th style="width: 50%; text-align: center;">シミュレーション結果1（グラフ表示）</th>
   </tr>
   <tr>
     <td align="center">
@@ -89,8 +89,8 @@ https://moneymanagement.jp/
 
 <table style="width: 100%;">
   <tr>
-    <th style="width: 50%; text-align: center;">シミュレーション結果画面2（AI診断結果）</th>
-    <th style="width: 50%; text-align: center;">学習コンテンツ画面</th>
+    <th style="width: 50%; text-align: center;">シミュレーション結果2（AI診断結果）</th>
+    <th style="width: 50%; text-align: center;">学習コンテンツ</th>
   </tr>
   <tr>
     <td align="center">
@@ -107,7 +107,7 @@ https://moneymanagement.jp/
     </td>
     <td align="center">
       投資未経験者を対象にした<br />
-      資産運用に関するノウハウの説明動画紹介します。
+      資産運用に関する解説動画紹介します。
     </td>
   </tr>
 </table>
@@ -115,7 +115,7 @@ https://moneymanagement.jp/
 <table style="width: 100%;">
   <tr>
     <td align="center">
-      シミュレーション結果画面(動画)
+      シミュレーション結果(動画)
     </td>
   </tr>
   <tr>
