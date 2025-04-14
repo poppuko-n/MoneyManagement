@@ -10,16 +10,18 @@ https://moneymanagement.jp/
 ## サービスへの想い
 このプロダクトは、投資による資産形成を始めたいが、「難しそう」「損をしそう」といったイメージを抱いている人の不安を払拭したい、という想いから生まれました。
 
-ただ情報を読んだり聞いたりするだけではなく、実際の株価を用いた仮想的な投資体験とAIによる診断結果を掲示することで、行動につながる学びを提供します。さらに家計簿機能により、自分の支出状況に応じた実践的なシミュレーションが可能です。
+ただ情報を読んだり聞いたりするだけではなく、実際の株価を用いた仮想的な投資体験とAIによる診断結果を掲示することで、実践的な体験を通じた学びを提供いたします。さらに家計簿機能により、自分の支出状況に応じた実践的なシミュレーションが可能です。
 
-「貯蓄から投資」への転換により、経済成長と資産所得の拡大という好循環を生み出し、より豊かな社会の実現に貢献します。
+これにより、投資をより身近に感じていただき、初めての投資への第一歩を踏み出すサポートをします。
+
+「貯蓄から投資」への転換により、経済成長と個人の資産所得の拡大という好循環を生み出し、より豊かな社会の実現に貢献します。
 
 ## 画面キャプチャ
 
 <table style="width: 100%;">
   <tr>
-    <th style="width: 50%; text-align: center;">新規登録画面</th>
-    <th style="width: 50%; text-align: center;">ホーム画面（ログイン時）</th>
+    <th style="width: 50%; text-align: center;">新規登録</th>
+    <th style="width: 50%; text-align: center;">ホーム（ログイン時）</th>
   </tr>
   <tr>
     <td align="center">
@@ -37,8 +39,8 @@ https://moneymanagement.jp/
 
 <table style="width: 100%;">
   <tr>
-    <th style="width: 50%; text-align: center;">家計簿トップ画面</th>
-    <th style="width: 50%; text-align: center;">家計簿詳細画面</th>
+    <th style="width: 50%; text-align: center;">家計簿トップ</th>
+    <th style="width: 50%; text-align: center;">家計簿詳細</th>
   </tr>
   <tr>
     <td align="center">
@@ -51,19 +53,19 @@ https://moneymanagement.jp/
   <tr>
     <td align="center">
       カテゴリ別の支出を円グラフで表示し、<br />
-      家計の状況を一目で把握できるようにしました。
+      家計の状況を一目で把握が可能です。
     </td>
     <td align="center">
-      記録の編集・削除に対応した<br />
-      詳細画面を用意しました。
+      記録の詳細が確認できるとともに<br />
+      編集・削除が可能です。
     </td>
   </tr>
 </table>
 
 <table style="width: 100%;">
   <tr>
-    <th style="width: 50%; text-align: center;">銘柄選択画面</th>
-    <th style="width: 50%; text-align: center;">シミュレーション結果画面1（グラフ表示）</th>
+    <th style="width: 50%; text-align: center;">銘柄選択</th>
+    <th style="width: 50%; text-align: center;">シミュレーション結果1（グラフ表示）</th>
   </tr>
   <tr>
     <td align="center">
@@ -87,8 +89,8 @@ https://moneymanagement.jp/
 
 <table style="width: 100%;">
   <tr>
-    <th style="width: 50%; text-align: center;">シミュレーション結果画面2（AI診断結果）</th>
-    <th style="width: 50%; text-align: center;">学習コンテンツ画面</th>
+    <th style="width: 50%; text-align: center;">シミュレーション結果2（AI診断結果）</th>
+    <th style="width: 50%; text-align: center;">学習コンテンツ</th>
   </tr>
   <tr>
     <td align="center">
@@ -105,7 +107,20 @@ https://moneymanagement.jp/
     </td>
     <td align="center">
       投資未経験者を対象にした<br />
-      資産運用に関するノウハウの説明動画を紹介します。
+      資産運用に関する解説動画紹介します。
+    </td>
+  </tr>
+</table>
+
+<table style="width: 100%;">
+  <tr>
+    <td align="center">
+      シミュレーション結果(動画)
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="./document/img/simulation_screen.gif" alt="シミュレーション結果の表示" style="width: 100%;" />
     </td>
   </tr>
 </table>
