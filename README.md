@@ -112,7 +112,14 @@ https://moneymanagement.jp/
   </tr>
 </table>
 
-<img src="./document/img/simulation_screen.gif" alt="シミュレーション結果の表示" style="width: 100%;" />
+<table　style="width: 100%;">
+  <tr　align="center">
+    シミュレーション結果画面(動画)
+  </tr>
+  <tr　align="center">
+    <img src="./document/img/simulation_screen.gif" alt="シミュレーション結果の表示" style="width: 100%;" />
+  </tr>
+</table>
 
 ## 使用技術
 | Category       | Technology Stack                                                                             |
