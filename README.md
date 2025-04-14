@@ -112,12 +112,16 @@ https://moneymanagement.jp/
   </tr>
 </table>
 
-<table　style="width: 100%;">
-  <tr　align="center">
-    シミュレーション結果画面(動画)
+<table style="width: 100%;">
+  <tr>
+    <td align="center">
+      シミュレーション結果画面(動画)
+    </td>
   </tr>
-  <tr　align="center">
-    <img src="./document/img/simulation_screen.gif" alt="シミュレーション結果の表示" style="width: 100%;" />
+  <tr>
+    <td align="center">
+      <img src="./document/img/simulation_screen.gif" alt="シミュレーション結果の表示" style="width: 100%;" />
+    </td>
   </tr>
 </table>
 
