@@ -107,7 +107,7 @@ https://moneymanagement.jp/
     </td>
     <td align="center">
       投資未経験者を対象にした<br />
-      資産運用に関するノウハウの説明動画を紹介します。
+      資産運用に関するノウハウの説明動画紹介します。
     </td>
   </tr>
 </table>
