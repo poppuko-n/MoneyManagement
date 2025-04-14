@@ -1,9 +1,7 @@
 import playImage from './assets/play.svg'
 
 const SelectCompanyHeader = ({ totalCost, onSubmit }) => {
-  const formatWithComma = (value) => {
-    return new Intl.NumberFormat("ja-JP").format(value);
-  };
+  const formatAmount = (value) => value.toLocaleString();
 
   return (
     <>
@@ -18,7 +16,7 @@ const SelectCompanyHeader = ({ totalCost, onSubmit }) => {
       </div>
     </div>
     <div className="bg-gray-100 shadow-md rounded p-4 mb-8">
-      <h2 className="text-xl">金額: {formatWithComma(totalCost())} 円</h2>
+      <h2 className="text-xl">金額: {formatAmount(totalCost())} 円</h2>
     </div>
     </>
   );
