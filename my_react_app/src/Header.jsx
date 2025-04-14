@@ -35,7 +35,7 @@ const Header = ({ setIsSignIN, setIsSignUp }) => {
               className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
               onClick={() => setIsSignUp(true)}
             >
-              新規会員登録
+              会員登録
             </button>
           </div>
         )}

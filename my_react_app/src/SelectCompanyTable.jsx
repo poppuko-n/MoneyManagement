@@ -73,6 +73,7 @@ const SelectCompanyTable = ({ companies, filtername, quantities, onChange, onRes
                 </td>
                 <td className="p-3 border-b">
                   <input
+                    id={company.code}
                     type="number"
                     placeholder="0"
                     value={quantities[company.code] || ""}
