@@ -10,20 +10,21 @@ RSpec.describe Company, type: :model do
 
     subject {Company.fetch_companies_with_sectors}
 
-    let(:expected_result) do
-      [
+    it '配列が返される' do
+      expect(subject).to be_an(Array)
+    end
+  
+    it '全件（3件）が返される' do
+      expect(subject.size).to eq(3)
+    end
+  
+    it 'equityの大きい順に正しいデータが並ぶ' do
+      expected_result = [
         [company_ganma.code, company_ganma.name, sector_ennergy.name],
         [company_beta.code, company_beta.name, sector_food.name],
         [company_alpha.code, company_alpha.name, sector_food.name],
       ]
-    end
-
-    it '銘柄がequity（純資産）の大きい順に並び替えられていて全件返ってくる' do
-      aggregate_failures do
-        expect(subject).to be_an(Array)
-        expect(subject.size).to eq(3)
-        expect(subject).to eq(expected_result)
-      end
+      expect(subject).to eq(expected_result)
     end
   end
 end
