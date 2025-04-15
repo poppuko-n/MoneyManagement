@@ -4,6 +4,12 @@ ja:
       user:
         name: "名前"
         password: "パスワード"
+      company:
+        code: "コード"
+        name: "社名"
+        sector_id: "カテゴリ"
     errors:
       messages:
         blank: "を入力してください"
+        taken: "はすでに存在します"
+
