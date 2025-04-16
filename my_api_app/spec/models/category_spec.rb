@@ -38,6 +38,61 @@ RSpec.describe Category, type: :model do
 
   end
 
-  
+  describe 'バリデーション' do
+    subject { Category.new(name: name, transaction_type: transaction_type) }
+
+    context '有効な場合' do
+      let(:name) { '教育費' }
+      let(:transaction_type) { '支出' }
+
+      it '有効なカテゴリである' do
+        expect(subject).to be_valid
+      end
+    end
+
+    context '無効な場合' do
+      context 'name が空' do
+        let(:name) { '' }
+        let(:transaction_type) { '収入' }
+
+        it '無効である' do
+          expect(subject).not_to be_valid
+          expect(subject.errors[:name]).to include('を入力してください')
+        end
+      end
+
+      context 'name が重複している' do
+        let(:name) { '光熱費' }
+        let(:transaction_type) { '収入' }
+
+        before { Category.create!(name: name, transaction_type: transaction_type) }
+
+        it '無効である' do
+          expect(subject).not_to be_valid
+          expect(subject.errors[:name]).to include('はすでに存在します')
+        end
+      end
+
+      context 'name が51文字以上' do
+        let(:name) { 'あ' * 51 }
+        let(:transaction_type) { '支出' }
+
+        it '無効である' do
+          expect(subject).not_to be_valid
+          expect(subject.errors[:name]).to include('は50文字以内で入力してください')
+        end
+      end
+
+      context 'transaction_type が未入力' do
+        let(:name) { '雑費' }
+        let(:transaction_type) { nil }
+
+        it '無効である' do
+          expect(subject).not_to be_valid
+          expect(subject.errors[:transaction_type]).to include('を入力してください')
+        end
+      end
+    end
+  end
   
 end
