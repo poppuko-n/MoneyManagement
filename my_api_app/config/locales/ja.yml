@@ -8,8 +8,11 @@ ja:
         code: "コード"
         name: "社名"
         sector_id: "カテゴリ"
+      category:
+        name: "名前"
     errors:
       messages:
         blank: "を入力してください"
         taken: "はすでに存在します"
+        too_long: "は%{count}文字以内で入力してください"
 
