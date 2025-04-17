@@ -1,8 +1,10 @@
 RSpec.describe Category, type: :model do
-  let!(:food)   { Category.create!(name: '食費', transaction_type: '支出') }
-  let!(:rent)   { Category.create!(name: '家賃', transaction_type: '支出') }
-  let!(:salary) { Category.create!(name: '給与', transaction_type: '収入') }
-  let!(:bonus)  { Category.create!(name: 'ボーナス', transaction_type: '収入') }
+  before do
+    Category.create!(name: '食費', transaction_type: '支出')
+    Category.create!(name: '家賃', transaction_type: '支出')
+    Category.create!(name: '給与', transaction_type: '収入')
+    Category.create!(name: 'ボーナス', transaction_type: '収入')
+  end
 
   describe '::fetch_expense_categories' do
     subject { Category.fetch_expense_categories }
@@ -12,11 +14,7 @@ RSpec.describe Category, type: :model do
     end
 
     it '支出カテゴリのみを返す' do
-      expect(subject).to match_array([food, rent])
-    end
-
-    it '各カテゴリのtransaction_typeがすべて"支出"である' do
-      expect(subject.pluck(:transaction_type).uniq).to eq(["支出"])
+      expect(subject.map(&:name)).to match_array(%w[食費 家賃])
     end
 
   end
@@ -29,11 +27,7 @@ RSpec.describe Category, type: :model do
     end
 
     it '収入カテゴリのみを返す' do
-      expect(subject).to match_array([salary, bonus])
-    end
-
-    it '各カテゴリのtransaction_typeがすべて"収入"である' do
-      expect(subject.pluck(:transaction_type).uniq).to eq(["収入"])
+      expect(subject.map(&:name)).to match_array(%w[給与 ボーナス])
     end
 
   end
