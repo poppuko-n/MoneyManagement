@@ -13,11 +13,11 @@ import { motion } from "framer-motion";
 const Home = () => {
   return (
     <>
-      <div className="relative flex items-center justify-center mb-20">
+      <div className="relative flex items-center justify-center mb-40">
         <motion.img 
-          initial={{ opacity:0 }}
+          initial={{ opacity:0.4 }}
           animate={{ opacity:1 }}
-          transition={{ duration:3 }}
+          transition={{ duration:2.5 }}
           src={homeImage} 
           alt="Home" 
           className="w-[90%] h-auto mt-1" 
