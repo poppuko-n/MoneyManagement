@@ -5,6 +5,7 @@ import SelectCompanyFilterBar from "./SelectCompanyFilterBar.jsx";
 import SelectCompanyTable from "./SelectCompanyTable.jsx";
 import Modal from "./Modal.jsx";
 import CompanyApi from './lib/CompanyApi.js'
+import { motion } from "framer-motion";
 
 const SelectCompany = () => {
   const [companies, setCompanies] = useState([]);
@@ -75,12 +76,22 @@ const SelectCompany = () => {
     : companies;
 
   return (
-    <div className="container mx-auto p-4">
+    <motion.div
+      initial={{ opacity: 0, y:100 }}
+      animate={{ opacity:1, y: 0 }}
+      transition={{ duration: 1 }}
+      className="container mx-auto p-4">
 
       {isLoading && (
         <Modal>
           <div className="text-center p-6">
-            <p className="text-xl font-semibold mb-2">AI分析中です…</p>
+          <motion.p
+            animate={{ opacity: [0.3, 1, 0.3] }}
+            transition={{ repeat: Infinity, duration: 1.0 }}
+            className="text-xl font-semibold mb-2"
+          >
+            AI分析中です…
+          </motion.p>
             <p className="text-sm text-gray-500">しばらくお待ちください</p>
           </div>
         </Modal>
@@ -106,7 +117,7 @@ const SelectCompany = () => {
         onReset = {resetQuantity}
         setQuantities = {setQuantities}
       />
-    </div>
+    </motion.div>
   );
 };
 
