@@ -14,7 +14,10 @@ const Home = () => {
   return (
     <>
       <div className="relative flex items-center justify-center mb-20">
-        <img 
+        <motion.img 
+          initial={{ opacity:0 }}
+          animate={{ opacity:1 }}
+          transition={{ duration:3 }}
           src={homeImage} 
           alt="Home" 
           className="w-[90%] h-auto mt-1" 
@@ -166,37 +169,57 @@ const Home = () => {
 
         <div className="flex flex-col md:flex-row items-center justify-between gap-2">
 
-          <div className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
+          <motion.div 
+            initial={{ opacity:0, y: 200 }}
+            whileInView={{ opacity:1, y:0 }}
+            transition={{ duration:0.5, ease: "linear" }}
+            viewport={{ once:true }}
+            className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h4 className="text-2xl font-semibold mb-6">資金の「見える化」</h4>
             <p className="text-gray-700 text-base mb-6">
               収入と支出の全体像が把握でき、投資の余裕資金を把握できます。
             </p>
             <img src={service1} alt="資金の見える化" className="mx-auto w-52 h-52 object-contain" />
-          </div>
+          </motion.div>
 
-          <div className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
+          <motion.div 
+            initial={{ opacity:0, y: 200 }}
+            whileInView={{ opacity:1, y:0 }}
+            transition={{ duration:0.5, ease: "linear", delay:0.5 }}
+            viewport={{ once:true }}
+            className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h4 className="text-2xl font-semibold mb-6">貯金計画</h4>
             <p className="text-gray-700 text-base mb-6">
               家計簿から支出の詳細が分かるので、具体的な節約目標が設定可能です。
             </p>
             <img src={service2} alt="貯金計画" className="mx-auto w-52 h-52 object-contain" />
-          </div>
+          </motion.div>
 
-          <div className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
+          <motion.div 
+            initial={{ opacity:0, y: 200 }}
+            whileInView={{ opacity:1, y:0 }}
+            transition={{ duration:0.5, ease: "linear", delay:1.0 }}
+            viewport={{ once:true }}
+            className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h4 className="text-2xl font-semibold mb-6">リアルな投資</h4>
             <p className="text-gray-700 text-base mb-6">
               実際の株価を利用しているため、支出状況に応じたリアルなシミュレーションが可能です。
             </p>
             <img src={service3} alt="リアルなシミュレーション" className="mx-auto w-52 h-52 object-contain" />
-          </div>
+          </motion.div>
 
-          <div className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
+          <motion.div 
+            initial={{ opacity:0, y: 200 }}
+            whileInView={{ opacity:1, y:0 }}
+            transition={{ duration:0.5, ease: "linear", delay:1.5 }}
+            viewport={{ once:true }}
+            className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h4 className="text-2xl font-semibold mb-6">リスク管理</h4>
             <p className="text-gray-700 text-base mb-6">
               シミュレーションは柔軟な設定が可能で、「長期」「積立」「分散」の効果を確認できます。
             </p>
             <img src={service4} alt="損益額の確認" className="mx-auto w-52 h-52 object-contain" />
-          </div>
+          </motion.div>
         </div>
       </div>
 
