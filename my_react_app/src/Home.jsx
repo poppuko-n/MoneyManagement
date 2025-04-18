@@ -101,30 +101,60 @@ const Home = () => {
         <div className="w-40 h-[2px] bg-red-400 mx-auto mb-10"></div>
 
         <ul className="grid grid-cols-2 md:grid-cols-2 gap-y-12 gap-x-10 max-w-[80%] mx-auto">
-          <li className="flex items-center text-xl font-medium">
+          <motion.li
+            initial={{ opacity:0, x:-100 }}
+            whileInView={{ opacity:1, x:0 }}
+            viewport={{ once: true }}
+            transition={{ duration:1 }}
+            className="flex items-center text-xl font-medium">
             <img src={checkbox} alt="checkbox" className="w-8 h-8 mr-4" />
             投資を始めたいけど、知識がない
-          </li>
-          <li className="flex items-center text-xl font-medium">
+          </motion.li>
+          <motion.li
+            initial={{ opacity:0, x:100 }}
+            whileInView={{ opacity:1, x:0 }}
+            viewport={{ once: true }}
+            transition={{ duration:1}}
+            className="flex items-center text-xl font-medium">
             <img src={checkbox} alt="checkbox" className="w-8 h-8 mr-4" />
             将来のために資産運用を始めたい
-          </li>
-          <li className="flex items-center text-xl font-medium">
+          </motion.li>
+          <motion.li
+            initial={{ opacity:0, x:-100 }}
+            whileInView={{ opacity:1, x:0 }}
+            viewport={{ once: true }}
+            transition={{ duration:1, delay:0.5}}
+            className="flex items-center text-xl font-medium">
             <img src={checkbox} alt="checkbox" className="w-8 h-8 mr-4" />
             初心者でも手軽に投資のシミュレーションをしたい
-          </li>
-          <li className="flex items-center text-xl font-medium">
+          </motion.li>
+          <motion.li
+            initial={{ opacity:0, x:100 }}
+            whileInView={{ opacity:1, x:0 }}
+            viewport={{ once: true }}
+            transition={{ duration:1, delay:0.5 }}
+            className="flex items-center text-xl font-medium">
             <img src={checkbox} alt="checkbox" className="w-8 h-8 mr-4" />
             リスクを抑えた運用を学びたい
-          </li>
-          <li className="flex items-center text-xl font-medium">
+          </motion.li>
+          <motion.li
+            initial={{ opacity:0, x:-100 }}
+            whileInView={{ opacity:1, x:0 }}
+            viewport={{ once: true }}
+            transition={{ duration:1, delay:1.0}}
+            className="flex items-center text-xl font-medium">
             <img src={checkbox} alt="checkbox" className="w-8 h-8 mr-4" />
             家計を見直して余剰資金を作りたい
-          </li>
-          <li className="flex items-center text-xl font-medium">
+          </motion.li>
+          <motion.li
+            initial={{ opacity:0, x:100 }}
+            whileInView={{ opacity:1, x:0 }}
+            viewport={{ once: true }}
+            transition={{ duration:1, delay:1.0 }} 
+            className="flex items-center text-xl font-medium">
             <img src={checkbox} alt="checkbox" className="w-8 h-8 mr-4" />
             長期的な資産形成に興味がある
-          </li>
+          </motion.li>
         </ul>
       </div>
 
