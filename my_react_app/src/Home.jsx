@@ -7,6 +7,8 @@ import service2 from "./assets/service2.png";
 import service3 from "./assets/service3.png";
 import service4 from "./assets/service4.png";
 import checkbox from "./assets/checkbox.png";
+import { motion } from "framer-motion";
+
 
 const Home = () => {
   return (
@@ -18,11 +20,25 @@ const Home = () => {
           className="w-[90%] h-auto mt-1" 
         />
         <div className="absolute text-center px-5">
-          <h1 className="text-black text-4xl font-serif tracking-wide leading-relaxed border-b border-gray-400 pb-2 inline-block">
+          <motion.h1
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 2 }}
+            className="text-black text-4xl font-serif tracking-wide leading-relaxed pb-2 inline-block"
+          >
             誰でもできるお金の管理、<br />
             <span className="indent-40 block">投資で未来をもっと自由に</span>
-          </h1>
+          </motion.h1>
+
+          <motion.div
+            initial={{ scaleX: 0 }}
+            animate={{ scaleX: 1 }}
+            transition={{ duration: 2 }}
+            style={{originX: 0}}
+            className="h-[1px] bg-gray-400 mx-auto mt-2"
+          />
         </div>
+
       </div>
 
       {/* セクション１ */}
