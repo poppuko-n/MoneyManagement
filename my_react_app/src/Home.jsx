@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 const Home = () => {
   return (
     <>
-      <div className="relative flex items-center justify-center mb-[110px]">
+      <div className="relative flex items-center justify-center mb-40">
         <motion.img 
           initial={{ opacity:0.4 }}
           animate={{ opacity:1 }}
@@ -56,7 +56,7 @@ const Home = () => {
             initial={{ opacity:0, y: 200 }}
             whileInView={{ opacity:1, y:0 }}
             transition={{ duration:0.5, ease: "linear" }}
-            viewport={{ once:true }}
+            viewport={{ once:true, amount: 0.2 }}
             className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h3 className="text-3xl font-extrabold mb-4 text-blue-600">STEP 1</h3>
             <h4 className="text-2xl font-semibold mb-4">家計簿</h4>
@@ -70,7 +70,7 @@ const Home = () => {
             initial={{ opacity:0, y: 200 }}
             whileInView={{ opacity:1, y:0 }}
             transition={{ duration:0.5, ease: "linear", delay:0.3 }}
-            viewport={{ once:true }}
+            viewport={{ once:true, amount: 0.2 }}
             className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h3 className="text-3xl font-extrabold mb-4 text-blue-600">STEP 2</h3>
             <h4 className="text-2xl font-semibold mb-4">銘柄選択</h4>
@@ -84,7 +84,7 @@ const Home = () => {
             initial={{ opacity:0, y: 200 }}
             whileInView={{ opacity:1, y:0 }}
             transition={{ duration:0.5, ease: "linear", delay:0.6 }}
-            viewport={{ once:true }}
+            viewport={{ once:true, amount: 0.2 }}
             className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h3 className="text-3xl font-extrabold mb-4 text-blue-600">STEP 3</h3>
             <h4 className="text-2xl font-semibold mb-4">シミュレーション</h4>
