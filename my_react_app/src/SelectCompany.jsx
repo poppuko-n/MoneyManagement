@@ -76,7 +76,11 @@ const SelectCompany = () => {
     : companies;
 
   return (
-    <div className="container mx-auto p-4">
+    <motion.div
+      initial={{ opacity: 0, y:100 }}
+      animate={{ opacity:1, y: 0 }}
+      transition={{ duration: 1 }}
+      className="container mx-auto p-4">
 
       {isLoading && (
         <Modal>
@@ -113,7 +117,7 @@ const SelectCompany = () => {
         onReset = {resetQuantity}
         setQuantities = {setQuantities}
       />
-    </div>
+    </motion.div>
   );
 };
 

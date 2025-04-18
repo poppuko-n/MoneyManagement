@@ -13,7 +13,7 @@ import { motion } from "framer-motion";
 const Home = () => {
   return (
     <>
-      <div className="relative flex items-center justify-center mb-40">
+      <div className="relative flex items-center justify-center mb-[110px]">
         <motion.img 
           initial={{ opacity:0.4 }}
           animate={{ opacity:1 }}
@@ -24,9 +24,9 @@ const Home = () => {
         />
         <div className="absolute text-center px-5">
           <motion.h1
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 2 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 4 }}
             className="text-black text-4xl font-serif tracking-wide leading-relaxed pb-2 inline-block"
           >
             誰でもできるお金の管理、<br />
@@ -69,7 +69,7 @@ const Home = () => {
           <motion.div 
             initial={{ opacity:0, y: 200 }}
             whileInView={{ opacity:1, y:0 }}
-            transition={{ duration:0.5, ease: "linear", delay:0.5 }}
+            transition={{ duration:0.5, ease: "linear", delay:0.3 }}
             viewport={{ once:true }}
             className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h3 className="text-3xl font-extrabold mb-4 text-blue-600">STEP 2</h3>
@@ -83,7 +83,7 @@ const Home = () => {
           <motion.div 
             initial={{ opacity:0, y: 200 }}
             whileInView={{ opacity:1, y:0 }}
-            transition={{ duration:0.5, ease: "linear", delay:1.0 }}
+            transition={{ duration:0.5, ease: "linear", delay:0.6 }}
             viewport={{ once:true }}
             className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h3 className="text-3xl font-extrabold mb-4 text-blue-600">STEP 3</h3>
@@ -126,7 +126,7 @@ const Home = () => {
             initial={{ opacity:0, x:-100 }}
             whileInView={{ opacity:1, x:0 }}
             viewport={{ once: true }}
-            transition={{ duration:1, delay:0.5}}
+            transition={{ duration:1, delay:0.4}}
             className="flex items-center text-xl font-medium">
             <img src={checkbox} alt="checkbox" className="w-8 h-8 mr-4" />
             初心者でも手軽に投資のシミュレーションをしたい
@@ -135,7 +135,7 @@ const Home = () => {
             initial={{ opacity:0, x:100 }}
             whileInView={{ opacity:1, x:0 }}
             viewport={{ once: true }}
-            transition={{ duration:1, delay:0.5 }}
+            transition={{ duration:1, delay:0.4 }}
             className="flex items-center text-xl font-medium">
             <img src={checkbox} alt="checkbox" className="w-8 h-8 mr-4" />
             リスクを抑えた運用を学びたい
@@ -144,7 +144,7 @@ const Home = () => {
             initial={{ opacity:0, x:-100 }}
             whileInView={{ opacity:1, x:0 }}
             viewport={{ once: true }}
-            transition={{ duration:1, delay:1.0}}
+            transition={{ duration:1, delay:0.8}}
             className="flex items-center text-xl font-medium">
             <img src={checkbox} alt="checkbox" className="w-8 h-8 mr-4" />
             家計を見直して余剰資金を作りたい
@@ -153,7 +153,7 @@ const Home = () => {
             initial={{ opacity:0, x:100 }}
             whileInView={{ opacity:1, x:0 }}
             viewport={{ once: true }}
-            transition={{ duration:1, delay:1.0 }} 
+            transition={{ duration:1, delay:0.8 }} 
             className="flex items-center text-xl font-medium">
             <img src={checkbox} alt="checkbox" className="w-8 h-8 mr-4" />
             長期的な資産形成に興味がある
@@ -185,7 +185,7 @@ const Home = () => {
           <motion.div 
             initial={{ opacity:0, y: 200 }}
             whileInView={{ opacity:1, y:0 }}
-            transition={{ duration:0.5, ease: "linear", delay:0.5 }}
+            transition={{ duration:0.5, ease: "linear", delay:0.3 }}
             viewport={{ once:true }}
             className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h4 className="text-2xl font-semibold mb-6">貯金計画</h4>
@@ -198,7 +198,7 @@ const Home = () => {
           <motion.div 
             initial={{ opacity:0, y: 200 }}
             whileInView={{ opacity:1, y:0 }}
-            transition={{ duration:0.5, ease: "linear", delay:1.0 }}
+            transition={{ duration:0.5, ease: "linear", delay:0.6 }}
             viewport={{ once:true }}
             className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h4 className="text-2xl font-semibold mb-6">リアルな投資</h4>
@@ -211,7 +211,7 @@ const Home = () => {
           <motion.div 
             initial={{ opacity:0, y: 200 }}
             whileInView={{ opacity:1, y:0 }}
-            transition={{ duration:0.5, ease: "linear", delay:1.5 }}
+            transition={{ duration:0.5, ease: "linear", delay:0.9 }}
             viewport={{ once:true }}
             className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h4 className="text-2xl font-semibold mb-6">リスク管理</h4>

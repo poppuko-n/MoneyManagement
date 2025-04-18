@@ -1,5 +1,6 @@
 import React from 'react';
 import { youtubeVideos } from './movie/youtubeVideos';
+import { motion } from 'framer-motion'
 
 function Learning() {
   return (
@@ -8,7 +9,12 @@ function Learning() {
         学習コンテンツ
       </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+      <motion.div
+        initial={{ opacity: 0, y:100 }}
+        animate={{ opacity:1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+
         {youtubeVideos.map((video) => (
           <a
             key={video.id}
@@ -28,7 +34,7 @@ function Learning() {
             </div>
           </a>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

@@ -7,6 +7,7 @@ import ExpenseNew from './ExpenseNew';
 import ExpenseEdit from './ExpenseEdit';
 import ExpenseApi from './lib/ExpenseApi';
 import Modal from './Modal';
+import { motion } from "framer-motion";
 
 const Expense = () => {
   const [isCreating, setIsCreating] = useState(false);
@@ -45,32 +46,45 @@ const Expense = () => {
   };
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y:100 }}
+      animate={{ opacity:1, y: 0 }}
+      transition={{ duration: 1 }}>
       <ExpenseHeader
         expenses={expenses}
         onCreateNew={() => setIsCreating(true)}
       />
       {isPieChart && (
-        <ExpensePieChart
-          expenses={expenses} 
-          expense_categories={expense_categories}
-          onChange={() =>{
-            setIsPieChart(false);
-            setIsDetail(true);
-            refreshExpenses(token);
-          }}
-        />
+        <motion.div
+        initial={{ opacity: 0, y:100 }}
+        animate={{ opacity:1, y: 0 }}
+        transition={{ duration: 1 }}>
+          <ExpensePieChart
+            expenses={expenses} 
+            expense_categories={expense_categories}
+            onChange={() =>{
+              setIsPieChart(false);
+              setIsDetail(true);
+              refreshExpenses(token);
+            }}
+          />
+        </motion.div>
       )}
       {isDetail && (
-        <ExpenseDetail
-          expenses={expenses} 
-          onSelectExpense={setCurrentExpenseId}
-          onBack={() => {
-            setIsPieChart(true);
-            setIsDetail(false);
-            refreshExpenses(token);
-          }} 
-        />
+        <motion.div
+        initial={{ opacity: 0, y:100 }}
+        animate={{ opacity:1, y: 0 }}
+        transition={{ duration: 1 }}>
+          <ExpenseDetail
+            expenses={expenses} 
+            onSelectExpense={setCurrentExpenseId}
+            onBack={() => {
+              setIsPieChart(true);
+              setIsDetail(false);
+              refreshExpenses(token);
+            }} 
+          />
+        </motion.div>
       )}
       {isCreating && (
         <Modal onClose={() => setIsCreating(false)}>
@@ -99,7 +113,7 @@ const Expense = () => {
           />
         </Modal>
       )} 
-    </div>
+    </motion.div>
   );
 };
 
