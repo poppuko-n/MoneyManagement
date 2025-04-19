@@ -1,14 +1,11 @@
 import { useState } from "react";
-import { useLocation } from "react-router-dom";
 import SimulationTypeSelector from './SimulationTypeSelector';
 import SimulationSummary from './SimulationSummary';
 import SimulationChart from './SimulationChart';
 import SimulationResultTable from './SimulationResultTable';
 import SimulationInsight from './SimulationInsight';
 
-const SimulationResult = () => {
-  const { results, ai_analysis } = useLocation().state;
-
+const SimulationResult = ({results, ai_analysis, onBack}) => {
   // NOTE: 運用方法の選択状態（"simulation"＝一括、"accumulation_simulation"＝積立）
   const [selectedType, setSelectedType] = useState("simulation");
 
