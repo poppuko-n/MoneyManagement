@@ -2,7 +2,6 @@ import { HashRouter, Route, Routes, NavLink } from 'react-router-dom';
 import Home from "./Home";
 import Expense from "./Expense";
 import SelectCompany from "./SelectCompany";
-import SimulationResult from "./SimulationResult";
 import Learning from "./Learning";
 
 const Navigation = () => {
@@ -67,7 +66,6 @@ const Navigation = () => {
         <Route path="/" element={<Home />} />
         <Route path="/expense" element={<Expense />} />
         <Route path="/selectcompany" element={<SelectCompany />} />
-        <Route path="/simulation_result" element={<SimulationResult />} />
         <Route path="/learning" element={<Learning />} />
       </Routes>
     </HashRouter>

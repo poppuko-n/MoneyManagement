@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import SimulationResult from "./SimulationResult.jsx"
 import SelectCompanyHeader from "./SelectCompanyHeader.jsx";
 import SelectCompanyFilterBar from "./SelectCompanyFilterBar.jsx";
 import SelectCompanyTable from "./SelectCompanyTable.jsx";
@@ -13,8 +13,8 @@ const SelectCompany = () => {
   const [isShowFiltered, setIsShowFiltered] = useState(false);
   const [filtername, setFilterName] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-
-  const navigate = useNavigate();
+  const [isSimulation, setIsSimulation] = useState(false);
+  const [simulationData, setSimulationData] = useState(null);
 
   useEffect(() => {
     CompanyApi.getCompanies().then((response) => {
@@ -61,19 +61,27 @@ const SelectCompany = () => {
     setIsLoading(true);
 
     CompanyApi.getSimulations({data: selectedCompanies})
-      .then((response) => {
-        navigate("/simulation_result", {
-          state: {
-            results: response.data.results,
-            ai_analysis: response.data.ai_analysis },
+      .then((response)=>{
+        setSimulationData({
+          results: response.data.results,
+          ai_analysis: response.data.ai_analysis
         });
-        setIsLoading(false);
+        setIsSimulation(true)
       })
+      .finally(()=>setIsLoading(false))
   };
 
   const filteredCompanies = isShowFiltered
     ? companies.filter((company) => quantities[company.code] > 0)
     : companies;
+
+  if (isSimulation){
+    <SimulationResult
+      results={simulationData.results}
+      ai_analysis={simulationData.ai_analysis}
+      onBack={()=>setIsSimulation(false)}
+    />
+  };
 
   return (
     <motion.div
