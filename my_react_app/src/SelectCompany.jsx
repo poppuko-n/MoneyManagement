@@ -76,11 +76,13 @@ const SelectCompany = () => {
     : companies;
 
   if (isSimulation){
-    <SimulationResult
-      results={simulationData.results}
-      ai_analysis={simulationData.ai_analysis}
-      onBack={()=>setIsSimulation(false)}
-    />
+    return(
+      <SimulationResult
+        results={simulationData.results}
+        ai_analysis={simulationData.ai_analysis}
+        onBack={()=>setIsSimulation(false)}
+      />
+    )
   };
 
   return (
