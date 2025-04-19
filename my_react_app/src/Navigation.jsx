@@ -1,7 +1,7 @@
 import { HashRouter, Route, Routes, NavLink } from 'react-router-dom';
 import Home from "./Home";
 import Expense from "./Expense";
-import SelectCompany from "./SelectCompany";
+import Simulation from "./Simulation";
 import Learning from "./Learning";
 
 const Navigation = () => {
@@ -36,7 +36,7 @@ const Navigation = () => {
             家計簿
           </NavLink>
           <NavLink
-            to="/selectcompany"
+            to="/simulation"
             className={({ isActive }) =>
               `px-5 py-2 rounded-md font-semibold transition duration-200 ${
                 isActive
@@ -65,7 +65,7 @@ const Navigation = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/expense" element={<Expense />} />
-        <Route path="/selectcompany" element={<SelectCompany />} />
+        <Route path="/simulation" element={<Simulation />} />
         <Route path="/learning" element={<Learning />} />
       </Routes>
     </HashRouter>

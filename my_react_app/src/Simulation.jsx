@@ -7,7 +7,7 @@ import Modal from "./Modal.jsx";
 import CompanyApi from './lib/CompanyApi.js'
 import { motion } from "framer-motion";
 
-const SelectCompany = () => {
+const Simulation = () => {
   const [companies, setCompanies] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [isShowFiltered, setIsShowFiltered] = useState(false);
@@ -131,4 +131,4 @@ const SelectCompany = () => {
   );
 };
 
-export default SelectCompany;
+export default Simulation;
