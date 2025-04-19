@@ -4,6 +4,7 @@ import SimulationSummary from './SimulationSummary';
 import SimulationChart from './SimulationChart';
 import SimulationResultTable from './SimulationResultTable';
 import SimulationInsight from './SimulationInsight';
+import arrowImage from "./assets/arrow.svg";
 
 const SimulationResult = ({results, ai_analysis, onBack}) => {
   // NOTE: 運用方法の選択状態（"simulation"＝一括、"accumulation_simulation"＝積立）
@@ -55,7 +56,16 @@ const SimulationResult = ({results, ai_analysis, onBack}) => {
   return (
     <div className="container mx-auto p-4">
       {/* NOTE: タイトル表示 */}
-      <h1 className="text-2xl border-b border-black pb-2 inline-block mb-6">シミュレーション結果</h1>
+      <div className="flex justify-between ">
+        <h1 className="text-2xl border-b border-black pb-2 inline-block mb-6">シミュレーション結果</h1>
+        <button
+          onClick={onBack}
+          className="flex items-center"
+          >
+            銘柄選択へ戻る
+            <img src={arrowImage} alt="arrow" className='w-5 h-5 ml-2' />
+        </button>
+      </div>
 
       {/* NOTE: 運用方法の選択ボタン（通常 / 積立） */}
       <SimulationTypeSelector
