@@ -18,7 +18,7 @@ function Learning() {
         {youtubeVideos.map((video) => (
           <a
             key={video.id}
-            href={`https://www.youtube.com/watch?v=${video.videoUrl}`}
+            href={`https://www.youtube.com/watch?v=${video.videoId}`}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-white rounded-xl shadow hover:shadow-lg transition duration-200"
