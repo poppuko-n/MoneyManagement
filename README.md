@@ -138,10 +138,10 @@ https://moneymanagement.jp/
 
 
 ## ER 図
-![alt text](document/img/er_diagram.png)
+![ER 図](document/img/er_diagram.png)
 
 ## インフラ構成図
-![document/img/システム構成図.png](document/img/システム構成図.png)
+![インフラ構成図](document/img/system_architecture.jpg)
 
 ## 機能一覧
 - 会員登録、ログイン／ログアウト
