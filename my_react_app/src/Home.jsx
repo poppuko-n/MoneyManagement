@@ -8,8 +8,10 @@ import service3 from "./assets/service3.png";
 import service4 from "./assets/service4.png";
 import checkbox from "./assets/checkbox.png";
 import { motion } from "framer-motion";
+import { useAuth } from "./contexts/Authcontext.jsx"
 
 const Home = ({setIsSignUp}) => {
+  const {isLoggedIn} = useAuth();
   return (
     <>
       <div className="relative flex items-center justify-center mb-40">
@@ -40,11 +42,13 @@ const Home = ({setIsSignUp}) => {
             className="h-[1.5px] bg-gray-400 mx-auto mt-2"
           />
 
+        {!isLoggedIn && 
         <motion.button
           onClick={()=>setIsSignUp(true)}
           >
             さっそくはじめる
           </motion.button>
+        }
         </div>
 
       </div>
