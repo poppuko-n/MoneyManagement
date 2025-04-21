@@ -54,7 +54,7 @@ const AppContainer = () => {
             </button>
             して始めましょう。
           </div>
-          <Home />
+          <Home setIsSignUp={setIsSignUp} />
         </>
       )}
 

@@ -8,9 +8,10 @@ import service3 from "./assets/service3.png";
 import service4 from "./assets/service4.png";
 import checkbox from "./assets/checkbox.png";
 import { motion } from "framer-motion";
+import { useAuth } from "./contexts/Authcontext.jsx"
 
-
-const Home = () => {
+const Home = ({setIsSignUp}) => {
+  const {isLoggedIn} = useAuth();
   return (
     <>
       <div className="relative flex items-center justify-center mb-40">
@@ -40,6 +41,24 @@ const Home = () => {
             style={{originX: 0}}
             className="h-[1.5px] bg-gray-400 mx-auto mt-2"
           />
+
+        {!isLoggedIn && 
+        <motion.button
+        onClick={() => setIsSignUp(true)}
+        animate={{ y: [0, -30, 0] }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          repeatType: "loop",
+          ease: "easeInOut",
+          delay: 0.2,
+        }}
+        className="mt-20 bg-gradient-to-r from-blue-400 to-indigo-500 text-white text-lg font-semibold px-6 py-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300"
+      >
+        さっそくはじめる
+      </motion.button>
+      
+        }
         </div>
 
       </div>
