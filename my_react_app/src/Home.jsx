@@ -44,10 +44,20 @@ const Home = ({setIsSignUp}) => {
 
         {!isLoggedIn && 
         <motion.button
-          onClick={()=>setIsSignUp(true)}
-          >
-            さっそくはじめる
-          </motion.button>
+        onClick={() => setIsSignUp(true)}
+        animate={{ y: [0, -30, 0] }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          repeatType: "loop",
+          ease: "easeInOut",
+          delay: 0.2,
+        }}
+        className="mt-20 bg-gradient-to-r from-blue-400 to-indigo-500 text-white text-lg font-semibold px-6 py-3 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300"
+      >
+        さっそくはじめる
+      </motion.button>
+      
         }
         </div>
 
