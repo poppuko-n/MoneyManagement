@@ -1,6 +1,5 @@
-# 銘柄を表すモデル
 class Company < ApplicationRecord
-  belongs_to :sector, optional: true
+  belongs_to :sector
   has_many :stock_prices
 
   validates :code, presence: true, uniqueness: true
