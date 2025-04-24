@@ -220,9 +220,9 @@ const Home = ({setIsSignUp}) => {
             transition={{ duration:0.5, ease: "linear", delay:0.6 }}
             viewport={{ once:true }}
             className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
-            <h4 className="text-2xl font-semibold mb-6">リアルな投資</h4>
+            <h4 className="text-2xl font-semibold mb-6">リアルな投資体験</h4>
             <p className="text-gray-700 text-base mb-6">
-              実際の株価を利用しているため、支出状況に応じたリアルなシミュレーションが可能です。
+              実際の株価を利用しているため、リアルなシミュレーションが可能です。
             </p>
             <img src={service3} alt="リアルなシミュレーション" className="mx-auto w-52 h-52 object-contain" />
           </motion.div>
@@ -233,9 +233,10 @@ const Home = ({setIsSignUp}) => {
             transition={{ duration:0.5, ease: "linear", delay:0.9 }}
             viewport={{ once:true }}
             className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
-            <h4 className="text-2xl font-semibold mb-6">リスク管理</h4>
+            <h4 className="text-2xl font-semibold mb-6"> AI分析</h4>
             <p className="text-gray-700 text-base mb-6">
-              シミュレーションは柔軟な設定が可能で、「長期」「積立」「分散」の効果を確認できます。
+              シミュレーション結果から、AIが投資傾向を分析。
+              将来を見据えた運用プランをサポートします。
             </p>
             <img src={service4} alt="損益額の確認" className="mx-auto w-52 h-52 object-contain" />
           </motion.div>
