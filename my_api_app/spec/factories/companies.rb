@@ -3,20 +3,17 @@ FactoryBot.define do
     code { 1 }
     name { "アルファ食品" }
     equity { 100 }
-    association :sector, factory: :sector_food
   end
 
   factory :company_beta, class: 'Company' do
     code { 2 }
     name { "ベータ食品" }
     equity { 200 }
-    association :sector, factory: :sector_food
   end
 
   factory :company_ganma, class: 'Company' do
     code { 3 }
     name { "ガンマエネルギー" }
     equity { 300 }
-    association :sector, factory: :sector_energy
   end
 end
