@@ -9,12 +9,14 @@ RSpec.describe ExpenseLog, type: :model do
     @bonus_log = create(:bonus_log, user: @user2)
   end
 
-  describe 'バリデーションのテスト' do
-    it '有効なカテゴリである' do
-      puts @food_log.inspect
-      puts @rent_log.inspect
-      puts @salary_log.inspect
-      puts @bonus_log.inspect
+  describe '::fetch_all_expenses_for_user' do
+    subject {ExpenseLog.fetch_all_expenses_for_user(@user1)}
+    it '指定したユーザーのみのログを返す' do
+      expect(subject.map(&:user_id).uniq).to eq([@user1.id])
+    end
+
+    it '全件のログを返す' do
+      expect(subject.size).to eq(2)
     end
   end
 end
