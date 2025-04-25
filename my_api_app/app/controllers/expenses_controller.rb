@@ -2,7 +2,7 @@ class ExpensesController < ApplicationController
   before_action :authenticate_user, { only: [ :index, :create, :show, :update, :destroy ] }
 
   def index
-    expenses = ExpenseLog.fetch_expense_log(@current_user.id).map do |expense|
+    expenses = ExpenseLog.fetch_all_expenses_for_user(@current_user.id).map do |expense|
       {
         id: expense.id,
         transaction_type: expense.transaction_type,
@@ -26,7 +26,7 @@ class ExpensesController < ApplicationController
   end
 
   def show
-    expense = ExpenseLog.fetch_one_expense_log(@current_user.id, params[:id])
+    expense = ExpenseLog.fetch_expense_for_user_byid(@current_user.id, params[:id])
     if expense
       render json: {
         transaction_type: expense.transaction_type,
