@@ -2,7 +2,6 @@ class ExpenseLog < ApplicationRecord
   belongs_to :category
   belongs_to :user
 
-  validates :category_id, presence: true
   validates :date, presence: true
   validates :item, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0 }
