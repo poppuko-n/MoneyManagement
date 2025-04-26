@@ -1,4 +1,3 @@
-# spec/factories/categories.rb
 FactoryBot.define do
   factory :food, class: 'Category' do
     name { '食費' }

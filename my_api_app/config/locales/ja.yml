@@ -10,9 +10,14 @@ ja:
         sector_id: "カテゴリ"
       category:
         name: "名前"
+      expense_log:
+        date: "日付"
+        item: "内容"
+        amout: "金額"
     errors:
       messages:
         blank: "を入力してください"
         taken: "はすでに存在します"
         too_long: "は%{count}文字以内で入力してください"
-
+        not_a_number: "は数値で入力してください"
+        greater_than: "%{count}より大きい値にしてください"
