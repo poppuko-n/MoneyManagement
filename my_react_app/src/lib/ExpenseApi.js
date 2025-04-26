@@ -49,7 +49,8 @@ class ExpenseApi {
       }
       )
       .then(response => ({
-        selectExpense: response.data
+        editExpense: response.data["expense_log"],
+        tracsactionType: response.data["transaction_type"]
       }))
       .catch(error => {
         alert("データの取得に失敗しました。")
