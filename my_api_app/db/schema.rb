@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_01_123801) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_26_041002) do
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", limit: 50, null: false
     t.datetime "created_at", null: false
@@ -33,7 +33,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_01_123801) do
 
   create_table "expense_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "category_id", null: false
-    t.integer "transaction_type", null: false
     t.date "date"
     t.string "item", limit: 50
     t.bigint "amount"
