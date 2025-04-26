@@ -34,8 +34,8 @@ const Expense = () => {
     })
   };
 
-  const getCategoriesBySelectType = (expense) => {
-    switch(expense.transaction_type){
+  const getCategoriesBySelectType = (transactionType) => {
+    switch(transactionType){
       case "支出":
         return expense_categories;
       case "収入":
