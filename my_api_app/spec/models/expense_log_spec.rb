@@ -2,10 +2,10 @@ RSpec.describe ExpenseLog, type: :model do
   let!(:user1) { create(:user1) }
   let!(:user2) { create(:user2) }
 
-  let!(:food) {create(:food)}
-  let!(:salary) {create(:salary)}
-  let!(:rent) {create(:rent)}
-  let!(:bonus) {create(:bonus)}
+  let!(:food) { create(:food) }
+  let!(:salary) { create(:salary) }
+  let!(:rent) { create(:rent) }
+  let!(:bonus) { create(:bonus) }
 
   let!(:food_log) { create(:food_log, category: food,  user: user1) }
   let!(:salary_log) { create(:salary_log, category: salary, user: user1) }
@@ -34,7 +34,7 @@ RSpec.describe ExpenseLog, type: :model do
     subject { ExpenseLog.new(category_id: category_id, user_id: user_id, date: date, item: item, amount: amount) }
     let (:category_id) { food.id }
     let (:user_id) { user1.id }
-    let (:date) { Date.today}
+    let (:date) { Date.today }
     let (:item) { "夜食" }
     let (:amount) { 5000 }
 
