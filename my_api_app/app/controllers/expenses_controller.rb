@@ -12,7 +12,7 @@ class ExpensesController < ApplicationController
         category_name: expense.category_name
       }
     end
-    render json: expenses
+    render json: expenses, status: :ok
   end
 
   def create
