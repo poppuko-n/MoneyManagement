@@ -43,7 +43,7 @@ RSpec.describe "Expenses", type: :request do
                 item: "昼食",
                 amount: 1000
               }
-            },headers: headers
+            }, headers: headers
           }.to change(ExpenseLog, :count).by(1)
 
           expect(response).to have_http_status(201)
@@ -56,7 +56,31 @@ RSpec.describe "Expenses", type: :request do
             "amount" => 1000,
             "user_id" => user1.id
           )
+        end
+      end
+    end
 
+    describe 'PATCH /expenses:id' do
+      context '有効なパラメーターの場合' do
+        it 'ログを更新することができる' do
+          patch "/expenses/#{food_log.id}", params: {
+            expense: {
+              category_id: food.id,
+              date: Date.today,
+              item: "更新された昼食",
+              amount: 2000
+            }
+          }, headers: headers
+
+          expect(response).to have_http_status(:ok)
+
+          json = JSON.parse(response.body)
+          expect(json['item']).to eq('更新された昼食')
+          expect(json['amount']).to eq(2000)
+
+          food_log.reload
+          expect(food_log.item).to eq('更新された昼食')
+          expect(food_log.amount).to eq(2000)
         end
       end
     end
