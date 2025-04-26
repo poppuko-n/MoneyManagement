@@ -22,12 +22,11 @@ erDiagram
 
   EXPENSE_LOGS {
     integer id PK
-    integer category_id　FK
-    integer transaction_type
+    integer category_id FK
+    integer user_id FK
     date date
     string item
     bigint amount
-    integer user_id　FK
     datetime created_at
     datetime updated_at
   }
@@ -41,7 +40,7 @@ erDiagram
 
   COMPANIES {
     integer id PK
-    integer code PK
+    integer code
     integer sector_id FK
     string name
     bigint equity

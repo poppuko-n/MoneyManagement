@@ -21,12 +21,11 @@ RSpec.describe ExpenseLog, type: :model do
   describe '::fetch_expense_for_user_byid' do
     subject { ExpenseLog.fetch_expense_for_user_byid(user1.id, food_log.id) }
     it '指定したログのみを返す' do
-      expect(subject).to  have_attributes(user_id: user1.id, id: food_log.id)
+      expect(subject).to have_attributes(user_id: user1.id, id: food_log.id)
     end
   end
 
   # describe 'バリデーションのテスト' do
 
   # end
-
 end

@@ -35,7 +35,7 @@ class ExpensesController < ApplicationController
           item: expense.item,
           amount: expense.amount
         },
-        transaction_type: Category.transaction_types.key(expense.transaction_type),
+        transaction_type: Category.transaction_types.key(expense.transaction_type)
       }
     else
       render json: { error: "指定された支出ログが見つかりません。" }, status: :not_found

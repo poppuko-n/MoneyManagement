@@ -6,5 +6,4 @@ FactoryBot.define do
   factory :sector_energy, class: 'Sector' do
     name { "エネルギー資源" }
   end
-
 end
