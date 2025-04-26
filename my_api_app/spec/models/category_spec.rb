@@ -8,26 +8,24 @@ RSpec.describe Category, type: :model do
     subject { Category.fetch_expense_categories }
 
     it '支出カテゴリのみを返す' do
-      expect(subject).to  eq([food, rent])
+      expect(subject).to eq([ food, rent ])
     end
 
     it 'ActiveRecord::Relationが返される' do
       expect(subject).to be_an(ActiveRecord::Relation)
     end
-
   end
 
   describe '::fetch_income_categories' do
     subject { Category.fetch_income_categories }
 
     it '収入カテゴリのみを返す' do
-      expect(subject).to eq([salary, bonus])
+      expect(subject).to eq([ salary, bonus ])
     end
 
     it 'ActiveRecord::Relationが返される' do
       expect(subject).to be_an(ActiveRecord::Relation)
     end
-
   end
 
   describe 'バリデーションのテスト' do
