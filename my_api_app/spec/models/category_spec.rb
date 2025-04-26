@@ -1,16 +1,14 @@
 RSpec.describe Category, type: :model do
-  before do
-    @food   = create(:food)
-    @rent   = create(:rent)
-    @salary = create(:salary)
-    @bonus  = create(:bonus)
-  end
+  let!(:food) { create(:food) }
+  let!(:rent) { create(:rent) }
+  let!(:salary) { create(:salary) }
+  let!(:bonus) { create(:bonus) }
 
   describe '::fetch_expense_categories' do
     subject { Category.fetch_expense_categories }
 
     it '支出カテゴリのみを返す' do
-      expect(subject).to  eq([@food, @rent])
+      expect(subject).to  eq([food, rent])
     end
 
     it 'ActiveRecord::Relationが返される' do
@@ -23,7 +21,7 @@ RSpec.describe Category, type: :model do
     subject { Category.fetch_income_categories }
 
     it '収入カテゴリのみを返す' do
-      expect(subject).to eq([@salary, @bonus])
+      expect(subject).to eq([salary, bonus])
     end
 
     it 'ActiveRecord::Relationが返される' do

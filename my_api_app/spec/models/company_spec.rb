@@ -1,12 +1,11 @@
 RSpec.describe Company, type: :model do
-  before do
-    @sector_food = create(:sector_food)
-    @sector_energy = create(:sector_energy)
-  
-    @company_alpha = create(:company_alpha, sector: @sector_food)
-    @company_beta  = create(:company_beta,  sector: @sector_food)
-    @company_ganma = create(:company_ganma, sector: @sector_energy)
-  end
+
+  let!(:sector_food) { create(:sector_food) }
+  let!(:sector_energy)  { create(:sector_energy) }
+
+  let!(:company_alpha)  { create(:company_alpha, sector: sector_food) } 
+  let!(:company_beta)   { create(:company_beta,  sector: sector_food) }
+  let!(:company_ganma)  { create(:company_ganma, sector: sector_energy) }
 
   describe '::fetch_companies_with_sectors' do
     subject {Company.fetch_companies_with_sectors}
@@ -21,9 +20,9 @@ RSpec.describe Company, type: :model do
   
     it 'equityの大きい順に正しいデータが並ぶ' do
       expected_result = [
-        [@company_ganma.code, @company_ganma.name, @company_ganma.sector.name],
-        [@company_beta.code,  @company_beta.name,  @company_beta.sector.name],
-        [@company_alpha.code, @company_alpha.name, @company_alpha.sector.name],
+        [company_ganma.code, company_ganma.name, company_ganma.sector.name],
+        [company_beta.code,  company_beta.name,  company_beta.sector.name],
+        [company_alpha.code, company_alpha.name, company_alpha.sector.name],
       ]
     
       expect(subject).to eq(expected_result)
@@ -33,7 +32,7 @@ RSpec.describe Company, type: :model do
 
   describe 'バリデーションのテスト' do
     subject {Company.new(code: code, name: name, sector: sector)}
-    let(:sector) { @sector_food }
+    let(:sector) { sector_food }
     let(:code) { 4 }
     let(:name) { "test_company" }
 
@@ -48,7 +47,6 @@ RSpec.describe Company, type: :model do
         let(:code) { '' }
         it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
           expect(subject).not_to be_valid
-          puts subject.errors.full_messages
           expect(subject.errors[:code]).to include("を入力してください")
         end
       end
@@ -82,7 +80,7 @@ RSpec.describe Company, type: :model do
 
   describe 'アソシエーションのテスト' do
     it '業種を関連づけられる' do
-      expect(@company_alpha.sector).to eq(@sector_food)
+      expect(company_alpha.sector).to eq(sector_food)
     end
   end
 end
