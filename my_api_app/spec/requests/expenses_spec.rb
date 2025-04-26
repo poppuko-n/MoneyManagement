@@ -84,5 +84,17 @@ RSpec.describe "Expenses", type: :request do
         end
       end
     end
+
+    describe 'DELETE /expenses/:id' do
+      context 'ログが存在する場合' do
+        it 'ログを削除することができる' do
+          expect { delete "/expenses/#{food_log.id}", headers: headers
+        }.to change(ExpenseLog, :count).by(-1)
+
+        expect(response).to have_http_status(204)
+        expect(ExpenseLog.exists?(food_log.id)).to be false
+        end
+      end
+    end
   end
 end
