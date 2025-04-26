@@ -3,8 +3,8 @@ import ExpenseApi from './lib/ExpenseApi';
 import { useAuth } from "./contexts/Authcontext"
 
 const ExpenseEdit = ({ onBack, expenseId, getCategoriesBySelectType }) => {
+  const [tracsactionType, setTracsactionType] = useState('')
   const [editExpense, setEditExpense] = useState({
-    transaction_type: '',
     category_id: '',
     date: '',
     item: '',
@@ -21,7 +21,8 @@ const ExpenseEdit = ({ onBack, expenseId, getCategoriesBySelectType }) => {
 
   useEffect(() => {
     ExpenseApi.showExpense(expenseId, token).then(data => {
-      setEditExpense(data.selectExpense);
+      setEditExpense(data.editExpense);
+      setTracsactionType(data.tracsactionType);
     });
   }, []);
 
@@ -34,8 +35,8 @@ const ExpenseEdit = ({ onBack, expenseId, getCategoriesBySelectType }) => {
           <label className="block text-base font-normal text-gray-900 mb-1">種類</label>
           <select
             className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={editExpense.transaction_type}
-            onChange={(e) => setEditExpense({ ...editExpense, transaction_type: e.target.value })}
+            value={tracsactionType}
+            onChange={(e) => setTracsactionType(e.target.value)}
           >
             <option value="">選択してください</option>
             <option value="支出">支出</option>
@@ -51,7 +52,7 @@ const ExpenseEdit = ({ onBack, expenseId, getCategoriesBySelectType }) => {
             onChange={(e) => setEditExpense({ ...editExpense, category_id: e.target.value })}
           >
             <option value="0">選択してください</option>
-            {getCategoriesBySelectType(editExpense).map((category) => (
+            {getCategoriesBySelectType(tracsactionType).map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
               </option>

@@ -5,8 +5,8 @@ import { useAuth } from "./contexts/Authcontext"
 const ExpenseNew = ({ onBack, getCategoriesBySelectType }) => {
   const today = new Date().toISOString().split('T')[0]; 
   const { token } = useAuth();
+  const [transactionType, setTransactionType] = useState('');
   const [createExpense, setExpense] = useState({
-    transaction_type: '',
     category_id: '',
     date: today,
     item: '',
@@ -29,8 +29,10 @@ const ExpenseNew = ({ onBack, getCategoriesBySelectType }) => {
           <label className="block text-base font-normal text-gray-900 mb-1">種類</label>
           <select
             className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={createExpense.transaction_type}
-            onChange={(e) => setExpense({ ...createExpense, transaction_type: e.target.value })}
+            value={transactionType}
+            onChange={(e) => {
+              setTransactionType(e.target.value);
+            }}
           >
             <option value="">選択してください</option>
             <option value="支出">支出</option>
@@ -46,7 +48,7 @@ const ExpenseNew = ({ onBack, getCategoriesBySelectType }) => {
             onChange={(e) => setExpense({ ...createExpense, category_id: e.target.value })}
           >
             <option value="">選択してください</option>
-            {getCategoriesBySelectType(createExpense).map((category) => (
+            {getCategoriesBySelectType(transactionType).map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
               </option>

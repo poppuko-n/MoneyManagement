@@ -5,7 +5,7 @@ class ExpensesController < ApplicationController
     expenses = ExpenseLog.fetch_all_expenses_for_user(@current_user.id).map do |expense|
       {
         id: expense.id,
-        transaction_type: expense.transaction_type,
+        transaction_type: Category.transaction_types.key(expense.transaction_type),
         date: expense.date,
         item: expense.item,
         amount: expense.amount,
@@ -29,11 +29,13 @@ class ExpensesController < ApplicationController
     expense = ExpenseLog.fetch_expense_for_user_byid(@current_user.id, params[:id])
     if expense
       render json: {
-        transaction_type: expense.transaction_type,
-        category_id: expense.category_id,
-        date: expense.date,
-        item: expense.item,
-        amount: expense.amount
+        expense_log: {
+          category_id: expense.category_id,
+          date: expense.date,
+          item: expense.item,
+          amount: expense.amount
+        },
+        transaction_type: Category.transaction_types.key(expense.transaction_type),
       }
     else
       render json: { error: "指定された支出ログが見つかりません。" }, status: :not_found
@@ -58,6 +60,6 @@ class ExpensesController < ApplicationController
   private
 
   def expense_params
-    params.require(:expense).permit(:transaction_type, :category_id, :date, :item, :amount)
+    params.require(:expense).permit(:category_id, :date, :item, :amount)
   end
 end
