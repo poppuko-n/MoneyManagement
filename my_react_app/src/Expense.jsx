@@ -24,7 +24,7 @@ const Expense = () => {
   useEffect(()=> {
     loadCategories();
     initializeYearMonth();
-    fetchExpenses(token);
+    fetchExpenses(token, year, month);
   },[]);
 
   const loadCategories = () => {
@@ -40,8 +40,8 @@ const Expense = () => {
     setMonth(String(now.getMonth()+1).padStart(2, '0'));
   };
 
-  const fetchExpenses = (token) => {
-    ExpenseApi.getExpenses(token).then(data => {
+  const fetchExpenses = (token, year, month) => {
+    ExpenseApi.getExpenses(token, year, month).then(data => {
       setExpenses(data.expenses)
     })
   };
