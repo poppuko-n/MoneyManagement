@@ -12,11 +12,15 @@ class ExpenseApi {
       }))
   }
 
-  static getExpenses(token) {
+  static getExpenses(token, year, month) {
     return axios
       .get(`${this.apiBaseUrl}/expenses`, {
         headers: {
           Authorization: `Bearer ${token}`
+        },
+        params: {
+          year: year,
+          month: month
         }
       })
       .then(response => ({
