@@ -17,27 +17,30 @@ const Expense = () => {
   const [expense_categories, setExpenseCategories] = useState([]);
   const [income_categories, setIncomeCategories] = useState([]);
   const [expenses, setExpenses] = useState([]);
-  const [year, setYear] = useState(null)
-  const [month, setMonth] = useState(null)
+  const [year, setYear] = useState('')
+  const [month, setMonth] = useState('')
   const { token } = useAuth();
  
   useEffect(()=> {
+    loadCategories();
+    initializeYearMonth();
+    fetchExpenses(token);
+  },[]);
+
+  const loadCategories = () => {
     ExpenseApi.getCategories().then(data => {
       setExpenseCategories(data.expense_categories);
       setIncomeCategories(data.income_categories);
     });
+  };
 
-    refreshYearMonth();
-    refreshExpenses(token);
-  },[]);
-
-  const refreshYearMonth = () => {
+  const initializeYearMonth = () => {
     const now = new Date;
     setYear(now.getFullYear());
     setMonth(String(now.getMonth()+1).padStart(2, '0'));
   };
 
-  const refreshExpenses = (token) => {
+  const fetchExpenses = (token) => {
     ExpenseApi.getExpenses(token).then(data => {
       setExpenses(data.expenses)
     })
@@ -65,7 +68,7 @@ const Expense = () => {
         month={month}
         setYear={setYear}
         setMonth={setMonth}
-        refreshYearMonth={refreshYearMonth}
+        initializeYearMonth={initializeYearMonth}
         onCreateNew={() => setIsCreating(true)}
       />
       {isPieChart && (
@@ -79,7 +82,7 @@ const Expense = () => {
             onChange={() =>{
               setIsPieChart(false);
               setIsDetail(true);
-              refreshExpenses(token);
+              fetchExpenses(token);
             }}
           />
         </motion.div>
@@ -95,7 +98,7 @@ const Expense = () => {
             onBack={() => {
               setIsPieChart(true);
               setIsDetail(false);
-              refreshExpenses(token);
+              fetchExpenses(token);
             }} 
           />
         </motion.div>
@@ -108,7 +111,7 @@ const Expense = () => {
               setIsPieChart(true);
               setIsDetail(false);
               setIsCreating(false);
-              refreshExpenses(token); 
+              fetchExpenses(token); 
             }}
           />
         </Modal>
@@ -122,7 +125,7 @@ const Expense = () => {
               setIsPieChart(true);
               setIsDetail(false);
               setCurrentExpenseId(null);
-              refreshExpenses(token);
+              fetchExpenses(token);
             }}
           />
         </Modal>

@@ -1,6 +1,6 @@
 import addImage from "./assets/add.svg";
 
-const ExpenseHeader = ({expenses, year, month, setYear, setMonth, refreshYearMonth, onCreateNew}) => {
+const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYearMonth, onCreateNew}) => {
   const incomeTotal = expenses
     .filter((expense) => expense.transaction_type === "収入")
     .reduce((total, expense) => total + expense.amount, 0);
@@ -47,7 +47,7 @@ const ExpenseHeader = ({expenses, year, month, setYear, setMonth, refreshYearMon
         </select>
         <label className="text-gray-700">月</label>
         <button
-          onClick={refreshYearMonth}
+          onClick={initializeYearMonth}
           className=" text-gray-800 border bg-gray-100 border-gray-300 rounded px-2 py-1 hover:bg-gray-300 transition duration-300"
         >
           今月
