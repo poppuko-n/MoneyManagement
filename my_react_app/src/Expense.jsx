@@ -17,7 +17,8 @@ const Expense = () => {
   const [expense_categories, setExpenseCategories] = useState([]);
   const [income_categories, setIncomeCategories] = useState([]);
   const [expenses, setExpenses] = useState([]);
-  const [yearMonth, setYearMonth] = useState(null)
+  const [year, setYear] = useState(null)
+  const [month, setMonth] = useState(null)
   const { token } = useAuth();
  
   useEffect(()=> {
@@ -32,9 +33,8 @@ const Expense = () => {
 
   const refreshYearMonth = () => {
     const now = new Date;
-    const year = now.getFullYear();
-    const month = String(now.getMonth()+1).padStart(2, '0');
-    setYearMonth(`${year}/${month}`);
+    setYear(now.getFullYear());
+    setMonth(String(now.getMonth()+1).padStart(2, '0'));
   };
 
   const refreshExpenses = (token) => {
@@ -61,7 +61,10 @@ const Expense = () => {
       transition={{ duration: 1 }}>
       <ExpenseHeader
         expenses={expenses}
-        yearMonth={yearMonth}
+        year={year}
+        month={month}
+        setYear={setYear}
+        setMonth={setMonth}
         onCreateNew={() => setIsCreating(true)}
       />
       {isPieChart && (

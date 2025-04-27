@@ -1,6 +1,6 @@
 import addImage from "./assets/add.svg";
 
-const ExpenseHeader = ({expenses, yearMonth, onCreateNew}) => {
+const ExpenseHeader = ({expenses, year, month, setYear, setMonth, onCreateNew}) => {
   const incomeTotal = expenses
     .filter((expense) => expense.transaction_type === "収入")
     .reduce((total, expense) => total + expense.amount, 0);
@@ -15,7 +15,39 @@ const ExpenseHeader = ({expenses, yearMonth, onCreateNew}) => {
     <div className="container mx-auto p-4">
       <div className="flex items-center justify-between mb-4">
         <h1 className="text-2xl border-b border-black pb-2 inline-block">月次収支</h1>
-        <div className="text-lg text-gray-700">{yearMonth}</div> 
+        <div className="flex gap-2 items-center">
+        <select
+          value={year}
+          onChange={(e) => setYear(e.target.value)}
+          className="bg-white border border-gray-300 rounded px-2 py-1"
+        >
+          <option value="2025">2025</option>
+          <option value="2024">2024</option>
+          <option value="2023">2023</option>
+        </select>
+        <label className="text-gray-700">年</label>
+
+        <select
+          value={month}
+          onChange={(e) => setMonth(e.target.value)}
+          className="bg-white border border-gray-300 rounded px-2 py-1"
+        >
+          <option value="01">01</option>
+          <option value="02">02</option>
+          <option value="03">03</option>
+          <option value="04">04</option>
+          <option value="05">05</option>
+          <option value="06">06</option>
+          <option value="07">07</option>
+          <option value="08">08</option>
+          <option value="09">09</option>
+          <option value="10">10</option>
+          <option value="11">11</option>
+          <option value="12">12</option>
+        </select>
+        <label className="text-gray-700">月</label>
+      </div>
+
         <div
           onClick={onCreateNew}
           className="cursor-pointer hover:bg-red-300 bg-red-400 text-white rounded-full p-4 transition duration-700 flex items-center justify-center"
