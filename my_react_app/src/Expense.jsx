@@ -65,6 +65,7 @@ const Expense = () => {
         month={month}
         setYear={setYear}
         setMonth={setMonth}
+        refreshYearMonth={refreshYearMonth}
         onCreateNew={() => setIsCreating(true)}
       />
       {isPieChart && (

@@ -1,6 +1,6 @@
 import addImage from "./assets/add.svg";
 
-const ExpenseHeader = ({expenses, year, month, setYear, setMonth, onCreateNew}) => {
+const ExpenseHeader = ({expenses, year, month, setYear, setMonth, refreshYearMonth, onCreateNew}) => {
   const incomeTotal = expenses
     .filter((expense) => expense.transaction_type === "収入")
     .reduce((total, expense) => total + expense.amount, 0);
@@ -19,7 +19,7 @@ const ExpenseHeader = ({expenses, year, month, setYear, setMonth, onCreateNew}) 
         <select
           value={year}
           onChange={(e) => setYear(e.target.value)}
-          className="bg-white border border-gray-300 rounded px-2 py-1"
+          className="text-xl bg-white border border-gray-300 rounded px-2 py-1"
         >
           <option value="2025">2025</option>
           <option value="2024">2024</option>
@@ -30,7 +30,7 @@ const ExpenseHeader = ({expenses, year, month, setYear, setMonth, onCreateNew}) 
         <select
           value={month}
           onChange={(e) => setMonth(e.target.value)}
-          className="bg-white border border-gray-300 rounded px-2 py-1"
+          className="text-xl bg-white border border-gray-300 rounded px-2 py-1"
         >
           <option value="01">01</option>
           <option value="02">02</option>
@@ -46,6 +46,12 @@ const ExpenseHeader = ({expenses, year, month, setYear, setMonth, onCreateNew}) 
           <option value="12">12</option>
         </select>
         <label className="text-gray-700">月</label>
+        <button
+          onClick={refreshYearMonth}
+          className=" text-gray-800 border bg-gray-100 border-gray-300 rounded px-2 py-1 hover:bg-gray-300 transition duration-300"
+        >
+          今月
+        </button>
       </div>
 
         <div
