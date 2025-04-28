@@ -51,6 +51,31 @@ RSpec.describe "Expenses", type: :request do
         )
       end
     end
+
+    context '無効なパラメーターの場合' do
+      it 'ログを登録することができない' do
+        expect {
+          post '/expenses', params: {
+            expense: {
+              category_id: '',
+              date: '',
+              item: '',
+              amount: ''
+            }
+          }, headers: headers
+        }.not_to change(ExpenseLog, :count)
+
+        expect(response).to have_http_status(422)
+        expected_errors = [
+          'カテゴリー を入力してください',
+          '日付 を入力してください',
+          '内容 を入力してください',
+          '金額 を入力してください',
+          '金額 は数値で入力してください'
+        ]
+        expect(response.parsed_body['errors']).to eq(expected_errors)
+      end
+    end
   end
 
   describe 'PATCH /expenses/:id' do
