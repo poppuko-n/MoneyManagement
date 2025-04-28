@@ -78,9 +78,9 @@ const Home = ({setIsSignUp}) => {
             viewport={{ once:true, amount: 0.2 }}
             className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h3 className="text-3xl font-extrabold mb-4 text-blue-600">STEP 1</h3>
-            <h4 className="text-2xl font-semibold mb-4">家計簿</h4>
+            <h4 className="text-2xl font-semibold mb-4">資金を把握</h4>
             <p className="text-gray-700 text-base mb-8">
-              毎月の収支額を把握するために、家計簿機能を提供。自分の資金を把握しましょう。
+              家計簿機能で毎月の収支を整理し、投資資金を明確にしましょう。
             </p>
             <img src={step1} alt="STEP 1" className="mx-auto w-52 h-52 object-contain" />
           </motion.div>
@@ -92,9 +92,9 @@ const Home = ({setIsSignUp}) => {
             viewport={{ once:true, amount: 0.2 }}
             className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h3 className="text-3xl font-extrabold mb-4 text-blue-600">STEP 2</h3>
-            <h4 className="text-2xl font-semibold mb-4">銘柄選択</h4>
+            <h4 className="text-2xl font-semibold mb-4">銘柄を選ぶ</h4>
             <p className="text-gray-700 text-base mb-8">
-              実際の銘柄を活用してシミュレーション。自分の余裕資金内で銘柄を選択してみましょう。
+              興味のある銘柄を選び、実際の株価データを使ってシミュレーションを始めます。
             </p>
             <img src={step2} alt="STEP 2" className="mx-auto w-52 h-52 object-contain" />
           </motion.div>
@@ -106,9 +106,9 @@ const Home = ({setIsSignUp}) => {
             viewport={{ once:true, amount: 0.2 }}
             className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h3 className="text-3xl font-extrabold mb-4 text-blue-600">STEP 3</h3>
-            <h4 className="text-2xl font-semibold mb-4">シミュレーション</h4>
+            <h4 className="text-2xl font-semibold mb-4">結果を分析</h4>
             <p className="text-gray-700 text-base mb-8">
-              運用期間、積立期間に応じた損益額が表示。今後の投資戦略を練りましょう。
+              損益シミュレーション結果とAI分析を参考に、今後の投資戦略を考えましょう。
             </p>
             <img src={step3} alt="STEP 3" className="mx-auto w-52 h-52  object-contain" />
           </motion.div>
@@ -235,7 +235,7 @@ const Home = ({setIsSignUp}) => {
             className="text-center bg-white shadow-lg rounded-xl p-8 flex-1 max-w-[30%] min-h-[450px]">
             <h4 className="text-2xl font-semibold mb-6"> AI分析</h4>
             <p className="text-gray-700 text-base mb-6">
-              シミュレーション結果から、AIが投資傾向を分析。
+              AIがシミュレーション結果を分析。
               将来を見据えた運用プランをサポートします。
             </p>
             <img src={service4} alt="損益額の確認" className="mx-auto w-52 h-52 object-contain" />
