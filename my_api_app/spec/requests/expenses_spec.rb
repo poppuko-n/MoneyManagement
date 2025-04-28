@@ -97,6 +97,38 @@ RSpec.describe "Expenses", type: :request do
         expect(food_log.amount).to eq(2000)
       end
     end
+
+    context '無効なパラメーターの場合' do
+      it 'ログを更新することができない' do
+        patch "/expenses/#{food_log.id}", params: {
+          expense:{
+            category_id: food.id,
+            date: Date.today,
+            item: '',
+            amount: 2000
+          }
+        }, headers: headers
+        expect(response).to have_http_status(422)
+        expect(response.parsed_body['errors']).to eq(["内容 を入力してください"])
+        food_log.reload
+        expect(food_log.item).to eq('昼食')
+        expect(food_log.amount).to eq(1000)
+      end
+    end
+
+    context 'ログが存在しない場合' do
+      it 'ログを更新することができない' do
+        patch "/expenses/#{food_log.id+100}", params: {
+          expense: {
+            category_id: food.id,
+            date: Date.today,
+            item: "更新された昼食",
+            amount: 2000
+          }
+        },headers: headers
+        expect(response).to have_http_status(404)
+      end
+    end
   end
 
   describe 'DELETE /expenses/:id' do
