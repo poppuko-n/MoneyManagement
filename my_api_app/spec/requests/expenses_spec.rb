@@ -1,16 +1,16 @@
 require 'rails_helper'
 
 RSpec.describe "Expenses", type: :request do
-  let!(:user1) { create(:user, name: 'テストユーザー1') }
-  let!(:food) { create(:category, name: '食費', transaction_type: '支出') }
-  let!(:salary) { create(:category, name: '給与', transaction_type: '収入') }
-  let!(:food_log) { create(:expense_log, date: Date.today, item: '昼食', amount: 1000,  category: food,  user: user1) }
-  let!(:salary_log) { create(:expense_log, date: Date.today, item: '給与', amount: 200000,  category: salary,  user: user1) }
+  let(:user1) { create(:user, name: 'テストユーザー1') }
+  let(:food) { create(:category, name: '食費', transaction_type: '支出') }
+  let(:salary) { create(:category, name: '給与', transaction_type: '収入') }
   let(:headers) { { "Authorization" => "Bearer #{token}" } }
   let(:token) { generate_token(user1) }
 
   describe "GET /expenses" do
     context 'ログインユーザーがアクセスした時' do
+      let!(:food_log) { create(:expense_log, date: Date.today, item: '昼食', amount: 1000,  category: food,  user: user1) }
+      let!(:salary_log) { create(:expense_log, date: Date.today, item: '給与', amount: 200000,  category: salary,  user: user1) }
       it '自分のログを取得することができる' do
         get '/expenses', headers: headers
         aggregate_failures do
@@ -85,6 +85,7 @@ RSpec.describe "Expenses", type: :request do
   end
 
   describe 'PATCH /expenses/:id' do
+    let!(:food_log) { create(:expense_log, date: Date.today, item: '昼食', amount: 1000,  category: food,  user: user1) }
     context '有効なパラメーターの場合' do
       it 'ログを更新することができる' do
         patch "/expenses/#{food_log.id}", params: {
@@ -142,6 +143,7 @@ RSpec.describe "Expenses", type: :request do
   end
 
   describe 'DELETE /expenses/:id' do
+    let!(:food_log) { create(:expense_log, date: Date.today, item: '昼食', amount: 1000,  category: food,  user: user1) }
     context 'ログが存在する場合' do
       it 'ログを削除することができる' do
         aggregate_failures do
