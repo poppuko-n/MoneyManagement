@@ -1,6 +1,6 @@
 RSpec.describe Company, type: :model do
-  let!(:sector_food) { create(:sector_food) }
-  let!(:sector_energy)  { create(:sector_energy) }
+  let!(:sector_food) { create(:sector, name: '食品') }
+  let!(:sector_energy) { create(:sector, name: 'エネルギー資源') }
 
   let!(:company_alpha)  { create(:company_alpha, sector: sector_food) }
   let!(:company_beta)   { create(:company_beta,  sector: sector_food) }
@@ -61,7 +61,7 @@ RSpec.describe Company, type: :model do
         let(:sector) { nil }
         it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
           expect(subject).not_to be_valid
-          expect(subject.errors[:sector_id]).to include("を入力してください")
+          expect(subject.errors[:sector]).to include("を入力してください")
         end
       end
     end
