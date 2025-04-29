@@ -43,7 +43,7 @@ RSpec.describe "Expenses", type: :request do
               }
             }, headers: headers
           }.to change(ExpenseLog, :count).by(1)
-  
+
           expect(response).to have_http_status(201)
           expect(response.parsed_body).to include(
             "category_id" => food.id,
@@ -69,7 +69,7 @@ RSpec.describe "Expenses", type: :request do
               }
             }, headers: headers
           }.not_to change(ExpenseLog, :count)
-  
+
           expect(response).to have_http_status(422)
           expected_errors = [
             'カテゴリー を入力してください',
@@ -109,7 +109,7 @@ RSpec.describe "Expenses", type: :request do
     context '無効なパラメーターの場合' do
       it 'ログを更新することができない' do
         patch "/expenses/#{food_log.id}", params: {
-          expense:{
+          expense: {
             category_id: food.id,
             date: Date.today,
             item: '',
@@ -118,7 +118,7 @@ RSpec.describe "Expenses", type: :request do
         }, headers: headers
         aggregate_failures do
           expect(response).to have_http_status(422)
-          expect(response.parsed_body['errors']).to eq(["内容 を入力してください"])
+          expect(response.parsed_body['errors']).to eq([ "内容 を入力してください" ])
           food_log.reload
           expect(food_log.item).to eq('昼食')
           expect(food_log.amount).to eq(1000)
@@ -135,7 +135,7 @@ RSpec.describe "Expenses", type: :request do
             item: "更新された昼食",
             amount: 2000
           }
-        },headers: headers
+        }, headers: headers
         expect(response).to have_http_status(404)
       end
     end
@@ -148,7 +148,7 @@ RSpec.describe "Expenses", type: :request do
           expect {
             delete "/expenses/#{food_log.id}", headers: headers
           }.to change(ExpenseLog, :count).by(-1)
-  
+
           expect(response).to have_http_status(204)
           expect(ExpenseLog.exists?(food_log.id)).to be false
         end
