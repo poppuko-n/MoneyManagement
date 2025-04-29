@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe "Expenses", type: :request do
   let!(:user1) { create(:user, name: 'テストユーザー1') }
-  let!(:food) { create(:food) }
-  let!(:salary) { create(:salary) }
+  let!(:food) { create(:category, name:'食費', transaction_type: '支出') }
+  let!(:salary) { create(:category, name:'給与', transaction_type: '収入') }
   let!(:food_log) { create(:food_log, category: food,  user: user1) }
   let!(:salary_log) { create(:salary_log, category: salary, user: user1) }
   let(:headers) { { "Authorization" => "Bearer #{token}" } }

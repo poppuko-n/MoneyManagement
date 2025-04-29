@@ -2,10 +2,10 @@ RSpec.describe ExpenseLog, type: :model do
   let!(:user1) { create(:user, name: 'テストユーザー1') }
   let!(:user2) { create(:user, name: 'テストユーザー2') }
 
-  let!(:food) { create(:food) }
-  let!(:salary) { create(:salary) }
-  let!(:rent) { create(:rent) }
-  let!(:bonus) { create(:bonus) }
+  let!(:food) { create(:category, name:'食費', transaction_type: '支出') }
+  let!(:rent) { create(:category, name:'家賃', transaction_type: '支出') }
+  let!(:salary) { create(:category, name:'給与', transaction_type: '収入') }
+  let!(:bonus) { create(:category, name:'ボーナス', transaction_type: '収入') }
 
   let!(:food_log) { create(:food_log, category: food,  user: user1) }
   let!(:salary_log) { create(:salary_log, category: salary, user: user1) }

@@ -1,8 +1,8 @@
 RSpec.describe Category, type: :model do
-  let!(:food) { create(:food) }
-  let!(:rent) { create(:rent) }
-  let!(:salary) { create(:salary) }
-  let!(:bonus) { create(:bonus) }
+  let!(:food) { create(:category, name:'食費', transaction_type: '支出') }
+  let!(:rent) { create(:category, name:'家賃', transaction_type: '支出') }
+  let!(:salary) { create(:category, name:'給与', transaction_type: '収入') }
+  let!(:bonus) { create(:category, name:'ボーナス', transaction_type: '収入') }
 
   describe '::fetch_expense_categories' do
     subject { Category.fetch_expense_categories }
