@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "Expenses", type: :request do
-  let!(:user1) { create(:user1) }
+  let!(:user1) { create(:user, name: 'テストユーザー1') }
   let!(:food) { create(:food) }
   let!(:salary) { create(:salary) }
   let!(:food_log) { create(:food_log, category: food,  user: user1) }

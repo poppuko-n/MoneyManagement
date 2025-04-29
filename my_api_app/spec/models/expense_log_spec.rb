@@ -1,6 +1,6 @@
 RSpec.describe ExpenseLog, type: :model do
-  let!(:user1) { create(:user1) }
-  let!(:user2) { create(:user2) }
+  let!(:user1) { create(:user, name: 'テストユーザー1') }
+  let!(:user2) { create(:user, name: 'テストユーザー2') }
 
   let!(:food) { create(:food) }
   let!(:salary) { create(:salary) }
