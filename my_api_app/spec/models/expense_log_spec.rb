@@ -1,16 +1,16 @@
 RSpec.describe ExpenseLog, type: :model do
-  let!(:user1) { create(:user1) }
-  let!(:user2) { create(:user2) }
+  let!(:user1) { create(:user, name: 'テストユーザー1') }
+  let!(:user2) { create(:user, name: 'テストユーザー2') }
 
-  let!(:food) {create(:food)}
-  let!(:salary) {create(:salary)}
-  let!(:rent) {create(:rent)}
-  let!(:bonus) {create(:bonus)}
+  let!(:food) { create(:category, name: '食費', transaction_type: '支出') }
+  let!(:rent) { create(:category, name: '家賃', transaction_type: '支出') }
+  let!(:salary) { create(:category, name: '給与', transaction_type: '収入') }
+  let!(:bonus) { create(:category, name: 'ボーナス', transaction_type: '収入') }
 
-  let!(:food_log) { create(:food_log, category: food,  user: user1) }
-  let!(:salary_log) { create(:salary_log, category: salary, user: user1) }
-  let!(:rent_log) { create(:rent_log, category: rent, user: user2) }
-  let!(:bonus_log) { create(:bonus_log, category: bonus, user: user2) }
+  let!(:food_log) { create(:expense_log, date: Date.today, item: '昼食', amount: 1000,  category: food,  user: user1) }
+  let!(:salary_log) { create(:expense_log, date: Date.today, item: '給与', amount: 200000,  category: salary,  user: user1) }
+  let!(:rent_log) { create(:expense_log, date: Date.today, item: '家賃', amount: 10000,  category: rent,  user: user2) }
+  let!(:bonus_log) { create(:expense_log, date: Date.today, item: 'ボーナス', amount: 400000,  category: bonus,  user: user2) }
 
   describe '::fetch_all_expenses_for_user' do
     subject { ExpenseLog.fetch_all_expenses_for_user(user1.id) }
@@ -34,7 +34,7 @@ RSpec.describe ExpenseLog, type: :model do
     subject { ExpenseLog.new(category_id: category_id, user_id: user_id, date: date, item: item, amount: amount) }
     let (:category_id) { food.id }
     let (:user_id) { user1.id }
-    let (:date) { Date.today}
+    let (:date) { Date.today }
     let (:item) { "夜食" }
     let (:amount) { 5000 }
 

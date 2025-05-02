@@ -11,9 +11,10 @@ ja:
       category:
         name: "名前"
       expense_log:
+        category: "カテゴリー"
         date: "日付"
         item: "内容"
-        amout: "金額"
+        amount: "金額"
     errors:
       messages:
         blank: "を入力してください"
@@ -21,3 +22,4 @@ ja:
         too_long: "は%{count}文字以内で入力してください"
         not_a_number: "は数値で入力してください"
         greater_than: "%{count}より大きい値にしてください"
+        required: "を入力してください" 
