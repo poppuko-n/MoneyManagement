@@ -93,8 +93,8 @@ class ExpenseApi {
       })
   }
 
-  static exportExpenses() {
-    console.log('ボタンが押下されました')
+  static exportExpenses(token) {
+    console.log(token)
   }
   
 }

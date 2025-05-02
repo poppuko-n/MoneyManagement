@@ -63,8 +63,8 @@ const Expense = () => {
     }
   };
 
-  const onExportExpenses = () => {
-    ExpenseApi.exportExpenses()
+  const onExportExpenses = (token) => {
+    ExpenseApi.exportExpenses(token)
   }
 
   return (
@@ -80,7 +80,7 @@ const Expense = () => {
         setMonth={setMonth}
         initializeYearMonth={initializeYearMonth}
         onCreateNew={() => setIsCreating(true)}
-        onExportExpenses={onExportExpenses}
+        onExportExpenses={() => onExportExpenses(token)}
       />
       {isPieChart && (
         <motion.div
