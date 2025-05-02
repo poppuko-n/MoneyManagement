@@ -1,3 +1,5 @@
+require "csv"
+
 class ExpensesController < ApplicationController
   before_action :authenticate_user, { only: [ :index, :create, :show, :update, :destroy, :export ] }
 
@@ -60,7 +62,20 @@ class ExpensesController < ApplicationController
   end
 
   def export
-    render status: :ok
+    expenses = ExpenseLog.fetch_all_expenses_for_user(@current_user.id)
+    csv_data = CSV.generate do |csv|
+      csv << [ "日付", "種別", "カテゴリ", "内容", "金額" ]
+      expenses.each do |expense|
+        csv << [
+          expense.date.to_s,
+          Category.transaction_types.key(expense.transaction_type),
+          expense.category_name,
+          expense.item,
+          expense.amount
+        ]
+      end
+    end
+    send_data csv_data, filename: "expenses_#{Time.zone.today}.csv", type: "text/csv"
   end
 
   private
