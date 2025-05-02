@@ -94,8 +94,27 @@ class ExpenseApi {
   }
 
   static exportExpenses(token) {
-    console.log(token)
+    return axios
+      .get(`${this.apiBaseUrl}/export`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        responseType: 'blob', 
+      })
+      .then(response => {
+        const blob = new Blob([response.data], { type: 'text/csv' }); 
+        const url = window.URL.createObjectURL(blob); 
+        const a = document.createElement('a');       
+        a.href = url;
+        a.download = `expenses_${new Date().toISOString().slice(0, 10)}.csv`;
+        a.click();
+        window.URL.revokeObjectURL(url); 
+      })
+      .catch(() => {
+        alert('ダウンロードに失敗しました。');
+      });
   }
+  
   
 }
 
