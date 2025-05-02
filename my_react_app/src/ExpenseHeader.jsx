@@ -1,7 +1,7 @@
 import addImage from "./assets/add.svg";
 import downLoadImage from "./assets/download.svg";
 
-const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYearMonth, onCreateNew}) => {
+const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYearMonth, onCreateNew, onExportExpenses}) => {
   const incomeTotal = expenses
     .filter((expense) => expense.transaction_type === "収入")
     .reduce((total, expense) => total + expense.amount, 0);
@@ -62,6 +62,7 @@ const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYear
         <div className="flex-1 flex justify-end gap-2">
           <div className="flex gap-2">
             <div
+            onClick={onExportExpenses}
               className="cursor-pointer hover:bg-gray-300 bg-gray-400 text-white rounded-full p-4 transition duration-700 flex items-center justify-center"
             >
               <img 
