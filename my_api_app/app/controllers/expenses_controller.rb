@@ -2,7 +2,9 @@ class ExpensesController < ApplicationController
   before_action :authenticate_user, { only: [ :index, :create, :show, :update, :destroy ] }
 
   def index
-    expenses = ExpenseLog.fetch_all_expenses_for_user(@current_user.id).map do |expense|
+    year = params[:year]
+    month = params[:month]
+    expenses = ExpenseLog.fetch_all_expenses_for_user_by_month(@current_user.id, year, month).map do |expense|
       {
         id: expense.id,
         transaction_type: Category.transaction_types.key(expense.transaction_type),

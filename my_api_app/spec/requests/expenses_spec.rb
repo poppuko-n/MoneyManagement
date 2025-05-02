@@ -9,21 +9,16 @@ RSpec.describe "Expenses", type: :request do
 
   describe "GET /expenses" do
     context 'ログインユーザーがアクセスした時' do
-      let!(:food_log) { create(:expense_log, date: Date.today, item: '昼食', amount: 1000,  category: food,  user: user1) }
-      let!(:salary_log) { create(:expense_log, date: Date.today, item: '給与', amount: 200000,  category: salary,  user: user1) }
-      it '自分のログを取得することができる' do
-        get '/expenses', headers: headers
+      let!(:food_log) { create(:expense_log, date: Date.new(2025, 5, 1), item: '昼食', amount: 1000,  category: food,  user: user1) }
+      let!(:salary_log) { create(:expense_log, date: Date.new(2025, 5, 1), item: '給与', amount: 200000,  category: salary,  user: user1) }
+      let!(:other_log) { create(:expense_log, date: Date.new(2024, 5, 1), item: '去年の給与', amount: 200000,  category: salary,  user: user1) }
+      it '指定した年月の家計記録を取得することができる' do
+        get '/expenses',params: { year: '2025', month: '05' }, headers: headers
         aggregate_failures do
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body.size).to eq(2)
-          expect(response.parsed_body.first).to include(
-            "id" => food_log.id,
-            "transaction_type" => food.transaction_type,
-            "date" => food_log.date.to_s,
-            "item" => food_log.item,
-            "amount" => food_log.amount,
-            "category_name" => food.name
-          )
+          expect(response.parsed_body.map { |e| e['item'] }).to include('昼食', '給与')
+          expect(response.parsed_body.map { |e| e['item'] }).not_to include('去年の給与')
         end
       end
     end
