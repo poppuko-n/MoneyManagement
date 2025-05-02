@@ -63,6 +63,10 @@ const Expense = () => {
     }
   };
 
+  const onExportExpenses = () => {
+    ExpenseApi.exportExpenses()
+  }
+
   return (
     <motion.div
       initial={{ opacity: 0, y:100 }}
@@ -76,6 +80,7 @@ const Expense = () => {
         setMonth={setMonth}
         initializeYearMonth={initializeYearMonth}
         onCreateNew={() => setIsCreating(true)}
+        onExportExpenses={onExportExpenses}
       />
       {isPieChart && (
         <motion.div

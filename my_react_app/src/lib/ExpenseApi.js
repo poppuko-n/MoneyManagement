@@ -92,6 +92,11 @@ class ExpenseApi {
         alert("削除に失敗しました。")
       })
   }
+
+  static exportExpenses() {
+    console.log('ボタンが押下されました')
+  }
+  
 }
 
 export default ExpenseApi;
