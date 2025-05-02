@@ -1,6 +1,6 @@
 const SimulationTypeSelector = ({ selectedType, onChange }) => {
   const types = [
-    { value: "simulation", label: "通常" },
+    { value: "simulation", label: "一括" },
     { value: "accumulation_simulation", label: "積立" },
   ];
 
