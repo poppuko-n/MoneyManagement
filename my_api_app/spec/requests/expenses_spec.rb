@@ -13,7 +13,7 @@ RSpec.describe "Expenses", type: :request do
       let!(:salary_log) { create(:expense_log, date: Date.new(2025, 5, 1), item: '給与', amount: 200000,  category: salary,  user: user1) }
       let!(:other_log) { create(:expense_log, date: Date.new(2024, 5, 1), item: '去年の給与', amount: 200000,  category: salary,  user: user1) }
       it '指定した年月の家計記録を取得することができる' do
-        get '/expenses',params: { year: '2025', month: '05' }, headers: headers
+        get '/expenses', params: { year: '2025', month: '05' }, headers: headers
         aggregate_failures do
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body.size).to eq(2)

@@ -1,5 +1,5 @@
 class ExpensesController < ApplicationController
-  before_action :authenticate_user, { only: [ :index, :create, :show, :update, :destroy ] }
+  before_action :authenticate_user, { only: [ :index, :create, :show, :update, :destroy, :export ] }
 
   def index
     year = params[:year]
@@ -57,6 +57,10 @@ class ExpensesController < ApplicationController
     expense = ExpenseLog.find(params[:id])
     expense.destroy
     head :no_content
+  end
+
+  def export
+    render status: :ok
   end
 
   private
