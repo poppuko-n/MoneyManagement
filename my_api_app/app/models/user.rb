@@ -1,5 +1,5 @@
 class User < ApplicationRecord
   has_many :expense_logs
-  validates :name, presence: true, length: { maximum: 50 }, uniqueness: true
+  validates :name, presence: true, uniqueness: true
   has_secure_password
 end
