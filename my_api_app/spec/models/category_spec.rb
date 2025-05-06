@@ -4,27 +4,29 @@ RSpec.describe Category, type: :model do
   let!(:salary) { create(:category, name: '給与', transaction_type: '収入') }
   let!(:bonus) { create(:category, name: 'ボーナス', transaction_type: '収入') }
 
-  describe '::fetch_expense_categories' do
-    subject { Category.fetch_expense_categories }
+  describe '::search' do
+    context 'transaction_typeが支出の場合' do
+      subject { Category.search(transaction_type: '支出') }
 
-    it '支出カテゴリのみを返す' do
-      expect(subject).to eq([ food, rent ])
+      it '支出カテゴリのみを返す' do
+        expect(subject).to eq([ food, rent ])
+      end
+
+      it 'ActiveRecord::Relationが返される' do
+        expect(subject).to be_an(ActiveRecord::Relation)
+      end
     end
 
-    it 'ActiveRecord::Relationが返される' do
-      expect(subject).to be_an(ActiveRecord::Relation)
-    end
-  end
+    context 'transaction_typeが収入の場合' do
+      subject { Category.search(transaction_type: '収入') }
 
-  describe '::fetch_income_categories' do
-    subject { Category.fetch_income_categories }
+      it '収入カテゴリのみを返す' do
+        expect(subject).to eq([ salary, bonus ])
+      end
 
-    it '収入カテゴリのみを返す' do
-      expect(subject).to eq([ salary, bonus ])
-    end
-
-    it 'ActiveRecord::Relationが返される' do
-      expect(subject).to be_an(ActiveRecord::Relation)
+      it 'ActiveRecord::Relationが返される' do
+        expect(subject).to be_an(ActiveRecord::Relation)
+      end
     end
   end
 
