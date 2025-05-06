@@ -1,6 +1,6 @@
 class CompaniesController < ApplicationController
+  # GET /companies
   def index
-    result = Company::ListBuilder.call
-    render json: result
+    render json: Company::ListBuilder.call, status: :ok
   end
 end
