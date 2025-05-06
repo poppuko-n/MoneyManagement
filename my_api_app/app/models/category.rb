@@ -5,13 +5,7 @@ class Category < ApplicationRecord
   validates :name, presence: true
   validates :transaction_type, presence: true
 
-  def self.fetch_expense_categories
-    Category.where(transaction_type: "支出")
-            .select(:id, :name, :transaction_type)
-  end
-
-  def self.fetch_income_categories
-    Category.where(transaction_type: "収入")
-            .select(:id, :name, :transaction_type)
+  def self.search(transaction_type:)
+    where(transaction_type: transaction_type).select(:id, :name, :transaction_type)
   end
 end

@@ -4,14 +4,6 @@ class StockPrice < ApplicationRecord
   validates :date, presence: true
   validates :close_price, presence: true
 
-
-  def self.fetch_latest_two_price(code)
-    StockPrice.where(company_code: code)
-              .order(date: :desc)
-              .limit(2)
-              .pluck(:close_price)
-  end
-
   def self.fetch_latest_date(code)
     StockPrice.where(company_code: code)
               .order(date: :desc)

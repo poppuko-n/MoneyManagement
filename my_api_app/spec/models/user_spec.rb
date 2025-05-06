@@ -37,7 +37,7 @@ RSpec.describe User, type: :model do
     let!(:food_log) { create(:expense_log, date: Date.today, item: '昼食', amount: 1000,  category: food,  user: user) }
     let!(:salary_log) { create(:expense_log, date: Date.today, item: '給与', amount: 200000,  category: salary,  user: user) }
     it '家計簿記録を関連づけられる' do
-      expect(user.expense_logs).to match_array([ food_log, salary_log ])
+      expect(user.expense_logs).to eq([ food_log, salary_log ])
     end
   end
 end
