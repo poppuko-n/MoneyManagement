@@ -11,7 +11,6 @@ class ApplicationController < ActionController::API
 
     token = request.headers[:Authorization].split(" ")[1]
     secret_key = Rails.application.credentials.secret_key_base
-
     begin
       # e.g. decoded_code　= [{"user_id"=>1}, {"alg"=>"HS256"}]
       decoded_code = JWT.decode(token, secret_key)
