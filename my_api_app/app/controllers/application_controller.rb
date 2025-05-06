@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
     secret_key = Rails.application.credentials.secret_key_base
 
     begin
-      # 実例 decoded_code　= [{"user_id"=>1}, {"alg"=>"HS256"}]
+      # e.g. decoded_code　= [{"user_id"=>1}, {"alg"=>"HS256"}]
       decoded_code = JWT.decode(token, secret_key)
       @current_user = User.find(decoded_code[0]["user_id"])
     rescue ActiveRecord::RecordNotFound
