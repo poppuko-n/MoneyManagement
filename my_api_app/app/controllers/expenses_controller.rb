@@ -1,7 +1,7 @@
 # - 認証済ユーザーの支出ログに対して、参照・作成・更新・削除・CSVエクスポートを提供。
 # - 操作対象が当該ユーザー自身のログであることを保証するため、show/update/destroyでは事前に認可チェック（set_authorized_expense）を行う。
 # - index では年・月を指定してログを絞り込み、整形したJSONを返却。
-# - export では全ログをCSV形式で出力。クライアントでからの要望を受けて追加。
+# - export では全ログをCSV形式で出力。クライアントからの要望を受けて追加。
 require "csv"
 
 class ExpensesController < ApplicationController
@@ -15,11 +15,11 @@ class ExpensesController < ApplicationController
     expenses = ExpenseLog.for_user_in_month(@current_user.id, year, month).map do |expense|
       {
         id: expense.id,
-        transaction_type: Category.transaction_type.key(expense.transaction_type),
+        transaction_type: expense.transaction_type_name,
         date: expense.date,
         item: expense.item,
         amount: expense.amount,
-        category_name: expense.category_name
+        category_name: expense.category.name
       }
     end
     render json: expenses, status: :ok
@@ -40,12 +40,12 @@ class ExpensesController < ApplicationController
   def show
     render json: {
       expense_log: {
-        category_id: @expense.category_id,
+        category_id: @expense.category.id,
         date: @expense.date,
         item: @expense.item,
         amount: @expense.amount
       },
-      transaction_type: Category.transaction_types.key(@expense.transaction_type)
+      transaction_type: @expense.transaction_type_name
     }
   end
 
@@ -72,8 +72,8 @@ class ExpensesController < ApplicationController
       expenses.each do |expense|
         csv << [
           expense.date.to_s,
-          Category.transaction_types.key(expense.transaction_type),
-          expense.category_name,
+          expense.transaction_type_name,
+          expense.category.name,
           expense.item,
           expense.amount
         ]

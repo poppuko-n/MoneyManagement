@@ -10,23 +10,22 @@ class ExpenseLog < ApplicationRecord
   start_date = Date.new(year.to_i, month.to_i, 1)
   end_data = start_date.end_of_month
 
-  joins(:category)
+  includes(:category)
     .where(user_id: user_id, date: start_date..end_data)
     .order(date: :asc)
-    .select(:id, :date, :item, :amount, "categories.name AS category_name", "categories.transaction_type AS transaction_type", :user_id)
  end
 
  def self.for_user(user_id)
-  joins(:category)
+  includes(:category)
     .where(user_id: user_id)
     .order(date: :asc)
-    .select(:id, :date, :item, :amount, "categories.name AS category_name", "categories.transaction_type AS transaction_type", :user_id)
  end
 
  def self.find_for_user(user_id, expense_id)
-  joins(:category)
-    .where(user_id: user_id, id: expense_id)
-    .select("categories.transaction_type AS transaction_type", :category_id, :date, :item, :amount, :id, :user_id)
-    .first
+  includes(:category).find_by(user_id: user_id, id: expense_id)
+ end
+
+ def transaction_type_name
+  category.transaction_type
  end
 end
