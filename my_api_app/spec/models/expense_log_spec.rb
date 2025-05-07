@@ -1,32 +1,32 @@
 RSpec.describe ExpenseLog, type: :model do
-  let!(:user1) { create(:user, name: 'テストユーザー1') }
-  let!(:user2) { create(:user, name: 'テストユーザー2') }
+  let(:user1) { create(:user, name: 'テストユーザー1') }
+  let(:food) { create(:category, name: '食費', transaction_type: '支出') }
+  let(:salary) { create(:category, name: '給与', transaction_type: '収入') }
 
-  let!(:food) { create(:category, name: '食費', transaction_type: '支出') }
-  let!(:rent) { create(:category, name: '家賃', transaction_type: '支出') }
-  let!(:salary) { create(:category, name: '給与', transaction_type: '収入') }
-  let!(:bonus) { create(:category, name: 'ボーナス', transaction_type: '収入') }
+  describe 'ログ取得系メソッドのテスト' do
+    let!(:food_log) { create(:expense_log, date: Date.new(2025, 4, 1), item: '昼食', amount: 1000,  category: food,  user: user1) }
+    let!(:salary_log) { create(:expense_log, date: Date.new(2024, 4, 1), item: '給与', amount: 200000,  category: salary,  user: user1) }
 
-  let!(:food_log) { create(:expense_log, date: Date.today, item: '昼食', amount: 1000,  category: food,  user: user1) }
-  let!(:salary_log) { create(:expense_log, date: Date.today, item: '給与', amount: 200000,  category: salary,  user: user1) }
-  let!(:rent_log) { create(:expense_log, date: Date.today, item: '家賃', amount: 10000,  category: rent,  user: user2) }
-  let!(:bonus_log) { create(:expense_log, date: Date.today, item: 'ボーナス', amount: 400000,  category: bonus,  user: user2) }
-
-  describe '::fetch_all_expenses_for_user' do
-    subject { ExpenseLog.fetch_all_expenses_for_user(user1.id) }
-    it '指定したユーザーのみのログを返す' do
-      expect(subject).to all(have_attributes(user_id: user1.id))
+    describe '::for_user_in_month' do
+      subject { ExpenseLog.for_user_in_month(user1.id, 2025, 4) }
+      it 'ログイン中のユーザーが指定した年月のログのみを取得する' do
+        expect(subject).to eq([ food_log ])
+        expect(subject).not_to include(salary_log)
+      end
     end
 
-    it '全件のログを返す' do
-      expect(subject.size).to eq(2)
+    describe '::for_user' do
+      subject { ExpenseLog.for_user(user1.id) }
+      it 'ログイン中のユーザーのログ一覧を取得する' do
+        expect(subject).to eq([ salary_log, food_log ])
+      end
     end
-  end
 
-  describe '::fetch_expense_for_user_byid' do
-    subject { ExpenseLog.fetch_expense_for_user_byid(user1.id, food_log.id) }
-    it '指定したログのみを返す' do
-      expect(subject).to have_attributes(user_id: user1.id, id: food_log.id)
+    describe '::find_for_user' do
+      subject { ExpenseLog.find_for_user(user1.id, food_log.id) }
+      it '指定したログのみ取得する' do
+        expect(subject).to eq(food_log)
+      end
     end
   end
 
