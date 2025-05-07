@@ -92,6 +92,6 @@ class ExpensesController < ApplicationController
     @expense = ExpenseLog.find_for_user(@current_user.id, params[:id])
     return if @expense
 
-    render json: { error: "権限がありません" }, status: :forbidden
+    render json: { error: "ログが見つかりません" }, status: :not_found
   end
 end
