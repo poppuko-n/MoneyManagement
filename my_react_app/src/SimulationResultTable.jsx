@@ -1,4 +1,4 @@
-const SimulationResultTable = ({ results, selectedType, selectedPeriod, calculateInitialInvestment }) => {
+const SimulationResultTable = ({ results, selectedType, displayPeriod, calculateInitialInvestment }) => {
   const formatAmount = (value) => value.toLocaleString();
 
   return (
@@ -16,8 +16,8 @@ const SimulationResultTable = ({ results, selectedType, selectedPeriod, calculat
       </thead>
       <tbody>
         {results.map((item) => {
-          const initial = calculateInitialInvestment(item, selectedPeriod);
-          const evalValue = item[selectedType][`${selectedPeriod}_ago`];
+          const initial = calculateInitialInvestment(item, displayPeriod);
+          const evalValue = item[selectedType][`${displayPeriod}_ago`];
           const profitLoss = evalValue - initial;
           const changeRate = ((profitLoss / initial) * 100).toFixed(2);
           const color =

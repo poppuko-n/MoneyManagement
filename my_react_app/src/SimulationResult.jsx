@@ -11,7 +11,7 @@ const SimulationResult = ({results, ai_analysis, onBack}) => {
   const [selectedType, setSelectedType] = useState("simulation");
 
   // NOTE: 表示するシミュレーション期間は固定（1年間）
-  const selectedPeriod = "1_year";
+  const displayPeriod = "1_year";
 
   // NOTE: 期間コードから月数を取得するヘルパー関数
   const getMonthlyCount = (period) => ({
@@ -40,7 +40,7 @@ const SimulationResult = ({results, ai_analysis, onBack}) => {
   };
 
   // NOTE: サマリーは12ヶ月固定（selectedPeriod = "1_year"）で表示
-  const summary = getSummary(selectedPeriod);
+  const summary = getSummary(displayPeriod);
 
   // NOTE: グラフ用のデータ（3ヶ月・6ヶ月・9ヶ月・1年ごとの推移）を作成
   const getChartData = () =>
@@ -87,7 +87,7 @@ const SimulationResult = ({results, ai_analysis, onBack}) => {
       <SimulationResultTable
         results={results}
         selectedType={selectedType}
-        selectedPeriod={selectedPeriod}
+        displayPeriod={displayPeriod}
         calculateInitialInvestment={calculateInitialInvestment}
       />
     </div>
