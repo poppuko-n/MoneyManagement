@@ -25,7 +25,7 @@
 #   }
 # ]
 
-module Simulation
+class StockPrice
   module InvestmentSimulator
     TARGET_PERIODS = (1..12).to_a
     class << self

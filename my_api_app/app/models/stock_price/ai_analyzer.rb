@@ -1,7 +1,7 @@
 require "httparty"
 
-module Simulation
-  class AiAnalyzer
+class StockPrice
+  module AiAnalyzer
     BASE_URL = "https://api.openai.com/v1/chat/completions".freeze
 
     class << self
