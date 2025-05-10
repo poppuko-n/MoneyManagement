@@ -72,7 +72,6 @@ module Simulation
       def format_accumulated_simulations(code, current_price, quantity)
         average_growth_rate = calculate_average_growth_rate(code, current_price)
         current_amout = 0
-        puts average_growth_rate
 
         TARGET_PERIODS.map do |month|
           buy_amout = current_price * quantity
@@ -84,7 +83,6 @@ module Simulation
           }
         end
       end
-
 
       def fetch_past_average_price(code, month)
           start_date = Date.today - month.months
