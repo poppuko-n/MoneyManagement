@@ -31,7 +31,7 @@
 
 module Simulation
   module InvestmentSimulator
-    TARGET_PERIODS = [ 3, 6, 9, 12 ]
+    TARGET_PERIODS = (1..12).to_a
     class << self
       def call(target)
         target_company_code, target_company_name, current_price, quantity  = target.values_at(:code, :name, :price, :quantity)
@@ -60,7 +60,7 @@ module Simulation
           past_price = fetch_past_price(code, month)
           { period: "#{month}_month",
             value: (current_price**2 / past_price) * quantity,
-            deposit: current_price * quantity }
+            deposit: current_price * quantity}
         end
       end
 
@@ -75,10 +75,18 @@ module Simulation
 
       def format_accumulated_simurations(code, current_price, quantity)
         TARGET_PERIODS.map do |month|
+          past_average_price = fetch_past_average_price(code, month)
           { period: "#{month}_month",
-            value: 121000,
+            value: current_amout + (current_price**2 / past_average_price) * quantity,
             deposit: current_price * quantity * month }
         end
+      end
+
+      def fetch_past_average_price(code, month)
+        start_date = Date.today - month.months
+        end_date = start_date + 30.days
+        StockPrice.where(company_code: code, date: start_date..end_date)
+                  .average(:close_price)
       end
 
       # # NOTE: 過去nヶ月分の月次平均株価を取得する。
