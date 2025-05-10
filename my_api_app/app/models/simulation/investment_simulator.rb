@@ -1,5 +1,35 @@
 # NOTE: フロントから送られてきた1つの銘柄データ（コード・名前・価格・数量）を使って、
 # 通常のシミュレーションと積立シミュレーションの結果をまとめたハッシュを返す。
+# 返すJSONは
+# {
+#   "code": "7203",
+#   "name": "トヨタ自動車",
+#   "current_price": 2530,
+#   "quantity": 1,
+#   "investments": [
+#     {
+#       "type": "one_time",
+#       "simulations": [
+#         { "period": "3_month", "value": 123000, "deposit": 2530 },
+#         { "period": "6_month", "value": 130000, "deposit": 2530 },
+#         { "period": "9_month", "value": 138000, "deposit": 2530 },
+#         { "period": "12_month", "value": 145000, "deposit": 2530 }
+#       ]
+#     },
+#     {
+#       "type": "accumulated",
+#       "simulations": [
+#         { "period": "3_month", "value": 121000, "deposit": 7590 },
+#         { "period": "6_month", "value": 132000, "deposit": 15180 },
+#         { "period": "9_month", "value": 144000, "deposit": 22770 },
+#         { "period": "12_month", "value": 157000, "deposit": 30360 }
+#       ]
+#     }
+#   ]
+# }
+
+
+
 # シミュレーション結果に対しての、AIによる分析・診断結果も併せて返す。
 module Simulation
   module InvestmentSimulator
