@@ -17,7 +17,7 @@ class StockPrice
     class << self
       def call(code, from: default_from, to: default_to)
         get_stock_prices(code, from, to)
-      end      
+      end
 
       def fetch_token
         refresh_token = Rails.application.credentials.jqunts[:refresh_token]
@@ -43,9 +43,9 @@ class StockPrice
       end
 
       def default_from
-        (Date.today << 3).strftime("%Y%m%d") 
-      end      
-      
+        (Date.today << 3).strftime("%Y%m%d")
+      end
+
       def default_to
         Date.today.strftime("%Y%m%d")
       end
