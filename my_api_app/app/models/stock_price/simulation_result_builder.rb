@@ -6,14 +6,15 @@
 
 class StockPrice
   module SimulationResultBuilder
-    class << self
-      def call(investment_simulation_targets)
-        simulated_results = investment_simulation_targets.map { |target| StockPrice::InvestmentSimulator.call(target) }
-        {
-          results: simulated_results
-          ai_analysis: AiAnalyzer.call(simulated_results)
-        }
+    def self.call(investment_simulation_targets)
+      results = investment_simulation_targets.map do |target|
+        StockPrice::InvestmentSimulator.call(target)
       end
+
+      {
+        results: results,
+        ai_analysis: AiAnalyzer.call(results)
+      }
     end
   end
 end
