@@ -28,8 +28,8 @@ class StockPrice
         body = simulation_results.map do |result|
           name = result[:name]
 
-          one_time = result[:investments].find {_1[:type] == 'one_time'}[:simulations]
-          accumulated = result[:investments].find {_1[:type] == 'accumulated'}[:simulations]
+          one_time = result[:investments].find { _1[:type] == "one_time" }[:simulations]
+          accumulated = result[:investments].find { _1[:type] == "accumulated" }[:simulations]
 
           <<~T
             #{name}
@@ -54,7 +54,6 @@ class StockPrice
           #{body}
         PROMPT
       end
-      
     end
   end
 end
