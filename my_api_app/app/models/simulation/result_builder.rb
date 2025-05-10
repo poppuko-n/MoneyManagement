@@ -10,7 +10,7 @@ module Simulation
       simulated_results = investment_simulation_targets.map { |target| Simulation::InvestmentSimulator.call(target) }
       {
         results: simulated_results
-        # ai_analysis: AiAnalyzer.call(simulated_results)
+        ai_analysis: AiAnalyzer.call(simulated_results)
       }
     end
   end
