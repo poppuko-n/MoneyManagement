@@ -92,7 +92,7 @@ const Expense = () => {
             onChange={() =>{
               setIsPieChart(false);
               setIsDetail(true);
-              fetchExpenses(token);
+              fetchExpenses(token, year, month);
             }}
           />
         </motion.div>
@@ -108,7 +108,7 @@ const Expense = () => {
             onBack={() => {
               setIsPieChart(true);
               setIsDetail(false);
-              fetchExpenses(token);
+              fetchExpenses(token, year, month);
             }} 
           />
         </motion.div>
@@ -121,7 +121,7 @@ const Expense = () => {
               setIsPieChart(true);
               setIsDetail(false);
               setIsCreating(false);
-              fetchExpenses(token); 
+              fetchExpenses(token, year, month); 
             }}
           />
         </Modal>
@@ -135,7 +135,7 @@ const Expense = () => {
               setIsPieChart(true);
               setIsDetail(false);
               setCurrentExpenseId(null);
-              fetchExpenses(token);
+              fetchExpenses(token, year, month);
             }}
           />
         </Modal>
