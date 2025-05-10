@@ -4,13 +4,16 @@
 # - `results`: 各銘柄ごとのシミュレーション結果（hashの配列）
 # - `ai_analysis`: 全体に対するAI分析結果（md形式）
 
-module Simulation
-  class ResultBuilder
+class StockPrice
+  module SimulationResultBuilder
     def self.call(investment_simulation_targets)
-      simulated_results = investment_simulation_targets.map { |target| Simulation::InvestmentSimulator.call(target) }
+      results = investment_simulation_targets.map do |target|
+        StockPrice::InvestmentSimulator.call(target)
+      end
+
       {
-        results: simulated_results,
-        ai_analysis: AiAnalyzer.call(simulated_results)
+        results: results,
+        ai_analysis: AiAnalyzer.call(results)
       }
     end
   end

@@ -15,8 +15,8 @@ class StockPrice
     ].freeze
 
     class << self
-      def call(code)
-        get_stock_prices(code, last_week, today)
+      def call(code, from: default_from, to: default_to)
+        get_stock_prices(code, from, to)
       end
 
       def fetch_token
@@ -42,8 +42,12 @@ class StockPrice
         Date.today.strftime("%Y%m%d")
       end
 
-      def last_week
-        (Date.today - 7).strftime("%Y%m%d")
+      def default_from
+        (Date.today << 3).strftime("%Y%m%d")
+      end
+
+      def default_to
+        Date.today.strftime("%Y%m%d")
       end
     end
   end

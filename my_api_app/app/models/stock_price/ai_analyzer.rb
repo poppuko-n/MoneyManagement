@@ -1,7 +1,7 @@
 require "httparty"
 
-module Simulation
-  class AiAnalyzer
+class StockPrice
+  module AiAnalyzer
     BASE_URL = "https://api.openai.com/v1/chat/completions".freeze
 
     class << self
@@ -25,24 +25,18 @@ module Simulation
       private
 
       def build_prompt(simulation_results)
-        readable_results = simulation_results.map do |result|
-          <<~TEXT
-            銘柄: #{result[:name]}（#{result[:code]}）
-            現在価格: #{result[:current_price]}円 / 保有数量: #{result[:quantity]}
+        body = simulation_results.map do |result|
+          name = result[:name]
 
-            【一括運用】
-            ・3ヶ月後: #{result[:simulation]["3_months_ago"]}円
-            ・6ヶ月後: #{result[:simulation]["6_months_ago"]}円
-            ・9ヶ月後: #{result[:simulation]["9_months_ago"]}円
-            ・1年後: #{result[:simulation]["1_year_ago"]}円
+          one_time = result[:investments].find { _1[:type] == "one_time" }[:simulations]
+          accumulated = result[:investments].find { _1[:type] == "accumulated" }[:simulations]
 
-            【積立運用】（毎月の購入額: #{result[:current_price] * result[:quantity]}円）
-            ・3ヶ月後: #{result[:accumulation_simulation]["3_months_ago"]}円（総購入額: #{result[:current_price] * result[:quantity] * 3}円）
-            ・6ヶ月後: #{result[:accumulation_simulation]["6_months_ago"]}円（総購入額: #{result[:current_price] * result[:quantity] * 6}円）
-            ・9ヶ月後: #{result[:accumulation_simulation]["9_months_ago"]}円（総購入額: #{result[:current_price] * result[:quantity] * 9}円）
-            ・1年後: #{result[:accumulation_simulation]["1_year_ago"]}円（総購入額: #{result[:current_price] * result[:quantity] * 12}円）
-          TEXT
-        end.join("\n-------------------------\n")
+          <<~T
+            #{name}
+            一括: #{one_time.map { |s| "#{s[:period]}=#{s[:value]}(#{s[:deposit]})" }.join(", ")}
+            積立: #{accumulated.map { |s| "#{s[:period]}=#{s[:value]}(#{s[:deposit]})" }.join(", ")}
+          T
+        end.join("\n")
 
         <<~PROMPT
           あなたは投資初心者向けのアドバイザー。
@@ -56,7 +50,8 @@ module Simulation
           - 出力は「###」による見出しや箇条書きを活用し、視認性の高い構成に。
 
           ### シミュレーションデータ
-          #{readable_results}
+          一括: の各値は 期間=評価額(投資額)。積立: も同様に 期間=評価額(累計投資額)である。
+          #{body}
         PROMPT
       end
     end
