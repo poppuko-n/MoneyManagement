@@ -47,12 +47,7 @@ module Simulation
             },
             {
               type: "accumulated",
-              simulations: [
-                { period: "3_month", value: 121000, deposit: 7590 },
-                { period: "6_month", value: 132000, deposit: 15180 },
-                { period: "9_month", value: 144000, deposit: 22770 },
-                { period: "12_month", value: 157000, deposit: 30360 }
-              ]
+              simulations: format_accumulated_simurations(target_company_code, current_price, quantity)
             }
           ]
         }
@@ -76,6 +71,14 @@ module Simulation
         price = StockPrice.where(company_code: code, date: end_date..start_date)
                           .order(date: :asc)
                           .first&.close_price
+      end
+
+      def format_accumulated_simurations(code, current_price, quantity)
+        TARGET_PERIODS.map do |month|
+          { period: "#{month}_month",
+            value: 121000,
+            deposit: current_price * quantity * month }
+        end
       end
 
       # # NOTE: 過去nヶ月分の月次平均株価を取得する。
