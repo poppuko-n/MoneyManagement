@@ -15,7 +15,7 @@ class StockPrice
             "Authorization" => "Bearer #{Rails.application.credentials.openai[:api_key]}"
           },
           body: {
-            model: "gpt-3.5-turbo",
+            model: "gpt-4",
             messages: [ { role: "user", content: prompt } ]
           }.to_json
           )
