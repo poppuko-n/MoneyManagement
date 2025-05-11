@@ -12,7 +12,7 @@ const Simulation = () => {
   const [quantities, setQuantities] = useState({});
   const [filtername, setFilterName] = useState("");
   const [simulationData, setSimulationData] = useState(null);
-  const [isShowFiltered, setIsShowFiltered] = useState(false);
+  const [isFilterSelectedCompanies, setIsFilterSelectedCompanies] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSimulation, setIsSimulation] = useState(false);
 
@@ -69,7 +69,7 @@ const Simulation = () => {
       .finally(()=>setIsLoading(false))
   };
 
-  const filteredCompanies = isShowFiltered
+  const displayedCompanies = isFilterSelectedCompanies
     ? companies.filter((company) => quantities[company.code] > 0)
     : companies;
 
@@ -113,12 +113,12 @@ const Simulation = () => {
       <SelectCompanyFilterBar 
         filtername = {filtername}
         setFilterName = {setFilterName}
-        isShowFiltered={isShowFiltered}
-        toggleShowFiltered={()=>setIsShowFiltered(!isShowFiltered)}
+        isFilterSelectedCompanies={isFilterSelectedCompanies}
+        toggleFiltered={()=>setIsFilterSelectedCompanies(!isFilterSelectedCompanies)}
       />
 
       <SelectCompanyTable 
-        companies = {filteredCompanies}
+        displayedCompanies = {displayedCompanies}
         filtername = {filtername}
         quantities = {quantities}
         handleQuantityChange = {handleQuantityChange}

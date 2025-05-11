@@ -1,7 +1,7 @@
 import addImage from './assets/add_circle.svg'
 import subtractImage from './assets/subtract_circle.svg'
 
-const SelectCompanyTable = ({ companies, filtername, quantities, handleQuantityChange, resetQuantity }) => {
+const SelectCompanyTable = ({ displayedCompanies, filtername, quantities, handleQuantityChange, resetQuantity }) => {
   const formatAmount = (value) => value.toLocaleString();
   
   return (
@@ -20,11 +20,10 @@ const SelectCompanyTable = ({ companies, filtername, quantities, handleQuantityC
     </thead>
 
     <tbody>
-          {companies
+          {displayedCompanies
             .filter((company) => {
               return (
-                company.name.includes(filtername) ||
-                company.code.includes(filtername)
+                company.name.includes(filtername)
               );
             })
             .map((company) => (
