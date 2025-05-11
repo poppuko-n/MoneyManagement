@@ -6,23 +6,17 @@
 # "name": "三菱ＵＦＪフィナンシャル・グループ",
 # "current_price": 2178,
 # "quantity": 1,
-# "investments": [
-#   {
-#     "type": "one_time",
-#     "simulations": [
-#       { "period": "1_month", "value": 2772, "deposit": 2178 },
-#       { "period": "2_month", "value": 2470, "deposit": 2178 },
-#       { "period": "3_month", "value": 2496, "deposit": 2178 }
-#     ]
-#   },
-#   {
-#     "type": "accumulated",
-#     "simulations": [
-#       { "period": "1_month", "value": "2395.8", "deposit": 2178 },
-#       { "period": "2_month", "value": "4791.6", "deposit": 4356 },
-#       { "period": "3_month", "value": "7187.4", "deposit": 6534 }
-#     ]
-#   }
+# "one_time": [
+#   { "period": "1_month", "value": 2885, "deposit": 2178 }
+#   { "period": "2_month", "value": 2505, "deposit": 2178 }
+#   ...
+#   { "period": "12_month", "value": 2964, "deposit": 2178 }
+# ],
+# "accumulated": [
+#   { "period": "1_month", "value": 2396, "deposit": 2178 }
+#   { "period": "2_month", "value": 4792, "deposit": 4356 }
+#   ...
+#   { "period": "12_month", "value": 28750, "deposit": 26136 }
 # ]
 
 class StockPrice
@@ -36,16 +30,8 @@ class StockPrice
           name: target_company_name,
           current_price: current_price,
           quantity: quantity,
-          investments: [
-            {
-              type: "one_time",
-              simulations: format_one_time_simulations(target_company_code, current_price, quantity)
-            },
-            {
-              type: "accumulated",
-              simulations: format_accumulated_simulations(target_company_code, current_price, quantity)
-            }
-          ]
+          one_time: format_one_time_simulations(target_company_code, current_price, quantity),
+          accumulated: format_accumulated_simulations(target_company_code, current_price, quantity)
         }
       end
 
@@ -78,7 +64,7 @@ class StockPrice
           current_amout += buy_amout
           {
             period: "#{month}_month",
-            value: average_growth_rate * current_amout,
+            value: (average_growth_rate * current_amout).round,
             deposit: current_price * quantity * month
           }
         end
