@@ -1,7 +1,7 @@
 import toggleOfImage from './assets/toggle_off.svg'
 import toggleOnImage from './assets/toggle_on.svg'
 
-const SelectCompanyFilterBar = ({ filtername, setFilterName, isFilterSelectedCompanies, toggleFiltered }) => {
+const SelectCompanyFilterBar = ({ filtername, setFilterName, isFilteringSelectedCompanies, toggleFiltered }) => {
   return (
     <>
       <div className="flex items-center justify-between mb-6 gap-4">
@@ -31,13 +31,13 @@ const SelectCompanyFilterBar = ({ filtername, setFilterName, isFilterSelectedCom
             className="cursor-pointer transition duration-300 flex items-center justify-center"
           >
             <img
-              src={isFilterSelectedCompanies ? toggleOnImage : toggleOfImage}
-              alt={isFilterSelectedCompanies ? "toggleon" : "toggleoff"}
+              src={isFilteringSelectedCompanies ? toggleOnImage : toggleOfImage}
+              alt={isFilteringSelectedCompanies ? "toggleon" : "toggleoff"}
               className="w-10 h-10"
             />
           </div>
           <span className="text-gray-700 truncate">
-            {isFilterSelectedCompanies ? "すべて表示" : "選択銘柄のみ表示"}
+            {isFilteringSelectedCompanies ? "すべて表示" : "選択銘柄のみ表示"}
           </span>
         </div>
       </div>

@@ -12,9 +12,9 @@ const Simulation = () => {
   const [quantities, setQuantities] = useState({});
   const [filtername, setFilterName] = useState("");
   const [simulationData, setSimulationData] = useState(null);
-  const [isFilterSelectedCompanies, setIsFilterSelectedCompanies] = useState(false);
+  const [isFilteringSelectedCompanies, setIsFilteringSelectedCompanies] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isSimulation, setIsSimulation] = useState(false);
+  const [isShowingSimulationResult , setIsShowingSimulationResult] = useState(false);
 
   useEffect(() => {
     CompanyApi.getCompanies().then((response) => {
@@ -64,24 +64,24 @@ const Simulation = () => {
           results: response.data.results,
           ai_analysis: response.data.ai_analysis
         });
-        setIsSimulation(true)
+        setIsShowingSimulationResult(true)
       })
       .finally(()=>setIsLoading(false))
   };
 
-  const displayedCompanies = isFilterSelectedCompanies
+  const displayedCompanies = isFilteringSelectedCompanies
     ? companies.filter((company) => quantities[company.code] > 0)
     : companies;
 
-  if (isSimulation){
+  if (isShowingSimulationResult ){
     return(
       <SimulationResult
         results={simulationData.results}
         ai_analysis={simulationData.ai_analysis}
-        onBack={()=>setIsSimulation(false)}
+        onBack={()=>setIsShowingSimulationResult(false)}
       />
-    )
-  };
+    );
+  }
 
   return (
     <motion.div
@@ -113,8 +113,8 @@ const Simulation = () => {
       <SelectCompanyFilterBar 
         filtername = {filtername}
         setFilterName = {setFilterName}
-        isFilterSelectedCompanies={isFilterSelectedCompanies}
-        toggleFiltered={()=>setIsFilterSelectedCompanies(!isFilterSelectedCompanies)}
+        isFilteringSelectedCompanies={isFilteringSelectedCompanies}
+        toggleFiltered={()=>setIsFilteringSelectedCompanies(!isFilteringSelectedCompanies)}
       />
 
       <SelectCompanyTable 
