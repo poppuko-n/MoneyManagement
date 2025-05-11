@@ -10,11 +10,11 @@ import { motion } from "framer-motion";
 const Simulation = () => {
   const [companies, setCompanies] = useState([]);
   const [quantities, setQuantities] = useState({});
-  const [isShowFiltered, setIsShowFiltered] = useState(false);
   const [filtername, setFilterName] = useState("");
+  const [simulationData, setSimulationData] = useState(null);
+  const [isShowFiltered, setIsShowFiltered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSimulation, setIsSimulation] = useState(false);
-  const [simulationData, setSimulationData] = useState(null);
 
   useEffect(() => {
     CompanyApi.getCompanies().then((response) => {
@@ -41,12 +41,10 @@ const Simulation = () => {
     }));
   };
 
-  const calculateTotalCost = () => {
-    return companies.reduce((total, company) => {
-      const quantity = quantities[company.code];
-      return total + company.latest_price * quantity;
-    }, 0);
-  };
+  const calculateTotalAmount = () =>
+    companies.reduce(
+      (total, company) => total + company.latest_price * (quantities[company.code] || 0), 0
+    );
 
   const sendQuantitiesToServer = () => {
     const selectedCompanies = companies
@@ -108,8 +106,8 @@ const Simulation = () => {
       )}
 
       <SelectCompanyHeader
-        totalCost={calculateTotalCost}
-        onSubmit={sendQuantitiesToServer}
+        totalAmount = {calculateTotalAmount}
+        onSubmit = {sendQuantitiesToServer}
       />
 
       <SelectCompanyFilterBar 
