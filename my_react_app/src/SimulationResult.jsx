@@ -8,31 +8,20 @@ import arrowImage from "./assets/arrow.svg";
 
 const SimulationResult = ({results, ai_analysis, onBack}) => {
   // NOTE: 運用方法の選択状態（"one_time"＝一括、"accumulated"＝積立）
+  const DISPLAY_PERIOD = "12_month";
   const [selectedSimulationType, setSelectedSimulationType] = useState("one_time");
 
-  const DISPLAY_PERIOD = "12_month";
-
-  const summaryDate = results.map( result => {
+  const simulationResultsByTypeAndPeriod = results.map( result => {
     const data = result[selectedSimulationType].find(sim => sim.period === DISPLAY_PERIOD);
     return {
+      code: result.code,
+      name: result.name,
+      current_price: result.current_price,
+      quantity: result.quantity,
       value: data.value,
       deposit: data.deposit
     };
   });
-
-  const investment = summaryDate.reduce((sum, d) => sum + d.deposit, 0);
-  const evaluation = summaryDate.reduce((sum, d) => sum + d.value, 0);
-  const profitLoss = evaluation - investment;
-  const changeRate = (profitLoss / investment * 100).toFixed(2);
-
-  // // NOTE: 1銘柄あたりの投資額（運用額）を算出
-  // // 積立運用なら「月数分 × 毎月の金額」、通常運用なら「単純な一括投資」
-  // const calculateInitialInvestment = (item, period) => {
-  //   const base = item.current_price * item.quantity;
-  //   return selectedSimulationType === "accumulation_simulation"
-  //     ? base * getMonthlyCount(period)
-  //     : base;
-  // };
 
   // // NOTE: グラフ用のデータ（3ヶ月・6ヶ月・9ヶ月・1年ごとの推移）を作成
   // const getChartData = () =>
@@ -66,12 +55,7 @@ const SimulationResult = ({results, ai_analysis, onBack}) => {
       />
       
       {/* NOTE: 運用額・評価額・損益額のサマリー表示 */}
-      <SimulationSummary
-          investment={investment}
-          evaluation={evaluation}
-          profitLoss={profitLoss}
-          changeRate={changeRate}
-      />
+      <SimulationSummary simulationResultsByTypeAndPeriod={simulationResultsByTypeAndPeriod} />
 
       {/* NOTE: 運用推移の折れ線グラフ（預金 vs 投資） */}
       {/* <SimulationChart data={getChartData()} /> */}
@@ -80,12 +64,7 @@ const SimulationResult = ({results, ai_analysis, onBack}) => {
       <SimulationInsight ai_analysis={ai_analysis} />
 
       {/* NOTE: 各銘柄ごとの明細テーブル */}
-      {/* <SimulationResultTable
-        results={results}
-        selectedSimulationType={selectedSimulationType}
-        displayPeriod={displayPeriod}
-        calculateInitialInvestment={calculateInitialInvestment}
-      /> */}
+      <SimulationResultTable simulationResultsByTypeAndPeriod={simulationResultsByTypeAndPeriod} />
     </div>
   );
 };

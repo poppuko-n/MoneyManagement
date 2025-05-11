@@ -1,4 +1,8 @@
-const SimulationSummary = ({ investment, evaluation, profitLoss, changeRate }) => {
+const SimulationSummary = ({ simulationResultsByTypeAndPeriod }) => {
+  const investment = simulationResultsByTypeAndPeriod.reduce((sum, d) => sum + d.deposit, 0);
+  const evaluation = simulationResultsByTypeAndPeriod.reduce((sum, d) => sum + d.value, 0);
+  const profitLoss = evaluation - investment;
+  const changeRate = (profitLoss / investment * 100).toFixed(2);
   const formatAmount = (amount) => amount.toLocaleString();
   const profitLossClass =
     profitLoss > 0 ? "text-red-500" : profitLoss < 0 ? "text-blue-500" : "text-gray-500";
