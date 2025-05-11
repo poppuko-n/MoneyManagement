@@ -18,11 +18,11 @@ const Simulation = () => {
 
   useEffect(() => {
     CompanyApi.getCompanies().then((response) => {
-      setCompanies(response.data);
       const initialQuantities = response.data.reduce((acc, company) => {
         acc[company.code] = 0;
         return acc;
       }, {});
+      setCompanies(response.data);
       setQuantities(initialQuantities);
     });
   }, []);
@@ -116,16 +116,15 @@ const Simulation = () => {
         filtername = {filtername}
         setFilterName = {setFilterName}
         isShowFiltered={isShowFiltered}
-        toggleShowFiltered={()=>setIsShowFiltered((prev) => !prev)}
+        toggleShowFiltered={()=>setIsShowFiltered(!isShowFiltered)}
       />
 
       <SelectCompanyTable 
         companies = {filteredCompanies}
         filtername = {filtername}
         quantities = {quantities}
-        onChange = {handleQuantityChange}
-        onReset = {resetQuantity}
-        setQuantities = {setQuantities}
+        handleQuantityChange = {handleQuantityChange}
+        resetQuantity = {resetQuantity}
       />
     </motion.div>
   );
