@@ -11,28 +11,40 @@ const SimulationResult = ({results, ai_analysis, onBack}) => {
   const DISPLAY_PERIOD = "12_month";
   const [selectedSimulationType, setSelectedSimulationType] = useState("one_time");
 
+  // 選択された運用タイプ（"one_time" or "accumulated"）と表示対象期間（例: "12_month"）に基づいて
+  // 各銘柄の評価額(value)と運用額（reposit）を取り出し、整形する。
   const simulationResultsByTypeAndPeriod = results.map( result => {
-    const data = result[selectedSimulationType].find(sim => sim.period === DISPLAY_PERIOD);
+    const selectedPeriodResults = result[selectedSimulationType].find(sim => sim.period === DISPLAY_PERIOD);
     return {
       code: result.code,
       name: result.name,
       current_price: result.current_price,
       quantity: result.quantity,
-      value: data.value,
-      deposit: data.deposit
+      value: selectedPeriodResults.value,
+      deposit: selectedPeriodResults.deposit
     };
   });
 
-  // // NOTE: グラフ用のデータ（3ヶ月・6ヶ月・9ヶ月・1年ごとの推移）を作成
-  // const getChartData = () =>
-  //   ["3_months", "6_months", "9_months", "1_year"].map((period) => {
-  //     const s = getSummary(period);
-  //     return {
-  //       date: `${getMonthlyCount(period)}ヶ月後`,
-  //       purchase_amount: s.investment,
-  //       evaluation_amount: s.evaluation,
-  //     };
-  //   });
+// 各月について、全銘柄の同月のシミュレーション結果を合算し、
+// 「○ヶ月後」「預金額（purchase_amount）」「評価額（evaluation_amount）」を持つオブジェクトの配列を返す。
+  const getChartData = () =>
+  Array.from({ length: 12 }, (_, i) => {
+    const period = `${i + 1}_month`;
+    const [deposit, value] = results.reduce(
+      ([d, v], r) => {
+        const sim = r[selectedSimulationType].find(s => s.period === period);
+        return [d + sim.deposit, v + +sim.value];
+      },
+      [0, 0]
+    );
+
+    return {
+      date: `${i + 1}ヶ月後`,
+      purchase_amount: deposit,
+      evaluation_amount: value,
+    };
+  });
+
 
   return (
     <div className="container mx-auto p-4">
@@ -58,7 +70,7 @@ const SimulationResult = ({results, ai_analysis, onBack}) => {
       <SimulationSummary simulationResultsByTypeAndPeriod={simulationResultsByTypeAndPeriod} />
 
       {/* NOTE: 運用推移の折れ線グラフ（預金 vs 投資） */}
-      {/* <SimulationChart data={getChartData()} /> */}
+      <SimulationChart data={getChartData()} />
 
       {/* NOTE: AIによる投資診断 */}
       <SimulationInsight ai_analysis={ai_analysis} />
