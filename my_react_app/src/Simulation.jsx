@@ -10,19 +10,19 @@ import { motion } from "framer-motion";
 const Simulation = () => {
   const [companies, setCompanies] = useState([]);
   const [quantities, setQuantities] = useState({});
-  const [isShowFiltered, setIsShowFiltered] = useState(false);
   const [filtername, setFilterName] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSimulation, setIsSimulation] = useState(false);
   const [simulationData, setSimulationData] = useState(null);
+  const [isFilteringSelectedCompanies, setIsFilteringSelectedCompanies] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isShowingSimulationResult , setIsShowingSimulationResult] = useState(false);
 
   useEffect(() => {
     CompanyApi.getCompanies().then((response) => {
-      setCompanies(response.data);
       const initialQuantities = response.data.reduce((acc, company) => {
         acc[company.code] = 0;
         return acc;
       }, {});
+      setCompanies(response.data);
       setQuantities(initialQuantities);
     });
   }, []);
@@ -41,12 +41,10 @@ const Simulation = () => {
     }));
   };
 
-  const calculateTotalCost = () => {
-    return companies.reduce((total, company) => {
-      const quantity = quantities[company.code];
-      return total + company.latest_price * quantity;
-    }, 0);
-  };
+  const calculateTotalAmount = () =>
+    companies.reduce(
+      (total, company) => total + company.latest_price * (quantities[company.code] || 0), 0
+    );
 
   const sendQuantitiesToServer = () => {
     const selectedCompanies = companies
@@ -66,24 +64,24 @@ const Simulation = () => {
           results: response.data.results,
           ai_analysis: response.data.ai_analysis
         });
-        setIsSimulation(true)
+        setIsShowingSimulationResult(true)
       })
       .finally(()=>setIsLoading(false))
   };
 
-  const filteredCompanies = isShowFiltered
+  const displayedCompanies = isFilteringSelectedCompanies
     ? companies.filter((company) => quantities[company.code] > 0)
     : companies;
 
-  if (isSimulation){
+  if (isShowingSimulationResult ){
     return(
       <SimulationResult
         results={simulationData.results}
         ai_analysis={simulationData.ai_analysis}
-        onBack={()=>setIsSimulation(false)}
+        onBack={()=>setIsShowingSimulationResult(false)}
       />
-    )
-  };
+    );
+  }
 
   return (
     <motion.div
@@ -108,24 +106,23 @@ const Simulation = () => {
       )}
 
       <SelectCompanyHeader
-        totalCost={calculateTotalCost}
-        onSubmit={sendQuantitiesToServer}
+        totalAmount = {calculateTotalAmount}
+        onSubmit = {sendQuantitiesToServer}
       />
 
       <SelectCompanyFilterBar 
         filtername = {filtername}
         setFilterName = {setFilterName}
-        isShowFiltered={isShowFiltered}
-        toggleShowFiltered={()=>setIsShowFiltered((prev) => !prev)}
+        isFilteringSelectedCompanies={isFilteringSelectedCompanies}
+        toggleFiltered={()=>setIsFilteringSelectedCompanies(!isFilteringSelectedCompanies)}
       />
 
       <SelectCompanyTable 
-        companies = {filteredCompanies}
+        displayedCompanies = {displayedCompanies}
         filtername = {filtername}
         quantities = {quantities}
-        onChange = {handleQuantityChange}
-        onReset = {resetQuantity}
-        setQuantities = {setQuantities}
+        handleQuantityChange = {handleQuantityChange}
+        resetQuantity = {resetQuantity}
       />
     </motion.div>
   );

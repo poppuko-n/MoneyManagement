@@ -1,5 +1,5 @@
-const SimulationResultTable = ({ results, selectedType, displayPeriod, calculateInitialInvestment }) => {
-  const formatAmount = (value) => value.toLocaleString();
+const SimulationResultTable = ({ simulationResultsByTypeAndPeriod }) => {
+  const formatAmount = (amount) => amount.toLocaleString();
 
   return (
     <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow">
@@ -15,12 +15,10 @@ const SimulationResultTable = ({ results, selectedType, displayPeriod, calculate
         </tr>
       </thead>
       <tbody>
-        {results.map((item) => {
-          const initial = calculateInitialInvestment(item, displayPeriod);
-          const evalValue = item[selectedType][`${displayPeriod}_ago`];
-          const profitLoss = evalValue - initial;
-          const changeRate = ((profitLoss / initial) * 100).toFixed(2);
-          const color =
+        {simulationResultsByTypeAndPeriod.map((item) => {
+          const profitLoss = item.value - item.deposit;
+          const changeRate = ((profitLoss / item.deposit) * 100).toFixed(2);
+          const profitLossClass =
             profitLoss > 0 ? "text-red-500" : profitLoss < 0 ? "text-blue-500" : "text-gray-500";
 
           return (
@@ -29,9 +27,9 @@ const SimulationResultTable = ({ results, selectedType, displayPeriod, calculate
               <td className="p-3 border-b">{item.name}</td>
               <td className="p-3 border-b">{formatAmount(item.current_price)}</td>
               <td className="p-3 border-b">{formatAmount(item.quantity)}</td>
-              <td className="p-3 border-b">{formatAmount(initial)} 円</td>
-              <td className="p-3 border-b">{formatAmount(evalValue)} 円</td>
-              <td className={`p-3 border-b ${color}`}>
+              <td className="p-3 border-b">{formatAmount(item.deposit)} 円</td>
+              <td className="p-3 border-b">{formatAmount(item.value)} 円</td>
+              <td className={`p-3 border-b ${profitLossClass}`}>
                 {formatAmount(profitLoss)} 円 ({changeRate} %)
               </td>
             </tr>

@@ -27,9 +27,8 @@ class StockPrice
       def build_prompt(simulation_results)
         body = simulation_results.map do |result|
           name = result[:name]
-
-          one_time = result[:investments].find { _1[:type] == "one_time" }[:simulations]
-          accumulated = result[:investments].find { _1[:type] == "accumulated" }[:simulations]
+          one_time = result[:one_time]
+          accumulated = result[:accumulated]
 
           <<~T
             #{name}
