@@ -57,15 +57,22 @@ class StockPrice
 
       def format_accumulated_simulations(code, current_price, quantity)
         average_growth_rate = calculate_average_growth_rate(code, current_price)
-        current_amout = 0
+        monthly_deposit = current_price * quantity
 
+        # 各月の積立分に対して、それぞれ運用月数に応じた複利を掛けて合計する
+        # 月=3 の場合、以下のように計算
+        # - 1ヶ月目に投資した分 → 3ヶ月運用されている → r^3倍
+        # - 2ヶ月目に投資した分 → 2ヶ月運用されている → r^2倍
+        # - 3ヶ月目に投資した分 → 1ヶ月運用されている → r^1倍
         TARGET_PERIODS.map do |month|
-          buy_amout = current_price * quantity
-          current_amout += buy_amout
+          total_value = (0...month).sum do |i|
+            monthly_deposit * (average_growth_rate ** (month-i))
+          end
+
           {
             period: "#{month}_month",
-            value: (average_growth_rate * current_amout).round,
-            deposit: current_price * quantity * month
+            value: total_value.round,
+            deposit: monthly_deposit * month
           }
         end
       end
@@ -85,7 +92,7 @@ class StockPrice
           to / from
         end
 
-        (rates.sum / rates.size).ceil(1)
+        (rates.sum / rates.size).ceil(2)
       end
     end
   end
