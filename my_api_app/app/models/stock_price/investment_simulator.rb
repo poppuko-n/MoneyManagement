@@ -68,7 +68,7 @@ class StockPrice
           total_value = (0...month).sum do |i|
             monthly_deposit * (average_growth_rate ** (month-i))
           end
-  
+
           {
             period: "#{month}_month",
             value: total_value.round,
