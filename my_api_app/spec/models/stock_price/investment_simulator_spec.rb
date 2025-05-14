@@ -43,13 +43,29 @@ RSpec.describe StockPrice::InvestmentSimulator do
       subject { described_class.send(:format_accumulated_simulations, code, current_price, quantity) }
 
       it '積み立て投資の評価額と預金額が正しく計算され、12ヶ月分返ってくること' do
-          # 12ヶ月分の結果が帰ってくる
-          expect(subject.size).to eq(12)
+        # 1ヶ月あたりの積立金額（毎月一定）
+        monthly_deposit = current_price * quantity
 
-          # 各月のpriodが"n_month"形式であること
-          subject.each_with_index do |simulation, index|
-            expect(simulation[:period]).to eq("#{index+1}_month")
-          end
+        # 12ヶ月分の結果が帰ってくる
+        expect(subject.size).to eq(12)
+
+        # 各月のシミュレーション結果を１件ずつ検証
+        subject.each_with_index do |simulation, index|
+          month = index + 1
+
+          # 評価額（value）は、これまで積み立てた金額すべてを、
+          # それぞれ「何ヶ月運用されたか」に応じて複利（1.2の累乗）で成長させた合計
+          # 例：3ヶ月目のシミュレーションなら
+          # - 1ヶ月目に積み立てた分 → 3ヶ月運用 → 1.2^3 倍
+          # - 2ヶ月目に積み立てた分 → 2ヶ月運用 → 1.2^2 倍
+          # - 3ヶ月目に積み立てた分 → 1ヶ月運用 → 1.2^1 倍
+          monthly_value = (0...month).sum do |i|
+            monthly_deposit * 1.2 ** (month - i)
+          end.round
+          expect(simulation[:period]).to eq("#{month}_month")
+          expect(simulation[:value]).to eq(monthly_value)
+          expect(simulation[:deposit]).to eq(monthly_deposit * month)
+        end
       end
     end
   end
