@@ -13,7 +13,21 @@ RSpec.describe StockPrice, type: :model do
     end
 
     context '異常系' do
-      
+      context 'dateが未入力' do
+        let(:date) { '' }
+        it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
+          expect(subject).not_to be_valid
+          expect(subject.errors[:date]).to include('を入力してください')
+        end
+      end
+
+      context 'close_priceが未入力' do
+        let(:close_price) { '' }
+        it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
+          expect(subject).not_to be_valid
+          expect(subject.errors[:close_price]).to include('を入力してください')
+        end
+      end
     end
   end
 end

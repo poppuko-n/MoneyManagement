@@ -3,6 +3,6 @@ FactoryBot.define do
     code { 1 }
     name { "会社名" }
     equity { 100 }
-    association :sector 
+    association :sector
   end
 end
