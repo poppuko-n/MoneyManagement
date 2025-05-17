@@ -15,7 +15,7 @@ gem "jwt"
 
 group :development, :test do
   gem "pry-rails"
-  gem "debug", require: false
+  gem "debug"
   gem "brakeman", require: false
   gem "rubocop-rails-omakase", require: false
   gem "factory_bot_rails"
