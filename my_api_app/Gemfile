@@ -6,7 +6,7 @@ gem "puma", ">= 5.0"
 gem "bcrypt", "~> 3.1.7"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "httparty"
-gem "rack-cors", require: "rack/cors"
+gem "rack-cors"
 gem "bootsnap", require: false
 gem "kamal", require: false
 gem "thruster", require: false
