@@ -1,5 +1,3 @@
-require "httparty"
-
 class StockPrice
   module WeeklyStockFetcher
     BASE_URL = "https://api.jquants.com/v1".freeze
