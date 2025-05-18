@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_18_024545) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_18_025707) do
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -20,7 +20,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_18_024545) do
 
   create_table "companies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.integer "code", null: false
-    t.integer "sector_id", null: false
+    t.bigint "sector_id", null: false
     t.string "name", null: false
     t.bigint "equity"
     t.datetime "created_at", null: false
@@ -64,6 +64,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_18_024545) do
     t.index ["name"], name: "index_users_on_name", unique: true
   end
 
+  add_foreign_key "companies", "sectors"
   add_foreign_key "expense_logs", "categories"
   add_foreign_key "expense_logs", "users"
   add_foreign_key "stock_prices", "companies", column: "company_code", primary_key: "code"
