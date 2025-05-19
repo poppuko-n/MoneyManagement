@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   post "stock_price/update", to: "stock_price#update"
 
   resources :companies, only: [ :index ]
-  resources :expenses, only: [ :index, :create, :show, :update, :destroy ]
+  resources :expenses, only: [ :index, :show, :create,  :update, :destroy ]
   resources :categories, only: [ :index ]
   resources :users, only: [ :create ]
 
