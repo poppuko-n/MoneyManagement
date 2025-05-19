@@ -14,7 +14,7 @@ class ExpenseApi {
 
   static getExpenses(token, year, month) {
     return axios
-      .get(`${this.apiBaseUrl}/expenses`, {
+      .get(`${this.apiBaseUrl}/expense_logs`, {
         headers: {
           Authorization: `Bearer ${token}`
         },
@@ -30,7 +30,7 @@ class ExpenseApi {
 
   static createExpense(expense, token) {
     return axios
-      .post(`${this.apiBaseUrl}/expenses`,
+      .post(`${this.apiBaseUrl}/expense_logs`,
         expense, {
           headers: {
             Authorization: `Bearer ${token}`
@@ -46,7 +46,7 @@ class ExpenseApi {
 
   static showExpense(expenseId, token){
     return axios
-      .get(`${this.apiBaseUrl}/expenses/${expenseId}`,{
+      .get(`${this.apiBaseUrl}/expense_logs/${expenseId}`,{
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -63,7 +63,7 @@ class ExpenseApi {
 
   static updateExpense(expenseId, expense, token) {
     return axios
-      .patch(`${this.apiBaseUrl}/expenses/${expenseId}`,
+      .patch(`${this.apiBaseUrl}/expense_logs/${expenseId}`,
         expense, {
           headers: {
             Authorization: `Bearer ${token}`
@@ -79,7 +79,7 @@ class ExpenseApi {
 
   static deleteExpense(expenseId, token) {
     return axios
-      .delete(`${this.apiBaseUrl}/expenses/${expenseId}`,{
+      .delete(`${this.apiBaseUrl}/expense_logs/${expenseId}`,{
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -95,7 +95,7 @@ class ExpenseApi {
 
   static exportExpenses(token) {
     return axios
-      .get(`${this.apiBaseUrl}/expenses/export`, {
+      .get(`${this.apiBaseUrl}/expense_logs/export`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
