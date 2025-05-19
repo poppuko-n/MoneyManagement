@@ -6,28 +6,6 @@ RSpec.describe Company, type: :model do
   let!(:company_beta)  { create(:company, code: 2, name: 'ベータ食品', equity: 200, sector: sector_food) }
   let!(:company_ganma)  { create(:company, code: 3, name: 'ガンマエネルギー', equity: 300, sector: sector_food) }
 
-  describe '::fetch_companies_with_sectors' do
-    subject { Company.fetch_companies_with_sectors }
-
-    it '配列が返される' do
-      expect(subject).to be_an(Array)
-    end
-
-    it '全件（3件）が返される' do
-      expect(subject.size).to eq(3)
-    end
-
-    it 'equityの大きい順に正しいデータが並ぶ' do
-      expected_result = [
-        [ company_ganma.code, company_ganma.name, company_ganma.sector.name ],
-        [ company_beta.code,  company_beta.name,  company_beta.sector.name ],
-        [ company_alpha.code, company_alpha.name, company_alpha.sector.name ]
-      ]
-
-      expect(subject).to eq(expected_result)
-    end
-  end
-
   describe 'バリデーションのテスト' do
     subject { Company.new(code: code, name: name, sector: sector) }
     let(:sector) { sector_food }

@@ -95,7 +95,7 @@ class ExpenseApi {
 
   static exportExpenses(token) {
     return axios
-      .get(`${this.apiBaseUrl}/export`, {
+      .get(`${this.apiBaseUrl}/expenses/export`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
