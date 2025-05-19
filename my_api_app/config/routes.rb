@@ -3,10 +3,10 @@ Rails.application.routes.draw do
 
   get "expenses/export", to: "expenses#export"
 
+  post "stock_price/simulate", to: "stock_price#simulate"
   post "stock_price/update", to: "stock_price#update"
 
   resources :companies, only: [ :index ]
-  resources :simulations, only: [ :create ]
   resources :expenses, only: [ :index, :create, :show, :update, :destroy ]
   resources :categories, only: [ :index ]
   resources :users, only: [ :create ]
