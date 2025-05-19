@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   # get "up" => "rails/health#show", as: :rails_health_check
   root to: proc { [ 200, {}, [ "OK" ] ] }
+
+  get "expenses/export", to: "expenses#export"
+
   resources :companies, only: [ :index ]
   resources :simulations, only: [ :create ]
   resources :stock_price_update, only: [ :create ]
@@ -13,8 +16,5 @@ Rails.application.routes.draw do
   resources :users, only: [ :create ]
 
   post "/login", to: "users#login"
-  get "/export", to: "expenses#export"
 
-  # Defines the root path route ("/")
-  # root "posts#index"
 end
