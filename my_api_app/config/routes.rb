@@ -1,10 +1,10 @@
 Rails.application.routes.draw do
   root to: proc { [ 200, {}, [ "OK" ] ] }
 
-  get "expense_logs/export", to: "expenses#export"
+  get "expense_logs/export", to: "expense_logs#export"
 
-  post "stock_price/simulate", to: "stock_price#simulate"
-  post "stock_price/update", to: "stock_price#update"
+  post "stock_prices/simulate", to: "stock_prices#simulate"
+  post "stock_prices/update", to: "stock_prices#update"
 
   resources :companies, only: [ :index ]
   resources :expense_logs, only: [ :index, :show, :create, :update, :destroy ]
