@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   root to: proc { [ 200, {}, [ "OK" ] ] }
 
-  get "expense_logs/export", to: "expenses#export"
+  get "expense_logs/export", to: "expense_logs#export"
 
   post "stock_price/simulate", to: "stock_price#simulate"
   post "stock_price/update", to: "stock_price#update"
