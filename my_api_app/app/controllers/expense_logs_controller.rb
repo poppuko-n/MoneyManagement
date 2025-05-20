@@ -1,14 +1,13 @@
-# - 認証済ユーザーの支出ログに対して、参照・作成・更新・削除・CSVエクスポートを提供。
 # - 操作対象が当該ユーザー自身のログであることを保証するため、show/update/destroyでは事前に認可チェック（set_authorized_expense）を行う。
 # - index では年・月を指定してログを絞り込み、整形したJSONを返却。
 # - export では全ログをCSV形式で出力。クライアントからの要望を受けて追加。
 require "csv"
 
-class ExpensesController < ApplicationController
+class ExpenseLogsController < ApplicationController
   before_action :authenticate_user, { only: [ :index, :create, :show, :update, :destroy, :export ] }
   before_action :set_authorized_expense, { only: [ :show, :update, :destroy ] }
 
-  # GET /expenses
+  # GET /expense_logs
   def index
     year = params[:year]
     month = params[:month]
@@ -25,9 +24,9 @@ class ExpensesController < ApplicationController
     render json: expenses, status: :ok
   end
 
-  # POST /expenses
+  # POST /expense_logs
   def create
-    expense = ExpenseLog.new(expense_params)
+    expense = ExpenseLog.new(expense_log_params)
     expense.user = @current_user
     if expense.save
       render json: expense, status: :created
@@ -36,7 +35,7 @@ class ExpensesController < ApplicationController
     end
   end
 
-  # GET /expenses/:id
+  # GET /expense_logs/:id
   def show
     render json: {
       expense_log: {
@@ -49,22 +48,22 @@ class ExpensesController < ApplicationController
     }
   end
 
-  # PATCH PUT /expenses/:id
+  # PATCH /expense_logs/:id
   def update
-    if @expense.update(expense_params)
+    if @expense.update(expense_log_params)
       render json: @expense, status: :ok
     else
       render json: { errors: @expense.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
-  # DELETE /expenses/:id
+  # DELETE /expense_logs/:id
   def destroy
     @expense.destroy
     head :no_content
   end
 
-  # GET /export
+  # GET /expense_logs/export
   def export
     expenses = ExpenseLog.for_user(@current_user.id)
     csv_data = CSV.generate do |csv|
@@ -84,8 +83,8 @@ class ExpensesController < ApplicationController
 
   private
 
-  def expense_params
-    params.require(:expense).permit(:category_id, :date, :item, :amount)
+  def expense_log_params
+    params.require(:expense_log).permit(:category_id, :date, :item, :amount)
   end
 
   def set_authorized_expense

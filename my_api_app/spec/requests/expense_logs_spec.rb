@@ -1,19 +1,19 @@
 require 'rails_helper'
 
-RSpec.describe "Expenses", type: :request do
+RSpec.describe "Expense_logs", type: :request do
   let(:user1) { create(:user, name: 'テストユーザー1') }
   let(:food) { create(:category, name: '食費', transaction_type: '支出') }
   let(:salary) { create(:category, name: '給与', transaction_type: '収入') }
   let(:headers) { { "Authorization" => "Bearer #{token}" } }
   let(:token) { generate_token(user1) }
 
-  describe "GET /expenses" do
+  describe "GET /expense_logs" do
     context 'ログインユーザーがアクセスした時' do
       let!(:food_log) { create(:expense_log, date: Date.new(2025, 5, 1), item: '昼食', amount: 1000,  category: food,  user: user1) }
       let!(:salary_log) { create(:expense_log, date: Date.new(2025, 5, 1), item: '給与', amount: 200000,  category: salary,  user: user1) }
       let!(:other_log) { create(:expense_log, date: Date.new(2024, 5, 1), item: '去年の給与', amount: 200000,  category: salary,  user: user1) }
       it '指定した年月の家計記録を取得することができる' do
-        get '/expenses', params: { year: '2025', month: '05' }, headers: headers
+        get '/expense_logs', params: { year: '2025', month: '05' }, headers: headers
         aggregate_failures do
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body.size).to eq(2)
@@ -24,13 +24,13 @@ RSpec.describe "Expenses", type: :request do
     end
   end
 
-  describe 'POST /expenses' do
+  describe 'POST /expense_logs' do
     context '有効なパラメーターの場合' do
       it 'ログを登録することができる' do
         aggregate_failures do
           expect {
-            post '/expenses', params: {
-              expense: {
+            post '/expense_logs', params: {
+              expense_log: {
                 category_id: food.id,
                 date: Date.today,
                 item: "昼食",
@@ -55,8 +55,8 @@ RSpec.describe "Expenses", type: :request do
       it 'ログを登録することができない' do
         aggregate_failures do
           expect {
-            post '/expenses', params: {
-              expense: {
+            post '/expense_logs', params: {
+              expense_log: {
                 category_id: '',
                 date: '',
                 item: '',
@@ -79,12 +79,12 @@ RSpec.describe "Expenses", type: :request do
     end
   end
 
-  describe 'PATCH /expenses/:id' do
+  describe 'PATCH /expense_logs/:id' do
     let!(:food_log) { create(:expense_log, date: Date.today, item: '昼食', amount: 1000,  category: food,  user: user1) }
     context '有効なパラメーターの場合' do
       it 'ログを更新することができる' do
-        patch "/expenses/#{food_log.id}", params: {
-          expense: {
+        patch "/expense_logs/#{food_log.id}", params: {
+          expense_log: {
             category_id: food.id,
             date: Date.today,
             item: "更新された昼食",
@@ -104,8 +104,8 @@ RSpec.describe "Expenses", type: :request do
 
     context '無効なパラメーターの場合' do
       it 'ログを更新することができない' do
-        patch "/expenses/#{food_log.id}", params: {
-          expense: {
+        patch "/expense_logs/#{food_log.id}", params: {
+          expense_log: {
             category_id: food.id,
             date: Date.today,
             item: '',
@@ -124,8 +124,8 @@ RSpec.describe "Expenses", type: :request do
 
     context 'ログが存在しない場合' do
       it 'ログを更新することができない' do
-        patch "/expenses/#{food_log.id+100}", params: {
-          expense: {
+        patch "/expense_logs/#{food_log.id+100}", params: {
+          expense_log: {
             category_id: food.id,
             date: Date.today,
             item: "更新された昼食",
@@ -137,13 +137,13 @@ RSpec.describe "Expenses", type: :request do
     end
   end
 
-  describe 'DELETE /expenses/:id' do
+  describe 'DELETE /expense_logs/:id' do
     let!(:food_log) { create(:expense_log, date: Date.today, item: '昼食', amount: 1000,  category: food,  user: user1) }
     context 'ログが存在する場合' do
       it 'ログを削除することができる' do
         aggregate_failures do
           expect {
-            delete "/expenses/#{food_log.id}", headers: headers
+            delete "/expense_logs/#{food_log.id}", headers: headers
           }.to change(ExpenseLog, :count).by(-1)
 
           expect(response).to have_http_status(204)
@@ -156,7 +156,7 @@ RSpec.describe "Expenses", type: :request do
       it 'ログを削除することができない' do
         aggregate_failures do
           expect {
-            delete "/expenses/#{food_log.id+100}", headers: headers
+            delete "/expense_logs/#{food_log.id+100}", headers: headers
           }.not_to change(ExpenseLog, :count)
           expect(response).to have_http_status(404)
         end
