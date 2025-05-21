@@ -1,13 +1,3 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-
 # Note: ここからCategoryテーブルの初期設定。
 [
   { name: "給与", transaction_type: 0 },
@@ -84,7 +74,7 @@ Company.import(
 
 # Note: ここからStockPriceテーブルの初期設定。
 FROM_DATE = "20230101"
-TO_DATE = "20250401"
+TO_DATE = "20250501"
 
 def fetch_stock_price(code)
   response = HTTParty.get(
