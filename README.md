@@ -139,7 +139,7 @@ https://moneymanagement.jp/
 ![ER 図](document/img/er_diagram.png)
 
 ## インフラ構成図
-![インフラ構成図](document/img/system_architecture.jpg)
+![インフラ構成図](document/img/system_architecture.png)
 
 ## 機能一覧
 - 会員登録、ログイン／ログアウト
