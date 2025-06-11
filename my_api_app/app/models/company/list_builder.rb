@@ -5,33 +5,27 @@ class Company
   module ListBuilder
     class << self
       def call
-        fetch_companies_with_sectors.map { |company| build_with_diff_price(company) }
+        Company.all.map { |company| build_with_diff_price(company) }
       end
 
       private
 
-      def fetch_companies_with_sectors
-        Company.joins(:sector)
-               .pluck(:code, :name, "sectors.name")
-      end
-
       def build_with_diff_price(company)
-        code, name, sector_name = company
-        latest, second = fetch_latest_prices(code)
+        latest, second = fetch_latest_prices(company)
         diff = latest - second
 
         {
-          code: code,
-          name: name,
-          sector_name: sector_name,
+          code: company.code,
+          name: company.name,
+          sector_name: company.sector.name,
           latest_price: latest,
           price_difference: diff,
-          price_difference_rate: (diff.to_f / latest).round(2)
+          price_difference_rate: format('%.2f', diff.to_f/latest)
         }
       end
 
-      def fetch_latest_prices(company_code)
-        StockPrice.where(company_code: company_code)
+      def fetch_latest_prices(company)
+        StockPrice.where(company_code: company.code)
                   .order(date: :desc)
                   .limit(2)
                   .pluck(:close_price)
