@@ -1,6 +1,6 @@
 class Category < ApplicationRecord
   has_many :expsense_logs
-  enum :transaction_type, { 収入: 0, 支出: 1 }
+  enum :transaction_type, { income: 0, expense: 1 }
 
   validates :name, presence: true
   validates :transaction_type, presence: true

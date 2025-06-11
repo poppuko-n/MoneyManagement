@@ -21,10 +21,6 @@ const ExpensePieChart = ({expenses, expense_categories, onChange})=> {
   const totalExpense = expenseData.reduce((sum, data)=> sum + data.value, 0);
   
   const COLORS = ["#FF6B6B", "#3B82F6", "#F4A261", "#2EC4B6", "#9B5DE5"];
-
-  const toggleIsDetail = () => {
-    setIsDetail((prev)=>!prev);
-  };
   
   return(
     <div className="container mx-auto p-4">

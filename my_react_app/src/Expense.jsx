@@ -63,9 +63,9 @@ const Expense = () => {
   // NOTE: 支出、収入に応じてカテゴリ一覧を返す
   const getCategoriesBySelectType = (transactionType) => {
     switch (transactionType) {
-      case "支出":
+      case "expense":
         return expense_categories;
-      case "収入":
+      case "income":
         return income_categories;
       default:
         return [];

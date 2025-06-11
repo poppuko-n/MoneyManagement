@@ -3,11 +3,11 @@ import downLoadImage from "./assets/download.svg";
 
 const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYearMonth, onCreateNew, onExportExpenses}) => {
   const incomeTotal = expenses
-    .filter((expense) => expense.transaction_type === "収入")
+    .filter((expense) => expense.transaction_type === "income")
     .reduce((total, expense) => total + expense.amount, 0);
 
   const expenseTotal = expenses
-    .filter((expense) => expense.transaction_type === "支出")
+    .filter((expense) => expense.transaction_type === "expense")
     .reduce((total, expense) => total + expense.amount, 0);
 
   const balance = incomeTotal - expenseTotal;
