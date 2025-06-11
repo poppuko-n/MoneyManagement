@@ -1,6 +1,3 @@
-# 業種付きの企業一覧を時価総額順に並べ、
-# 各企業の最新株価・価格差・変化率を含むデータを生成するユーティリティ。
-
 class Company
   module ListBuilder
     class << self

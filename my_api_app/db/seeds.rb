@@ -59,7 +59,7 @@ end
 
 Company.import(
   companies,
-  on_duplicate_key_update: [ :sector_id, :name]
+  on_duplicate_key_update: [ :sector_id, :name ]
 )
 
 # Note: ここからStockPriceテーブルの初期設定。
