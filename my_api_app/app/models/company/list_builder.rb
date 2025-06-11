@@ -5,14 +5,13 @@ class Company
   module ListBuilder
     class << self
       def call
-        fetch_ranked_companies_with_sectors.map { |company| build_with_diff_price(company) }
+        fetch_companies_with_sectors.map { |company| build_with_diff_price(company) }
       end
 
       private
 
-      def fetch_ranked_companies_with_sectors
+      def fetch_companies_with_sectors
         Company.joins(:sector)
-               .order(equity: :desc)
                .pluck(:code, :name, "sectors.name")
       end
 
