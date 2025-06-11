@@ -12,7 +12,6 @@ const SelectCompanyTable = ({ displayedCompanies, filtername, quantities, handle
         <th className="border px-4 py-2 text-left">銘柄名</th>
         <th className="border px-4 py-2 text-left">業種</th>
         <th className="border px-4 py-2 text-left">株価(円)</th>
-        <th className="border px-4 py-2 text-left"></th>
         <th className="border px-4 py-2 text-left">口数</th>
         <th className="border px-4 py-2 text-left">金額</th>
         <th className="border px-4 py-2 text-left"></th>
@@ -32,43 +31,10 @@ const SelectCompanyTable = ({ displayedCompanies, filtername, quantities, handle
                 <td className="p-3 border-b text-left">{company.name}</td>
                 <td className="p-3 border-b text-left">{company.sector_name}</td>
                 <td
-                  className={`p-3 border-b text-lg font-semibold ${
-                    company.price_difference > 0
-                      ? "text-red-500"
-                      : company.price_difference < 0
-                      ? "text-green-500"
-                      : ""
-                  }`}
+                  className={`p-3 border-b text-lg font-semibold `
+                }
                 >
                   {formatAmount(company.latest_price)} 
-                </td>
-                <td className="p-3 border-b text-sm">
-                  <div
-                    className={`${
-                      company.price_difference > 0
-                        ? "text-red-500"
-                        : company.price_difference < 0
-                        ? "text-green-500"
-                        : ""
-                    }`}
-                  >
-                    {company.price_difference > 0
-                      ? `+${formatAmount(company.price_difference)} `
-                      : `${formatAmount(company.price_difference)} `}
-                  </div>
-                  <div
-                    className={`${
-                      company.price_difference_rate > 0
-                        ? "text-red-500"
-                        : company.price_difference_rate < 0
-                        ? "text-green-500"
-                        : ""
-                    }`}
-                  >
-                    {company.price_difference_rate > 0
-                      ? `+${company.price_difference_rate}%`
-                      : `${company.price_difference_rate}%`}
-                  </div>
                 </td>
                 <td className="p-3 border-b">
                   <input

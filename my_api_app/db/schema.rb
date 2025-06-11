@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_18_025707) do
+ActiveRecord::Schema[8.0].define(version: 2025_06_11_130935) do
   create_table "categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.datetime "created_at", null: false
@@ -22,7 +22,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_18_025707) do
     t.integer "code", null: false
     t.bigint "sector_id", null: false
     t.string "name", null: false
-    t.bigint "equity"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_companies_on_code", unique: true

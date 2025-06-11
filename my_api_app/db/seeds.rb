@@ -48,28 +48,18 @@ def fetch_company_info(code)
   JSON.parse(response.body)["info"]
 end
 
-def fetch_company_equity(code)
-  response = HTTParty.get(
-    "#{StockPrice::WeeklyStockFetcher::BASE_URL}/fins/statements",
-    query: { code: code },
-    headers: { Authorization: AUTH_TOKEN }
-  )
-  JSON.parse(response.body)["statements"][0]["Equity"].to_i
-end
-
 companies = StockPrice::WeeklyStockFetcher::TARGET_CODES.map do |code|
   info = fetch_company_info(code)
   Company.new(
     code: info[0]["Code"].to_i,
     sector_id: info[0]["Sector17Code"].to_i,
-    name: info[0]["CompanyName"],
-    equity: fetch_company_equity(code)
+    name: info[0]["CompanyName"]
   )
 end
 
 Company.import(
   companies,
-  on_duplicate_key_update: [ :sector_id, :name, :equity ]
+  on_duplicate_key_update: [ :sector_id, :name ]
 )
 
 # Note: ここからStockPriceテーブルの初期設定。
