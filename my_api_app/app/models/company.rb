@@ -1,6 +1,6 @@
 class Company < ApplicationRecord
   belongs_to :sector
-  has_many :stock_prices, foreign_key: :company_code
+  has_many :stock_prices, foreign_key: :company_code, primary_key: :code
 
   validates :code, presence: true, uniqueness: true
   validates :name, presence: true, uniqueness: true
