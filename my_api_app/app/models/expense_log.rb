@@ -28,14 +28,4 @@ class ExpenseLog < ApplicationRecord
       transaction_type: category.transaction_type
     }
  end
-
- def build_csv
-  [
-    date.to_s,
-    category.transaction_type,
-    category.name,
-    item,
-    amount
-  ]
- end
 end

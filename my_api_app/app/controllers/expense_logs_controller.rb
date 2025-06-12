@@ -1,7 +1,5 @@
-require "csv"
-
 class ExpenseLogsController < ApplicationController
-  before_action :authenticate_user, { only: [ :index, :create, :show, :update, :destroy, :export ] }
+  before_action :authenticate_user, { only: [ :index, :create, :show, :update, :destroy ] }
   before_action :set_expense_log, { only: [ :show, :update, :destroy ] }
 
   # GET /expense_logs
@@ -41,17 +39,6 @@ class ExpenseLogsController < ApplicationController
   def destroy
     @expense_log.destroy
     head :no_content
-  end
-
-  # GET /expense_logs/export
-  def export
-    csv_data = CSV.generate do |csv|
-      csv << [ "日付", "種別", "カテゴリ", "内容", "金額" ]
-      @current_user.expense_logs.each do |expense_log|
-        csv << expense_log.build_csv
-      end
-    end
-    send_data csv_data, filename: "expense_logs_#{Time.zone.today}.csv", type: "text/csv"
   end
 
   private
