@@ -1,6 +1,3 @@
-# - 操作対象が当該ユーザー自身のログであることを保証するため、show/update/destroyでは事前に認可チェック（set_authorized_expense）を行う。
-# - index では年・月を指定してログを絞り込み、整形したJSONを返却。
-# - export では全ログをCSV形式で出力。クライアントからの要望を受けて追加。
 require "csv"
 
 class ExpenseLogsController < ApplicationController
@@ -9,18 +6,11 @@ class ExpenseLogsController < ApplicationController
 
   # GET /expense_logs
   def index
-    year = params[:year]
-    month = params[:month]
-    expenses = ExpenseLog.for_user_in_month(@current_user.id, year, month).map do |expense|
-      {
-        id: expense.id,
-        transaction_type: expense.transaction_type_name,
-        date: expense.date,
-        item: expense.item,
-        amount: expense.amount,
-        category_name: expense.category.name
-      }
-    end
+    year, month = params.values_at(:year, :month).map(&:to_i)
+    start_date = Date.new(year, month, 1)
+    end_data = start_date.end_of_month
+    expenses = @current_user.expense_logs.where(date: start_date..end_data).map(&:as_api_json)
+
     render json: expenses, status: :ok
   end
 
@@ -44,7 +34,7 @@ class ExpenseLogsController < ApplicationController
         item: @expense.item,
         amount: @expense.amount
       },
-      transaction_type: @expense.transaction_type_name
+      transaction_type: @expense.category.transaction_type
     }
   end
 
