@@ -72,18 +72,13 @@ const Expense = () => {
     }
   };
 
-  // NOTE: 家計簿データをエクスポートする（CSV）
-  const onExportExpenses = (token) => {
-    ExpenseApi.exportExpenses(token);
-  };
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 100 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1 }}>
 
-      {/* NOTE: ヘッダー（年月切替、新規作成、エクスポート） */}
+      {/* NOTE: ヘッダー（年月切替、新規作成） */}
       <ExpenseHeader
         expenses={expenses}
         year={year}
@@ -92,7 +87,6 @@ const Expense = () => {
         setMonth={setMonth}
         initializeYearMonth={initializeYearMonth}
         onCreateNew={() => setIsCreating(true)}
-        onExportExpenses={() => onExportExpenses(token)}
       />
 
       {/* NOTE: 円グラフ表示。切り替えで明細表示へ */}
