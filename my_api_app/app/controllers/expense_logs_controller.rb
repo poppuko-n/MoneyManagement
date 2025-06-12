@@ -4,10 +4,8 @@ class ExpenseLogsController < ApplicationController
 
   # GET /expense_logs
   def index
-    year, month = params.values_at(:year, :month).map(&:to_i)
-    start_date, end_date = build_month_range(year, month)
+    start_date, end_date = build_month_range_from_params
     expense_logs = @current_user.expense_logs.where(date: start_date..end_date).map(&:as_api_json)
-
     render json: expense_logs, status: :ok
   end
 
@@ -47,16 +45,13 @@ class ExpenseLogsController < ApplicationController
     params.require(:expense_log).permit(:category_id, :date, :item, :amount)
   end
 
-  def build_month_range(year, month)
-    start_date = Date.new(year, month, 1)
-    end_date = start_date.end_of_month
-    [ start_date, end_date ]
-  end
-
   def set_expense_log
     @expense_log = @current_user.expense_logs.find(params[:id])
-    return if @expense_log
+  end
 
-    render json: { error: "ログが見つかりません" }, status: :not_found
+  def build_month_range_from_params
+    year, month = params.values_at(:year, :month).map(&:to_i)
+    date = Date.new(year, month)
+    [ date.beginning_of_month, date.end_of_month ]
   end
 end
