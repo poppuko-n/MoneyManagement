@@ -78,7 +78,7 @@ class ExpenseLogsController < ApplicationController
   end
 
   def set_authorized_expense
-    @expense = ExpenseLog.find_for_user(@current_user.id, params[:id])
+    @expense = @current_user.expense_logs.find(params[:id])
     return if @expense
 
     render json: { error: "ログが見つかりません" }, status: :not_found

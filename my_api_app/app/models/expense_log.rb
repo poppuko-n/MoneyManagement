@@ -6,12 +6,6 @@ class ExpenseLog < ApplicationRecord
   validates :item, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0 }
 
- def self.for_user(user_id)
-  includes(:category)
-    .where(user_id: user_id)
-    .order(date: :asc)
- end
-
  def self.find_for_user(user_id, expense_id)
   includes(:category).find_by(user_id: user_id, id: expense_id)
  end
