@@ -5,7 +5,7 @@ class ExpenseLogsController < ApplicationController
   # GET /expense_logs
   def index
     start_date, end_date = build_month_range_from_params
-    expense_logs = @current_user.expense_logs.where(date: start_date..end_date).map(&:as_api_json)
+    expense_logs = @current_user.expense_logs.where(date: start_date..end_date).map(&:to_api)
     render json: expense_logs, status: :ok
   end
 
@@ -27,7 +27,7 @@ class ExpenseLogsController < ApplicationController
   # PATCH /expense_logs/:id
   def update
     if @expense_log.update(expense_log_params)
-      render json: @expense_log, status: :ok
+      render json: @expense_log.to_api, status: :ok
     else
       render json: { errors: @expense_log.errors.full_messages }, status: :unprocessable_entity
     end
