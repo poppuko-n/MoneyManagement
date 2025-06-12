@@ -1,6 +1,6 @@
 class CompaniesController < ApplicationController
   # GET /companies
   def index
-    render json: Company::ListBuilder.call, status: :ok
+    render json: Company.all.map(&:as_api_json), status: :ok
   end
 end
