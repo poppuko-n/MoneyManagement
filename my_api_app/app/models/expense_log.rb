@@ -20,5 +20,4 @@ class ExpenseLog < ApplicationRecord
     category_name: category.name
   }
  end
-
 end

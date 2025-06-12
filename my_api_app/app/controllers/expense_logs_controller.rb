@@ -2,26 +2,26 @@ require "csv"
 
 class ExpenseLogsController < ApplicationController
   before_action :authenticate_user, { only: [ :index, :create, :show, :update, :destroy, :export ] }
-  before_action :set_authorized_expense, { only: [ :show, :update, :destroy ] }
+  before_action :set_expense_log, { only: [ :show, :update, :destroy ] }
 
   # GET /expense_logs
   def index
     year, month = params.values_at(:year, :month).map(&:to_i)
     start_date = Date.new(year, month, 1)
     end_data = start_date.end_of_month
-    expenses = @current_user.expense_logs.where(date: start_date..end_data).map(&:as_api_json)
+    expense_logs = @current_user.expense_logs.where(date: start_date..end_data).map(&:as_api_json)
 
-    render json: expenses, status: :ok
+    render json: expense_logs, status: :ok
   end
 
   # POST /expense_logs
   def create
-    expense = ExpenseLog.new(expense_log_params)
-    expense.user = @current_user
-    if expense.save
-      render json: expense, status: :created
+    expense_log = ExpenseLog.new(expense_log_params)
+    expense_log.user = @current_user
+    if expense_log.save
+      render json: expense_log, status: :created
     else
-      render json: { errors: expense.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: expense_log.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -29,27 +29,27 @@ class ExpenseLogsController < ApplicationController
   def show
     render json: {
       expense_log: {
-        category_id: @expense.category.id,
-        date: @expense.date,
-        item: @expense.item,
-        amount: @expense.amount
+        category_id: @expense_log.category.id,
+        date: @expense_log.date,
+        item: @expense_log.item,
+        amount: @expense_log.amount
       },
-      transaction_type: @expense.category.transaction_type
+      transaction_type: @expense_log.category.transaction_type
     }
   end
 
   # PATCH /expense_logs/:id
   def update
-    if @expense.update(expense_log_params)
-      render json: @expense, status: :ok
+    if @expense_log.update(expense_log_params)
+      render json: @expense_log, status: :ok
     else
-      render json: { errors: @expense.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @expense_log.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   # DELETE /expense_logs/:id
   def destroy
-    @expense.destroy
+    @expense_log.destroy
     head :no_content
   end
 
@@ -77,9 +77,9 @@ class ExpenseLogsController < ApplicationController
     params.require(:expense_log).permit(:category_id, :date, :item, :amount)
   end
 
-  def set_authorized_expense
-    @expense = @current_user.expense_logs.find(params[:id])
-    return if @expense
+  def set_expense_log
+    @expense_log = @current_user.expense_logs.find(params[:id])
+    return if @expense_log
 
     render json: { error: "ログが見つかりません" }, status: :not_found
   end
