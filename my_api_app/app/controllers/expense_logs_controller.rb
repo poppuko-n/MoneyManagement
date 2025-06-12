@@ -7,9 +7,8 @@ class ExpenseLogsController < ApplicationController
   # GET /expense_logs
   def index
     year, month = params.values_at(:year, :month).map(&:to_i)
-    start_date = Date.new(year, month, 1)
-    end_data = start_date.end_of_month
-    expense_logs = @current_user.expense_logs.where(date: start_date..end_data).map(&:as_api_json)
+    start_date, end_date = month_range(year, month)
+    expense_logs = @current_user.expense_logs.where(date: start_date..end_date).map(&:as_api_json)
 
     render json: expense_logs, status: :ok
   end
@@ -59,6 +58,12 @@ class ExpenseLogsController < ApplicationController
 
   def expense_log_params
     params.require(:expense_log).permit(:category_id, :date, :item, :amount)
+  end
+
+  def month_range(year, month)
+    start_date = Date.new(year, month, 1)
+    end_date = start_date.end_of_month
+    [ start_date, end_date ]
   end
 
   def set_expense_log
