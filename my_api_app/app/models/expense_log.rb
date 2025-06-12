@@ -6,16 +6,16 @@ class ExpenseLog < ApplicationRecord
   validates :item, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0 }
 
- def as_api_json
+  def to_api
     {
-    id: id,
-    transaction_type: category.transaction_type,
-    date: date,
-    item: item,
-    amount: amount,
-    category_name: category.name
-  }
- end
+      id: id,
+      transaction_type: category.transaction_type,
+      date: date,
+      item: item,
+      amount: amount,
+      category_name: category.name
+    }
+  end
 
  def build_api_json
   {

@@ -9,7 +9,7 @@ class Company < ApplicationRecord
     stock_prices.order(date: :desc).limit(1).pluck(:close_price).first
   end
 
-  def as_api_json
+  def to_api
     {
     code: code,
     name: name,
