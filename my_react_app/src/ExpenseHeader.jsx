@@ -1,13 +1,13 @@
 import addImage from "./assets/add.svg";
 import downLoadImage from "./assets/download.svg";
 
-const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYearMonth, onCreateNew, onExportExpenses}) => {
+const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYearMonth, onCreateNew}) => {
   const incomeTotal = expenses
-    .filter((expense) => expense.transaction_type === "収入")
+    .filter((expense) => expense.transaction_type === "income")
     .reduce((total, expense) => total + expense.amount, 0);
 
   const expenseTotal = expenses
-    .filter((expense) => expense.transaction_type === "支出")
+    .filter((expense) => expense.transaction_type === "expense")
     .reduce((total, expense) => total + expense.amount, 0);
 
   const balance = incomeTotal - expenseTotal;
@@ -60,18 +60,6 @@ const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYear
         </div>
 
         <div className="flex-1 flex justify-end gap-2">
-          <div className="flex gap-2">
-            <div
-            onClick={onExportExpenses}
-              className="cursor-pointer hover:bg-gray-300 bg-gray-400 text-white rounded-full p-4 transition duration-700 flex items-center justify-center"
-            >
-              <img 
-                src={downLoadImage} 
-                alt="download"
-                className="w-6 h-6" 
-              />
-              ダウンロード
-            </div>
             <div
               onClick={onCreateNew}
               className="cursor-pointer hover:bg-red-300 bg-red-400 text-white rounded-full p-4 transition duration-700 flex items-center justify-center"
@@ -83,7 +71,6 @@ const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYear
               />
               新規登録
             </div>
-          </div>
         </div>
 
       </div>

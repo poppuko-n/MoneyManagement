@@ -35,8 +35,8 @@ const ExpenseNew = ({ onBack, getCategoriesBySelectType }) => {
             }}
           >
             <option value="">選択してください</option>
-            <option value="支出">支出</option>
-            <option value="収入">収入</option>
+            <option value="expense">支出</option>
+            <option value="income">収入</option>
           </select>
         </div>
 
