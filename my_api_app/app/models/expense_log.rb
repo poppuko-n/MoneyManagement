@@ -6,10 +6,6 @@ class ExpenseLog < ApplicationRecord
   validates :item, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0 }
 
- def self.find_for_user(user_id, expense_id)
-  includes(:category).find_by(user_id: user_id, id: expense_id)
- end
-
  def as_api_json
     {
     id: id,
@@ -19,5 +15,27 @@ class ExpenseLog < ApplicationRecord
     amount: amount,
     category_name: category.name
   }
+ end
+
+ def build_api_json
+  {
+      expense_log: {
+        category_id: category.id,
+        date: date,
+        item: item,
+        amount: amount
+      },
+      transaction_type: category.transaction_type
+    }
+ end
+
+ def build_csv
+  [
+    date.to_s,
+    category.transaction_type,
+    category.name,
+    item,
+    amount
+  ]
  end
 end

@@ -16,8 +16,7 @@ class ExpenseLogsController < ApplicationController
 
   # POST /expense_logs
   def create
-    expense_log = ExpenseLog.new(expense_log_params)
-    expense_log.user = @current_user
+    expense_log = @current_user.expense_logs.build(expense_log_params)
     if expense_log.save
       render json: expense_log, status: :created
     else
@@ -27,15 +26,7 @@ class ExpenseLogsController < ApplicationController
 
   # GET /expense_logs/:id
   def show
-    render json: {
-      expense_log: {
-        category_id: @expense_log.category.id,
-        date: @expense_log.date,
-        item: @expense_log.item,
-        amount: @expense_log.amount
-      },
-      transaction_type: @expense_log.category.transaction_type
-    }
+    render json: @expense_log.build_api_json
   end
 
   # PATCH /expense_logs/:id
@@ -55,20 +46,13 @@ class ExpenseLogsController < ApplicationController
 
   # GET /expense_logs/export
   def export
-    expenses = ExpenseLog.for_user(@current_user.id)
     csv_data = CSV.generate do |csv|
       csv << [ "日付", "種別", "カテゴリ", "内容", "金額" ]
-      expenses.each do |expense|
-        csv << [
-          expense.date.to_s,
-          expense.transaction_type_name,
-          expense.category.name,
-          expense.item,
-          expense.amount
-        ]
+      @current_user.expense_logs.each do |expense_log|
+        csv << expense_log.build_csv
       end
     end
-    send_data csv_data, filename: "expenses_#{Time.zone.today}.csv", type: "text/csv"
+    send_data csv_data, filename: "expense_logs_#{Time.zone.today}.csv", type: "text/csv"
   end
 
   private
