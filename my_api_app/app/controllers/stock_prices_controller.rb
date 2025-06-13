@@ -1,5 +1,6 @@
 class StockPricesController < ApplicationController
   TARGET_PERIODS = (1..12).to_a
+
   # POST /stock_prices/update
   def update
     StockPrice::Importer.call
@@ -8,14 +9,14 @@ class StockPricesController < ApplicationController
 
   # POST /stock_prices/simulate
   def simulate
-    # params[:data] = [{"code"=>銘柄コード, "name"=>"銘柄名", "price"=>現在価格, "quantity"=>購入数量}]
+    # params[:data] = [{"code"=>銘柄コード, "quantity"=>購入数量}]
     render json: build_simulation_result(params[:data]), status: :ok
   end
 
   private
 
-  def build_simulation_result(investment_simulation_targets)
-      results = investment_simulation_targets.map do |target|
+  def build_simulation_result(simulation_targets)
+      results = simulation_targets.map do |target|
         build_investment_simuration(target)
       end
       {
@@ -24,32 +25,37 @@ class StockPricesController < ApplicationController
       }
   end
 
-# 返すJSONは,以下の通り（３ヶ月の場合の例）。
-# "code": "83060",
-# "name": "三菱ＵＦＪフィナンシャル・グループ",
-# "current_price": 2178,
-# "quantity": 1,
-# "one_time": [
-#   { "period": "1_month", "value": 2885, "deposit": 2178 }
-#   { "period": "2_month", "value": 2505, "deposit": 2178 }
-#   ...
-#   { "period": "12_month", "value": 2964, "deposit": 2178 }
-# ],
-# "accumulated": [
-#   { "period": "1_month", "value": 2396, "deposit": 2178 }
-#   { "period": "2_month", "value": 4792, "deposit": 4356 }
-#   ...
-#   { "period": "12_month", "value": 28750, "deposit": 26136 }
-# ]
+  # "code": "83060",
+  # "name": "三菱ＵＦＪフィナンシャル・グループ",
+  # "current_price": 2178,
+  # "quantity": 1,
+  # "one_time": [
+  #   { "period": "1_month", "value": 2885, "deposit": 2178 }
+  #   { "period": "2_month", "value": 2505, "deposit": 2178 }
+  #   ...
+  #   { "period": "12_month", "value": 2964, "deposit": 2178 }
+  # ],
+  # "accumulated": [
+  #   { "period": "1_month", "value": 2396, "deposit": 2178 }
+  #   { "period": "2_month", "value": 4792, "deposit": 4356 }
+  #   ...
+  #   { "period": "12_month", "value": 28750, "deposit": 26136 }
+  # ]
+
+  def set_company(code)
+    Company.find_by(code: code)
+  end
+
   def build_investment_simuration(target)
-    target_company_code, target_company_name, current_price, quantity  = target.values_at(:code, :name, :price, :quantity)
+    company_code, quantity  = target.values_at(:code, :quantity)
+    company = set_company(company_code)
         {
-          code: target_company_code,
-          name: target_company_name,
-          current_price: current_price,
+          code: company_code,
+          name: company.name,
+          current_price: company.latest_stock_price,
           quantity: quantity,
-          one_time: format_one_time_simulations(target_company_code, current_price, quantity),
-          accumulated: format_accumulated_simulations(target_company_code, current_price, quantity)
+          one_time: format_one_time_simulations(company_code, company.latest_stock_price.to_i, quantity),
+          accumulated: format_accumulated_simulations(company_code, company.latest_stock_price.to_i, quantity)
         }
   end
 
