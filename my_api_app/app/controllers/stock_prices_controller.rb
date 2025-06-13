@@ -50,7 +50,6 @@ class StockPricesController < ApplicationController
     company_code, quantity  = target.values_at(:code, :quantity)
     company = set_company(company_code)
         {
-          code: company_code,
           name: company.name,
           current_price: company.latest_stock_price,
           quantity: quantity,

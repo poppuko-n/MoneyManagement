@@ -5,7 +5,6 @@ const SimulationResultTable = ({ simulationResultsByTypeAndPeriod }) => {
     <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow">
       <thead className="bg-gray-200">
         <tr>
-          <th className="p-3 border-b">コード</th>
           <th className="p-3 border-b">銘柄名</th>
           <th className="p-3 border-b">現在価格 (円)</th>
           <th className="p-3 border-b">保有数量</th>
@@ -23,7 +22,6 @@ const SimulationResultTable = ({ simulationResultsByTypeAndPeriod }) => {
 
           return (
             <tr key={item.code} className="text-center">
-              <td className="p-3 border-b">{item.code}</td>
               <td className="p-3 border-b">{item.name}</td>
               <td className="p-3 border-b">{formatAmount(item.current_price)}</td>
               <td className="p-3 border-b">{formatAmount(item.quantity)}</td>
