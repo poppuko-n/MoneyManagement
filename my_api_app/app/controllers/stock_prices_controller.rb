@@ -33,38 +33,7 @@ class StockPricesController < ApplicationController
           current_price: company.latest_stock_price,
           quantity: quantity,
           one_time: OneTimeSimulator.new(company, quantity).call,
-          accumulated: format_accumulated_simulations(company, quantity)
+          accumulated: AccumulatedSimulator.new(company, quantity).call
         }
-  end
-
-  def format_accumulated_simulations(company, quantity)
-    average_growth_rate = calculate_average_growth_rate(company)
-    monthly_deposit = company.latest_stock_price * quantity
-    TARGET_PERIODS.map do |month|
-      total_value = (0...month).sum do |i|
-        monthly_deposit * (average_growth_rate ** (month-i))
-      end
-
-      {
-        period: "#{month}_month",
-        value: total_value.round,
-        deposit: monthly_deposit * month
-      }
-    end
-  end
-
-  def fetch_past_average_price(company, month)
-      start_date = Date.today - month.months
-      end_date = start_date + 30.days
-      company.stock_prices.where(date: start_date..end_date).average(:close_price)
-  end
-
-  def calculate_average_growth_rate(company)
-    rates = TARGET_PERIODS.map do |i|
-      from = fetch_past_average_price(company, i)
-      to   = i == 1 ? company.latest_stock_price : fetch_past_average_price(company, i - 1)
-      to / from
-    end
-    (rates.sum / rates.size).ceil(2)
   end
 end
