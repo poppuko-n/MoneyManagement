@@ -6,19 +6,30 @@ class OneTimeSimulator
   end
 
   def call
-    TARGET_PERIODS.map do |month|
-      past_price = fetch_past_price(month)
-      { period: "#{month}_month",
-        value: (@company.latest_stock_price**2 / past_price) * @quantity,
-        deposit: @company.latest_stock_price * @quantity }
-    end
+    TARGET_PERIODS.map { |month| to_api(fetch_past_price(month), month) }
   end
 
   private
 
   def fetch_past_price(month)
-    start_date = Date.today
-    end_date = start_date - month.months
-    @company.stock_prices.where(date: end_date..start_date).order(date: :asc).first&.close_price
+    start_date = Date.today - month.months
+    # find_byだと完全一致なので範囲検索にしている。
+    @company.stock_prices.where(date: start_date..).pick(:close_price)
+  end
+
+  def calculate_one_time_investment_value(past_price)
+    @company.latest_stock_price**2 / past_price * @quantity
+  end
+
+  def calculate_one_time_investment_deposit
+    @company.latest_stock_price * @quantity
+  end
+
+  def to_api(past_price, month)
+    {
+      period: "#{month}_month",
+      value: calculate_one_time_investment_value(past_price),
+      deposit: calculate_one_time_investment_deposit
+    }
   end
 end
