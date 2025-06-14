@@ -64,8 +64,6 @@ const Simulation = () => {
       .filter((company) => quantities[company.code] > 0)
       .map((company) => ({
         code: company.code,
-        name: company.name,
-        price: company.latest_price,
         quantity: quantities[company.code],
       }));
 
