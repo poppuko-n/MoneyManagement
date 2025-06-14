@@ -13,9 +13,7 @@ class StockPriceUpdater
   ].freeze
 
   def  call
-    stock_prices = TARGET_CODES.flat_map do |code|
-      format_stock_prices(daily_quotes(code))
-    end
+    stock_prices = TARGET_CODES.flat_map { |code| format_stock_prices(daily_quotes(code))}
     import_with_logging(stock_prices)
   end
 
@@ -46,8 +44,8 @@ class StockPriceUpdater
   Date.today.strftime("%Y%m%d")
   end
 
-  def format_stock_prices(quotes)
-    quotes.map do |quote|
+  def format_stock_prices(daily_quotes)
+    daily_quotes.map do |quote|
       StockPrice.new(
         company_code: quote["Code"].to_i,
         date: quote["Date"],
@@ -56,7 +54,7 @@ class StockPriceUpdater
     end
   end
 
-  def import_with_logging(stock_prices)
+  def update_company_stock_prices(stock_prices)
     stock_prices.each_slice(BASE_SIZE) do |batch|
       valid_stprice, unvalid_stprice = batch.partition(&:valid?)
       log_errors(unvalid_stprice) unless unvalid_stprice.empty?
