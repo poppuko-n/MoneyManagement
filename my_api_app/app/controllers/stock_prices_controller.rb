@@ -32,24 +32,9 @@ class StockPricesController < ApplicationController
           name: company.name,
           current_price: company.latest_stock_price,
           quantity: quantity,
-          one_time: format_one_time_simulations(company, quantity),
+          one_time: OneTimeSimulator.new(company, quantity).call,
           accumulated: format_accumulated_simulations(company, quantity)
         }
-  end
-
-  def format_one_time_simulations(company, quantity)
-    TARGET_PERIODS.map do |month|
-      past_price = fetch_past_price(company, month)
-      { period: "#{month}_month",
-        value: (company.latest_stock_price**2 / past_price) * quantity,
-        deposit: company.latest_stock_price * quantity }
-    end
-  end
-
-  def fetch_past_price(company, month)
-    start_date = Date.today
-    end_date = start_date - month.months
-    company.stock_prices.where(date: end_date..start_date).order(date: :asc).first&.close_price
   end
 
   def format_accumulated_simulations(company, quantity)
