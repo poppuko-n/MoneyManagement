@@ -1,6 +1,4 @@
 class StockPricesController < ApplicationController
-  TARGET_PERIODS = (1..12).to_a
-
   # POST /stock_prices/update
   def update
     StockPrice::Importer.call
@@ -9,16 +7,13 @@ class StockPricesController < ApplicationController
 
   # POST /stock_prices/simulate
   def simulate
-    # params[:data] = [{"code"=>銘柄コード, "quantity"=>購入数量}]
     render json: build_simulation_result(params[:data]), status: :ok
   end
 
   private
 
   def build_simulation_result(simulation_targets)
-      results = simulation_targets.map do |target|
-        simulation_investment(target)
-      end
+      results = simulation_targets.map { |target| simulation_investment(target) }
       {
         results: results,
         ai_analysis: StockPrice::AiAnalyzer.call(results)
