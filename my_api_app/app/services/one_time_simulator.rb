@@ -6,7 +6,7 @@ class OneTimeSimulator
   end
 
   def call
-    TARGET_PERIODS.map { |month| to_api(fetch_past_price(month), month) }
+    TARGET_PERIODS.map { |month| to_api(month) }
   end
 
   private
@@ -25,7 +25,8 @@ class OneTimeSimulator
     @company.latest_stock_price * @quantity
   end
 
-  def to_api(past_price, month)
+  def to_api(month)
+    past_price = fetch_past_price(month)
     {
       period: "#{month}_month",
       value: calculate_one_time_investment_value(past_price),
