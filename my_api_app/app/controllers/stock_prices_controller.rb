@@ -7,8 +7,8 @@ class StockPricesController < ApplicationController
 
   # POST /stock_prices/simulate
   def simulate
-    results = params[:data].map{ |target| to_api(target) }
-    ai_analysis = StockPrice::AiAnalyzer.call(results)
+    results = params[:data].map { |target| to_api(target) }
+    ai_analysis = AiAnalyzer.new(results).call
     render json: { results:, ai_analysis: }, status: :ok
   end
 
