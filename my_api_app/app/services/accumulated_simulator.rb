@@ -6,7 +6,7 @@ class AccumulatedSimulator
   end
 
   def call
-    TARGET_PERIODS.map { |month| to_api(month) } 
+    TARGET_PERIODS.map { |month| to_api(month) }
   end
 
   private
