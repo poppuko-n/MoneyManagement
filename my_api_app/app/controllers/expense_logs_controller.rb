@@ -1,6 +1,6 @@
 class ExpenseLogsController < ApplicationController
-  before_action :authenticate_user, { only: [ :index, :create, :show, :update, :destroy ] }
-  before_action :set_expense_log, { only: [ :show, :update, :destroy ] }
+  before_action :authenticate_user, { only: %i[index create show update destroy ] }
+  before_action :set_expense_log, { only: %i[show update destroy] }
 
   # GET /expense_logs
   def index
