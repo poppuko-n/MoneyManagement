@@ -1,4 +1,3 @@
-require "httparty"
 class AiAnalyzer
   BASE_URL = "https://api.openai.com/v1/chat/completions".freeze
   def initialize(results)
