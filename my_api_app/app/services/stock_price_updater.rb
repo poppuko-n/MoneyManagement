@@ -14,12 +14,37 @@ class StockPriceUpdater
 
   def  call
     stock_prices = TARGET_CODES.flat_map do |code|
-      format_stock_prices(StockPrice::WeeklyStockFetcher.call(code))
+      format_stock_prices(daily_quotes(code))
     end
     import_with_logging(stock_prices)
   end
 
   private
+
+  def daily_quotes(code)
+  response = HTTParty.get(
+    "#{BASE_URL}/prices/daily_quotes",
+    query: { code: code, from: from_date, to: to_date },
+    headers: { Authorization: id_token }
+  )
+  JSON.parse(response.body)["daily_quotes"]
+  end
+
+  def id_token
+  refresh_token = Rails.application.credentials.jqunts[:refresh_token]
+  response = HTTParty.post(
+    "#{BASE_URL}/token/auth_refresh",
+    query: { refreshtoken: refresh_token })
+  JSON.parse(response.body)["idToken"]
+  end
+
+  def from_date
+  (Date.today << 3).strftime("%Y%m%d")
+  end
+
+  def to_date
+  Date.today.strftime("%Y%m%d")
+  end
 
   def format_stock_prices(quotes)
     quotes.map do |quote|
