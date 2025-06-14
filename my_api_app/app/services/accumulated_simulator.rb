@@ -23,17 +23,14 @@ class AccumulatedSimulator
   private
 
   def calculate_average_growth_rate
-    rates = TARGET_PERIODS.map do |month|
-      from = fetch_past_average_price(month)
-      to   = month == 1 ? @company.latest_stock_price : fetch_past_average_price(month - 1)
-      to / from
-    end
+    past_prices = TARGET_PERIODS.map { |m| calculate_past_average_price(m) }
+    past_prices.unshift(@company.latest_stock_price)
+    rates = past_prices.each_cons(2).map { |to, from| to / from }
     (rates.sum / rates.size).ceil(2)
   end
 
-  def fetch_past_average_price(month)
-      start_date = Date.today - month.months
-      end_date = start_date + 30.days
-      @company.stock_prices.where(date: start_date..end_date).average(:close_price)
+  def calculate_past_average_price(month)
+    start_date = Date.today - month.months
+    @company.stock_prices.where(date: start_date..).limit(30).average(:close_price)
   end
 end
