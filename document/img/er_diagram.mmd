@@ -1,8 +1,7 @@
 erDiagram
-  USERS ||--o{ EXPENSE_LOGS : "1人のユーザーが複数の家計簿を登録する"
-  CATEGORIES ||--o{ EXPENSE_LOGS : "1つのカテゴリに複数の家計簿が属する"
-  SECTORS ||--o{ COMPANIES : "1つの業種に複数の企業が属する"
-  COMPANIES ||--o{ STOCK_PRICES : "1つの企業に複数の株価データがある"
+  USERS ||--o{ EXPENSE_LOGS : "1人のユーザーが複数の家計記録を所持"
+  CATEGORIES ||--o{ EXPENSE_LOGS : "1つのカテゴリに複数の家計記録が属する"
+  COMPANIES ||--o{ STOCK_PRICES : "1つの日本企業に複数の株価データを所持"
 
   USERS {
     integer id PK
@@ -31,26 +30,17 @@ erDiagram
     datetime updated_at
   }
 
-  SECTORS {
-    integer id PK
-    string name
-    datetime created_at
-    datetime updated_at
-  }
-
   COMPANIES {
-    integer id PK
-    integer code
-    integer sector_id FK
+    string code　PK
     string name
-    bigint equity
+    string sector_name
     datetime created_at
     datetime updated_at
   }
 
   STOCK_PRICES {
     integer id PK
-    integer company_code FK
+    string company_code FK
     date date
     integer close_price
     datetime created_at
