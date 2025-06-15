@@ -1,4 +1,4 @@
-class JqunatsClient
+class JquantsClient
   BASE_URL = "https://api.jquants.com/v1".freeze
 
   def initialize
@@ -8,7 +8,7 @@ class JqunatsClient
   def daily_quotes(code)
   response = HTTParty.get(
     "#{BASE_URL}/prices/daily_quotes",
-    query: { code: code, from: stat_date(months_ago = 3), to: current_date },
+    query: { code: code, from: start_date, to: current_date },
     headers: { Authorization: id_token }
   )
   JSON.parse(response.body)["daily_quotes"]
@@ -23,11 +23,11 @@ class JqunatsClient
   JSON.parse(response.body)["idToken"]
   end
 
-  def stat_date(months_ago = 3)
-  (Date.today << 3).strftime("%Y%m%d")
+  def start_date
+    (Date.today << 1).strftime("%Y%m%d")
   end
 
   def current_date
-  Date.today.strftime("%Y%m%d")
+    Date.today.strftime("%Y%m%d")
   end
 end

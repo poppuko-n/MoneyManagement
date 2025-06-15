@@ -1,6 +1,4 @@
 class StockPriceUpdater
-  BASE_SIZE = 1000
-  
   TARGET_CODES = [
     "72030", "83060", "61780", "83160", "99840",
     "72670", "94320", "84110", "80580", "71820",
@@ -13,14 +11,14 @@ class StockPriceUpdater
   ].freeze
 
   def  call
-    stock_prices = TARGET_CODES.flat_map { |code| format_stock_prices(daily_quotes(code))}
-    import_with_logging(stock_prices)
+    stock_prices = TARGET_CODES.flat_map { |code| format_stock_prices(code)}
+    update_company_stock_prices(stock_prices)
   end
 
   private
 
-  def format_stock_prices(daily_quotes)
-    daily_quotes.map do |quote|
+  def format_stock_prices(code)
+    JquantsClient.new.daily_quotes(code).map do |quote|
       StockPrice.new(
         company_code: quote["Code"].to_i,
         date: quote["Date"],
@@ -30,11 +28,9 @@ class StockPriceUpdater
   end
 
   def update_company_stock_prices(stock_prices)
-    stock_prices.each_slice(BASE_SIZE) do |batch|
-      valid_stprice, unvalid_stprice = batch.partition(&:valid?)
-      log_errors(unvalid_stprice) unless unvalid_stprice.empty?
-      StockPrice.import valid_stprice, on_duplicate_key_update: [ :close_price ]
-    end
+    valid, invalid = stock_prices.partition(&:valid?)
+    log_errors(invalid) if invalid.any?
+    StockPrice.import valid, on_duplicate_key_update: [ :close_price ]
   end
 
   def log_errors(records)
