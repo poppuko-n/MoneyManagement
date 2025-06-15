@@ -20,7 +20,7 @@ class StockPriceUpdater
   def format_stock_prices(code)
     JquantsClient.new.fetch_daily_quotes(code).map do |quote|
       StockPrice.new(
-        company_code: quote["Code"].to_i,
+        company_code: quote["Code"],
         date: quote["Date"],
         close_price: quote["Close"]
       )
