@@ -11,14 +11,14 @@ class StockPriceUpdater
   ].freeze
 
   def  call
-    stock_prices = TARGET_CODES.flat_map { |code| format_stock_prices(code)}
+    stock_prices = TARGET_CODES.flat_map { |code| format_stock_prices(code) }
     update_company_stock_prices(stock_prices)
   end
 
   private
 
   def format_stock_prices(code)
-    JquantsClient.new.daily_quotes(code).map do |quote|
+    JquantsClient.new.fetch_daily_quotes(code).map do |quote|
       StockPrice.new(
         company_code: quote["Code"].to_i,
         date: quote["Date"],

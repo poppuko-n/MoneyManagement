@@ -5,7 +5,7 @@ class JquantsClient
     @refresh_token = Rails.application.credentials.jqunts[:refresh_token]
   end
 
-  def daily_quotes(code)
+  def fetch_daily_quotes(code)
   response = HTTParty.get(
     "#{BASE_URL}/prices/daily_quotes",
     query: { code: code, from: start_date, to: current_date },
