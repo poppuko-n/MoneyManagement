@@ -5,7 +5,7 @@ class ExpenseLogsController < ApplicationController
   # GET /expense_logs
   def index
     start_date, end_date = build_month_range_from_params
-    expense_logs = @current_user.expense_logs.where(date: start_date..end_date).map(&:to_api)
+    expense_logs = @current_user.expense_logs.where(date: start_date..end_date).preload(:category).map(&:to_api)
     render json: expense_logs, status: :ok
   end
 
