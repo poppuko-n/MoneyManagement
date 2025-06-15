@@ -6,12 +6,21 @@ class JquantsClient
   end
 
   def fetch_daily_quotes(code)
-  response = HTTParty.get(
-    "#{BASE_URL}/prices/daily_quotes",
-    query: { code: code, from: start_date, to: current_date },
-    headers: { Authorization: id_token }
-  )
-  JSON.parse(response.body)["daily_quotes"]
+    response = HTTParty.get(
+      "#{BASE_URL}/prices/daily_quotes",
+      query: { code: code, from: start_date, to: current_date },
+      headers: { Authorization: id_token }
+    )
+    JSON.parse(response.body)["daily_quotes"]
+  end
+
+  def fetch_company_info(code)
+    response = HTTParty.get(
+      "#{BASE_URL}/listed/info",
+      query: { code: code },
+      headers: { Authorization: id_token }
+    )
+    JSON.parse(response.body)["info"]
   end
 
   private
