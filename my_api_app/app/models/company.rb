@@ -8,13 +8,4 @@ class Company < ApplicationRecord
   def latest_stock_price
     stock_prices.order(date: :desc).limit(1).pluck(:close_price).first
   end
-
-  def to_api
-    {
-    code: code,
-    name: name,
-    sector_name: sector_name,
-    latest_price: latest_stock_price
-    }
-  end
 end
