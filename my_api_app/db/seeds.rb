@@ -39,31 +39,17 @@ Company.import(
 )
 
 # Note: ここからStockPriceテーブルの初期設定。
-# FROM_DATE = "20230101"
-# TO_DATE = "20250501"
+stock_prices = TARGET_CODES.flat_map do |code|
+  JquantsClient.new.fetch_daily_quotes(code, 12).map do |quote|
+    StockPrice.new(
+      company_code: quote["Code"],
+      date: quote["Date"],
+      close_price: quote["Close"]
+    )
+  end
+end
 
-# def fetch_stock_price(code)
-#   response = HTTParty.get(
-#     "#{StockPrice::WeeklyStockFetcher::BASE_URL}/prices/daily_quotes",
-#     query: { code: code, from: FROM_DATE, to: TO_DATE },
-#     headers: { Authorization: AUTH_TOKEN }
-#   )
-#   JSON.parse(response.body)["daily_quotes"]
-# end
-
-# stock_prices = StockPrice::WeeklyStockFetcher::TARGET_CODES.flat_map do |code|
-#   daily_quotes = fetch_stock_price(code)
-
-#   daily_quotes.map do |quote|
-#     StockPrice.new(
-#       company_code: quote["Code"].to_i,
-#       date: quote["Date"],
-#       close_price: quote["Close"].to_i
-#     )
-#   end
-# end
-
-# StockPrice.import(
-#   stock_prices,
-#   on_duplicate_key_update: [ :close_price ]
-# )
+StockPrice.import(
+  stock_prices,
+  on_duplicate_key_update: %i[company_code date close_price]
+)
