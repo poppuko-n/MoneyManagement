@@ -1,16 +1,16 @@
 # Note: ここからCategoryテーブルの初期設定。
-# [
-#   { name: "給与", transaction_type: 0 },
-#   { name: "副業", transaction_type: 0 },
-#   { name: "その他", transaction_type: 0 },
-#   { name: "食費", transaction_type: 1 },
-#   { name: "日用品", transaction_type: 1 },
-#   { name: "交際費", transaction_type: 1 },
-#   { name: "交通費", transaction_type: 1 },
-#   { name: "固定費", transaction_type: 1 }
-# ].each do |attrs|
-#   Category.find_or_create_by!(attrs)
-# end
+[
+  { name: "給与", transaction_type: 0 },
+  { name: "副業", transaction_type: 0 },
+  { name: "その他", transaction_type: 0 },
+  { name: "食費", transaction_type: 1 },
+  { name: "日用品", transaction_type: 1 },
+  { name: "交際費", transaction_type: 1 },
+  { name: "交通費", transaction_type: 1 },
+  { name: "固定費", transaction_type: 1 }
+].each do |attrs|
+  Category.find_or_create_by!(attrs)
+end
 
 # Note: ここからCompanyテーブルの初期設定。
 TARGET_CODES = [
@@ -28,14 +28,14 @@ companies = TARGET_CODES.map do |code|
   info = JquantsClient.new.fetch_company_info(code)
   Company.new(
     code: info[0]["Code"],
-    sector_name: info[0]["Sector17CodeName"],
-    name: info[0]["CompanyName"]
+    name: info[0]["CompanyName"],
+    sector_name: info[0]["Sector17CodeName"]
   )
 end
 
 Company.import(
   companies,
-  on_duplicate_key_update: [:sector_name]
+  on_duplicate_key_update: %i[code name sector_name]
 )
 
 # Note: ここからStockPriceテーブルの初期設定。
