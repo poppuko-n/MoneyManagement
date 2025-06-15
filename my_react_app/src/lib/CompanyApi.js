@@ -13,7 +13,7 @@ class CompanyApi {
 
   static getSimulations(payload) {
     return axios
-      .post(`${this.apiBaseUrl}/stock_prices/simulate`, payload)
+      .post(`${this.apiBaseUrl}/simulation_results`, payload)
       .catch(error => {
         alert("データの送信に失敗しました。")
       })
