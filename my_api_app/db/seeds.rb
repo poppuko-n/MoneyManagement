@@ -1,5 +1,5 @@
-# Note: ここからCategoryテーブルの初期設定。
-[
+# === Category ===
+categories = [
   { name: "給与", transaction_type: 0 },
   { name: "副業", transaction_type: 0 },
   { name: "その他", transaction_type: 0 },
@@ -8,11 +8,12 @@
   { name: "交際費", transaction_type: 1 },
   { name: "交通費", transaction_type: 1 },
   { name: "固定費", transaction_type: 1 }
-].each do |attrs|
-  Category.find_or_create_by!(attrs)
-end
+]
 
-# Note: ここからCompanyテーブルの初期設定。
+categories.each { |attrs| Category.find_or_create_by!(attrs) }
+puts "Categories seeded: #{Category.count}"
+
+# === Company ===
 TARGET_CODES = %w[
   72030 83060 61780 83160 99840
   72670 94320 84110 80580 71820
@@ -24,8 +25,10 @@ TARGET_CODES = %w[
   65210 65220 65230 65240
 ].freeze
 
+client = JquantsClient.new
+
 companies = TARGET_CODES.map do |code|
-  info = JquantsClient.new.fetch_company_info(code)
+  info = client.fetch_company_info(code)
   Company.new(
     code: info[0]["Code"],
     name: info[0]["CompanyName"],
@@ -35,21 +38,23 @@ end
 
 Company.import(
   companies,
-  on_duplicate_key_update: %i[code name sector_name]
+  on_duplicate_key_update: %i[name sector_name]
 )
+puts "Companies seeded: #{Company.count}"
 
-# Note: ここからStockPriceテーブルの初期設定。
-stock_prices = TARGET_CODES.flat_map do |code|
-  JquantsClient.new.fetch_daily_quotes(code, 12).map do |quote|
-    StockPrice.new(
-      company_code: quote["Code"],
-      date: quote["Date"],
-      close_price: quote["Close"]
-    )
-  end
-end
+# === StockPrice ===
+# stock_prices = TARGET_CODES.flat_map do |code|
+#   client.fetch_daily_quotes(code, 12).map do |quote|
+#     StockPrice.new(
+#       company_code: quote["Code"],
+#       date: quote["Date"],
+#       close_price: quote["Close"]
+#     )
+#   end
+# end
 
-StockPrice.import(
-  stock_prices,
-  on_duplicate_key_update: %i[company_code date close_price]
-)
+# StockPrice.import(
+#   stock_prices,
+#   on_duplicate_key_update: %i[close_price]
+# )
+# puts "StockPrices seeded: #{StockPrice.count}"
