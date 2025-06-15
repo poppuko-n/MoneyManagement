@@ -43,18 +43,18 @@ Company.import(
 puts "Companies seeded: #{Company.count}"
 
 # === StockPrice ===
-# stock_prices = TARGET_CODES.flat_map do |code|
-#   client.fetch_daily_quotes(code, 12).map do |quote|
-#     StockPrice.new(
-#       company_code: quote["Code"],
-#       date: quote["Date"],
-#       close_price: quote["Close"]
-#     )
-#   end
-# end
+stock_prices = TARGET_CODES.flat_map do |code|
+  client.fetch_daily_quotes(code, months_ago: 12).map do |quote|
+    StockPrice.new(
+      company_code: quote["Code"],
+      date: quote["Date"],
+      close_price: quote["Close"]
+    )
+  end
+end
 
-# StockPrice.import(
-#   stock_prices,
-#   on_duplicate_key_update: %i[close_price]
-# )
-# puts "StockPrices seeded: #{StockPrice.count}"
+StockPrice.import(
+  stock_prices,
+  on_duplicate_key_update: %i[close_price]
+)
+puts "StockPrices seeded: #{StockPrice.count}"
