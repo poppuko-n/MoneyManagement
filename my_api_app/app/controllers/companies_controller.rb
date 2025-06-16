@@ -1,7 +1,7 @@
 class CompaniesController < ApplicationController
   # GET /companies
   def index
-    latest_prices = StockPrice.where(id: StockPrice.group(:company_code).maximum(:id).values).index_by(&:company_code)
-    render json: Company.all.map { |c| c.as_json.merge(latest_price: latest_prices[c.code].close_price) }, status: :ok
+    latest_prices = StockPrice.latest_price_map_by_code
+    render json: Company.all_with_latest_prices(latest_prices), status: :ok
   end
 end
