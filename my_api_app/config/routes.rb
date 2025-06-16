@@ -6,10 +6,13 @@ Rails.application.routes.draw do
   resources :expense_logs, only: %i[index show create update destroy]
   resources :users, only: %i[create]
 
+  namespace :stock_price do
+    resources :simulation_results, only: %i[create]
+  end
+
   resources :stock_prices, only: [] do
     collection do
       post :refresh
-      post :simulate
     end
   end
 
