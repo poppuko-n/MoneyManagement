@@ -4,8 +4,8 @@ class ExpenseLogsController < ApplicationController
 
   # GET /expense_logs
   def index
-    start_date, end_date = build_month_range_from_params
-    expense_logs = @current_user.expense_logs.where(date: start_date..end_date).preload(:category).map(&:to_api)
+    start_date, end_date = month_range_from_params
+    expense_logs = ExpenseLog.for_user_in_range(@current_user, start_date, end_date)
     render json: expense_logs, status: :ok
   end
 
@@ -49,7 +49,7 @@ class ExpenseLogsController < ApplicationController
     @expense_log = @current_user.expense_logs.find(params[:id])
   end
 
-  def build_month_range_from_params
+  def month_range_from_params
     year, month = params.values_at(:year, :month).map(&:to_i)
     date = Date.new(year, month)
     [ date.beginning_of_month, date.end_of_month ]
