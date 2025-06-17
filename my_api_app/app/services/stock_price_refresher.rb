@@ -1,21 +1,14 @@
-class StockPriceUpdater
-  TARGET_CODES = %w[
-    72030 83060 61780 83160 99840
-    72670 94320 84110 80580 71820
-    80310 67580 45020 72010 62010
-    87660 77510 94330 80010 80530
-    70110 65010 72020 77520 70130
-    69020 65030 65060 65040 65080
-    65050 65070 65130 65160 65170
-    65210 65220 65230 65240
-  ].freeze
-
+class StockPriceRefresher
   def  call
-    stock_prices = TARGET_CODES.flat_map { |code| format_stock_prices(code) }
+    stock_prices = target_codes.flat_map { |code| format_stock_prices(code) }
     update_company_stock_prices(stock_prices)
   end
 
   private
+
+  def target_codes
+    Company.pluck(:code)
+  end
 
   def format_stock_prices(code)
     JquantsClient.new.fetch_daily_quotes(code).map do |quote|
