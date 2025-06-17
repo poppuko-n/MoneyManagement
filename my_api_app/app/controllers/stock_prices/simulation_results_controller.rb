@@ -1,5 +1,5 @@
-class StockPrice::SimulationResultsController < ApplicationController
-  # POST /stock_price/simulation_results
+class StockPrices::SimulationResultsController < ApplicationController
+  # POST /stock_prics/simulation_results
   def create
     results = params[:data].map { |target| to_api(target) }
     ai_analysis = AiAnalyzer.new(results).call
