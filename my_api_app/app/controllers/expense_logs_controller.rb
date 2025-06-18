@@ -21,7 +21,7 @@ class ExpenseLogsController < ApplicationController
 
   # GET /expense_logs/:id
   def show
-    render json: @expense_log.build_api_json
+    render json: @expense_log.as_json_with_category
   end
 
   # PATCH /expense_logs/:id
