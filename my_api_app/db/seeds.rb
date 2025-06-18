@@ -10,7 +10,7 @@ categories = [
   { name: "固定費", transaction_type: "支出" }
 ]
 
-categories.each { |attrs| Category.find_or_create_by!(attrs) }
+Category.import!
 puts "Categories seeded: #{Category.count}"
 
 # === Company ===
@@ -36,10 +36,7 @@ companies = TARGET_CODES.map do |code|
   )
 end
 
-Company.import(
-  companies,
-  on_duplicate_key_update: %i[name sector_name]
-)
+Company.import!(companies)
 puts "Companies seeded: #{Company.count}"
 
 # === StockPrice ===
@@ -53,8 +50,5 @@ stock_prices = TARGET_CODES.flat_map do |code|
   end
 end
 
-StockPrice.import(
-  stock_prices,
-  on_duplicate_key_update: %i[close_price]
-)
+StockPrice.import!(stock_price)
 puts "StockPrices seeded: #{StockPrice.count}"
