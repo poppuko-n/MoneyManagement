@@ -9,15 +9,12 @@ import ExpenseApi from './lib/ExpenseApi';
 import Modal from './Modal';
 import { motion } from "framer-motion";
 
-// NOTE: 家計簿管理画面のメインコンポーネント。
-// 支出・収入のカテゴリ別集計（円グラフ）や明細表示、新規作成・編集機能を提供する。
 const Expense = () => {
   const [isCreating, setIsCreating] = useState(false);
   const [isDetail, setIsDetail] = useState(false);
   const [isPieChart, setIsPieChart] = useState(true);
   const [currentExpenseId, setCurrentExpenseId] = useState(null);
-  const [expense_categories, setExpenseCategories] = useState([]);
-  const [income_categories, setIncomeCategories] = useState([]);
+  const [categories, setCategories] = useState([]);
   const [expenses, setExpenses] = useState([]);
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
@@ -36,15 +33,13 @@ const Expense = () => {
     }
   }, [year, month]);
 
-  // NOTE: カテゴリ情報（支出・収入）をAPIから取得
   // フロントでプルダウンをハードコーディングする代わりに、DB上のカテゴリを毎回取得する設計。
   // これにより、カテゴリの追加・変更があってもサーバー側の管理のみで済む。
   const loadCategories = () => {
     ExpenseApi.getCategories().then(data => {
-      setExpenseCategories(data.expense_categories);
-      setIncomeCategories(data.income_categories);
-    });
-  };
+      setCategories(data);
+    })
+  }
 
   // NOTE: 年月の初期化（今月を設定）
   const initializeYearMonth = () => {
@@ -62,14 +57,7 @@ const Expense = () => {
 
   // NOTE: 支出、収入に応じてカテゴリ一覧を返す
   const getCategoriesBySelectType = (transactionType) => {
-    switch (transactionType) {
-      case "expense":
-        return expense_categories;
-      case "income":
-        return income_categories;
-      default:
-        return [];
-    }
+    return categories.filter(category => category.transaction_type === transactionType);
   };
 
   return (
@@ -97,7 +85,7 @@ const Expense = () => {
           transition={{ duration: 1 }}>
           <ExpensePieChart
             expenses={expenses}
-            expense_categories={expense_categories}
+            expense_categories={getCategoriesBySelectType("支出")}
             onChange={() => {
               setIsPieChart(false);
               setIsDetail(true);

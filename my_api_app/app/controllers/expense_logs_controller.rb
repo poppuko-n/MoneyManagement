@@ -27,7 +27,7 @@ class ExpenseLogsController < ApplicationController
   # PATCH /expense_logs/:id
   def update
     if @expense_log.update(expense_log_params)
-      render json: @expense_log.to_api, status: :ok
+      render json: @expense_log, status: :ok
     else
       render json: { errors: @expense_log.errors.full_messages }, status: :unprocessable_entity
     end
