@@ -6,10 +6,7 @@ class ExpenseApi {
   static getCategories() {
     return axios
       .get(`${this.apiBaseUrl}/categories`)
-      .then(response => ({
-        expense_categories: response.data.expense_categories,
-        income_categories: response.data.income_categories
-      }))
+      .then(response => response.data);
   }
 
   static getExpenses(token, year, month) {
