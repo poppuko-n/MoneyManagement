@@ -24,11 +24,9 @@ const ExpensePieChart = ({expenses, expense_categories, onChange})=> {
   
   return(
     <div className="container mx-auto p-4">
-      
       <h2 className="text-xl font-bold text-center mb-2">カテゴリ別支出</h2>
 
       <div className="flex flex-col md:flex-row justify-center items-center gap-8">
-
         <div className="w-full md:w-1/2 flex justify-center">
           <PieChart width={450} height={400}>
             <Pie
@@ -52,10 +50,9 @@ const ExpensePieChart = ({expenses, expense_categories, onChange})=> {
         </div>
 
         <div className="w-full md:w-1/2">
-
           <div className='flex justify-end mb-4'>
             <button onClick={onChange} className='flex items-center'>
-              詳細一覧へ
+              一覧へ
               <img src={arrowImage} alt="arrow" className='w-5 h-5 ml-2' />
             </button>
           </div>
@@ -84,9 +81,7 @@ const ExpensePieChart = ({expenses, expense_categories, onChange})=> {
             </tbody>
           </table>
         </div>
-
       </div>
-
     </div>
   )
 }
