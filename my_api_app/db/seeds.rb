@@ -1,13 +1,13 @@
 # === Category ===
 categories = [
-  { name: "給与", transaction_type: 0 },
-  { name: "副業", transaction_type: 0 },
-  { name: "その他", transaction_type: 0 },
-  { name: "食費", transaction_type: 1 },
-  { name: "日用品", transaction_type: 1 },
-  { name: "交際費", transaction_type: 1 },
-  { name: "交通費", transaction_type: 1 },
-  { name: "固定費", transaction_type: 1 }
+  { name: "給与", transaction_type: "収入" },
+  { name: "副業", transaction_type: "収入" },
+  { name: "その他", transaction_type: "収入" },
+  { name: "食費", transaction_type: "支出" },
+  { name: "日用品", transaction_type: "支出" },
+  { name: "交際費", transaction_type: "支出" },
+  { name: "交通費", transaction_type: "支出" },
+  { name: "固定費", transaction_type: "支出" }
 ]
 
 categories.each { |attrs| Category.find_or_create_by!(attrs) }
