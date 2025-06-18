@@ -16,16 +16,4 @@ class ExpenseLog < ApplicationRecord
       category_name: category.name
     )
   end
-
- def build_api_json
-  {
-      expense_log: {
-        category_id: category.id,
-        date: date,
-        item: item,
-        amount: amount
-      },
-      transaction_type: category.transaction_type
-    }
- end
 end

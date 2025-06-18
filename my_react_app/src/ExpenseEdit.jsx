@@ -21,8 +21,8 @@ const ExpenseEdit = ({ onBack, expenseId, getCategoriesBySelectType }) => {
 
   useEffect(() => {
     ExpenseApi.showExpense(expenseId, token).then(data => {
-      setEditExpense(data.editExpense);
-      setTracsactionType(data.tracsactionType);
+      setEditExpense(data);
+      setTracsactionType(data.transaction_type);
     });
   }, []);
 
