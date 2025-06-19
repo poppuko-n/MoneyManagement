@@ -18,6 +18,14 @@ class CompanyApi {
         alert("データの送信に失敗しました。")
       })
   }
+
+    static createProjectionsAnalyses(payload) {
+    return axios
+      .post(`${this.apiBaseUrl}/stock_prices/projections_analyses`, payload)
+      .catch(error => {
+        alert("データの送信に失敗しました。")
+      })
+  }
 }
 
 export default CompanyApi;
