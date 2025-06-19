@@ -4,9 +4,9 @@ import SimulationSummary from './SimulationSummary';
 import SimulationChart from './SimulationChart';
 import SimulationResultTable from './SimulationResultTable';
 import SimulationInsight from './SimulationInsight';
-import arrowImage from "./assets/arrow.svg";
 
-const SimulationResult = ({projectionResults, ai_analysis, onBack}) => {
+
+const SimulationResult = ({projectionResults, onBack}) => {
   // NOTE: 運用方法の選択状態（"one_time"＝一括、"accumulated"＝積立）
   const DISPLAY_PERIOD = "12_month";
   const [selectedSimulationType, setSelectedSimulationType] = useState("one_time");
@@ -45,37 +45,21 @@ const SimulationResult = ({projectionResults, ai_analysis, onBack}) => {
     };
   });
 
-
   return (
     <div className="container mx-auto p-4">
-      {/* NOTE: タイトル表示 */}
-      <div className="flex justify-between ">
-        <h1 className="text-2xl border-b border-black pb-2 inline-block mb-6">シミュレーション結果</h1>
-        <button
-          onClick={onBack}
-          className="flex items-center"
-          >
-            銘柄選択へ戻る
-            <img src={arrowImage} alt="arrow" className='w-5 h-5 ml-2' />
-        </button>
-      </div>
-
       {/* NOTE: 運用方法の選択ボタン（一括 / 積立） */}
       <SimulationTypeSelector
         selectedSimulationType={selectedSimulationType}
         setSelectedSimulationType={setSelectedSimulationType}
+        onBack={onBack}
       />
       
-      {/* NOTE: 運用額・評価額・損益額のサマリー表示 */}
       <SimulationSummary simulationResultsByTypeAndPeriod={simulationResultsByTypeAndPeriod} />
 
-      {/* NOTE: 運用推移の折れ線グラフ（預金 vs 投資） */}
       <SimulationChart data={getChartData()} />
 
-      {/* NOTE: AIによる投資診断 */}
       {/* <SimulationInsight ai_analysis={ai_analysis} /> */}
 
-      {/* NOTE: 各銘柄ごとの明細テーブル */}
       <SimulationResultTable simulationResultsByTypeAndPeriod={simulationResultsByTypeAndPeriod} />
     </div>
   );
