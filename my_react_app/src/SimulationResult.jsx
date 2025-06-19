@@ -6,14 +6,14 @@ import SimulationResultTable from './SimulationResultTable';
 import SimulationInsight from './SimulationInsight';
 import arrowImage from "./assets/arrow.svg";
 
-const SimulationResult = ({results, ai_analysis, onBack}) => {
+const SimulationResult = ({projectionResults, ai_analysis, onBack}) => {
   // NOTE: 運用方法の選択状態（"one_time"＝一括、"accumulated"＝積立）
   const DISPLAY_PERIOD = "12_month";
   const [selectedSimulationType, setSelectedSimulationType] = useState("one_time");
 
   // 選択された運用タイプ（"one_time" or "accumulated"）と表示対象期間（例: "12_month"）に基づいて
   // 各銘柄の評価額(value)と運用額（reposit）を取り出し、整形する。
-  const simulationResultsByTypeAndPeriod = results.map( result => {
+  const simulationResultsByTypeAndPeriod = projectionResults.map( result => {
     const selectedPeriodResults = result[selectedSimulationType].find(sim => sim.period === DISPLAY_PERIOD);
     return {
       code: result.code,
@@ -30,7 +30,7 @@ const SimulationResult = ({results, ai_analysis, onBack}) => {
   const getChartData = () =>
   Array.from({ length: 12 }, (_, i) => {
     const period = `${i + 1}_month`;
-    const [deposit, value] = results.reduce(
+    const [deposit, value] = projectionResults.reduce(
       ([d, v], r) => {
         const sim = r[selectedSimulationType].find(s => s.period === period);
         return [d + sim.deposit, v + +sim.value];
@@ -73,7 +73,7 @@ const SimulationResult = ({results, ai_analysis, onBack}) => {
       <SimulationChart data={getChartData()} />
 
       {/* NOTE: AIによる投資診断 */}
-      <SimulationInsight ai_analysis={ai_analysis} />
+      {/* <SimulationInsight ai_analysis={ai_analysis} /> */}
 
       {/* NOTE: 各銘柄ごとの明細テーブル */}
       <SimulationResultTable simulationResultsByTypeAndPeriod={simulationResultsByTypeAndPeriod} />

@@ -11,7 +11,7 @@ class CompanyApi {
       })
   }
 
-  static getSimulations(payload) {
+  static createProjections(payload) {
     return axios
       .post(`${this.apiBaseUrl}/stock_prices/projections`, payload)
       .catch(error => {
