@@ -6,8 +6,8 @@ class ExpenseLog < ApplicationRecord
   validates :item, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0 }
 
-  def self.for_user_in_range(user, start_date, end_date)
-    where(user: user, date: start_date..end_date).preload(:category).map(&:as_json_with_category)
+  def self.for_user_in_range(user, range)
+    where(user: user, date: range)
   end
 
   def as_json_with_category
