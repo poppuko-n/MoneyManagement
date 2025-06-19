@@ -1,12 +1,11 @@
 class ExpenseLogsController < ApplicationController
-  before_action :authenticate_user, { only: %i[index create show update destroy ] }
-  before_action :set_expense_log, { only: %i[show update destroy] }
+  before_action :authenticate_user, only: %i[index create show update destroy ]
+  before_action :set_expense_log, only: %i[show update destroy]
 
   # GET /expense_logs
   def index
-    start_date, end_date = month_range_from_params
-    expense_logs = ExpenseLog.for_user_in_range(@current_user, start_date, end_date)
-    render json: expense_logs, status: :ok
+    expense_logs = ExpenseLog.for_user_in_range(@current_user, month_range_from_params).preload(:category)
+    render json: expense_logs.map(&:as_json_with_category), status: :ok
   end
 
   # POST /expense_logs
@@ -35,7 +34,7 @@ class ExpenseLogsController < ApplicationController
 
   # DELETE /expense_logs/:id
   def destroy
-    @expense_log.destroy
+    @expense_log.destroy!
     head :no_content
   end
 
@@ -52,6 +51,6 @@ class ExpenseLogsController < ApplicationController
   def month_range_from_params
     year, month = params.values_at(:year, :month).map(&:to_i)
     date = Date.new(year, month)
-    [ date.beginning_of_month, date.end_of_month ]
+    date.beginning_of_month..date.end_of_month
   end
 end
