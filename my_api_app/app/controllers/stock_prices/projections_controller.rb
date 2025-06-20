@@ -1,8 +1,7 @@
 class StockPrices::ProjectionsController < ApplicationController
   def create
-    codes = params[:data].map { |t| t[:code] }
-    companies = Company.where(code: codes).index_by(&:code)
-    prices = StockPrice.where(company_code: codes).group_by(&:company_code)
+    companies = Company.where(code: set_company_code).index_by(&:code)
+    prices = StockPrice.where(company_code: set_company_code).group_by(&:company_code)
 
     results = params[:data].map { |t|
       company = companies[t[:code]]
@@ -17,5 +16,11 @@ class StockPrices::ProjectionsController < ApplicationController
     }
 
     render json: results, status: :ok
+  end
+
+  private
+
+  def set_company_code
+    params[:data].map { |t| t[:code] }
   end
 end
