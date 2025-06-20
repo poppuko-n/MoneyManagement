@@ -11,9 +11,17 @@ class CompanyApi {
       })
   }
 
-  static getSimulations(payload) {
+  static createProjections(payload) {
     return axios
-      .post(`${this.apiBaseUrl}/stock_prices/simulation_results`, payload)
+      .post(`${this.apiBaseUrl}/stock_prices/projections`, payload)
+      .catch(error => {
+        alert("データの送信に失敗しました。")
+      })
+  }
+
+    static createProjectionsAnalyses(payload) {
+    return axios
+      .post(`${this.apiBaseUrl}/stock_prices/projection_analyses`, payload)
       .catch(error => {
         alert("データの送信に失敗しました。")
       })

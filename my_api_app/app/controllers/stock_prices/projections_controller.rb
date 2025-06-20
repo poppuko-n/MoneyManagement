@@ -1,9 +1,8 @@
-class StockPrices::SimulationResultsController < ApplicationController
-  # POST /stock_prics/simulation_results
+class StockPrices::ProjectionsController < ApplicationController
+  # POST /stock_prices/projections
   def create
     results = params[:data].map { |target| to_api(target) }
-    ai_analysis = AiAnalyzer.new(results).call
-    render json: { results:, ai_analysis: }, status: :ok
+    render json: results, status: :ok
   end
 
   private

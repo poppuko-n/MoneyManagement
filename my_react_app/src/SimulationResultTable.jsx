@@ -21,7 +21,7 @@ const SimulationResultTable = ({ simulationResultsByTypeAndPeriod }) => {
             profitLoss > 0 ? "text-red-500" : profitLoss < 0 ? "text-blue-500" : "text-gray-500";
 
           return (
-            <tr key={item.code} className="text-center">
+            <tr key={item.name} className="text-center">
               <td className="p-3 border-b">{item.name}</td>
               <td className="p-3 border-b">{formatAmount(item.current_price)}</td>
               <td className="p-3 border-b">{formatAmount(item.quantity)}</td>

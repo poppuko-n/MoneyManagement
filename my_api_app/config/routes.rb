@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   resources :companies, only: %i[index]
 
   namespace :stock_prices do
-    resources :simulation_results, only: %i[create]
+    resources :projections, only: %i[create]
+    resources :projection_analyses, only: %i[create]
     resources :refreshes, only: %i[create]
   end
 
