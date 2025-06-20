@@ -3,7 +3,7 @@ import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, ResponsiveContainer } f
 const SimulationChart = ({ data }) => {
   return (
     <div className="bg-white rounded shadow p-4 mb-6">
-      <h2 className="text-lg font-semibold mb-2">預金と投資した場合の比較</h2>
+      <h2 className="text-xl font-semibold mb-4 border-b pb-2">預金と投資した場合の比較</h2>
       <ResponsiveContainer width="100%" height={400}>
         <LineChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
           <XAxis dataKey="date" />
