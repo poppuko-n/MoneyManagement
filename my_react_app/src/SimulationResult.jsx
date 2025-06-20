@@ -1,18 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SimulationTypeSelector from './SimulationTypeSelector';
 import SimulationSummary from './SimulationSummary';
 import SimulationChart from './SimulationChart';
 import SimulationResultTable from './SimulationResultTable';
 import SimulationInsight from './SimulationInsight';
-
+import CompanyApi from './lib/CompanyApi.js';
 
 const SimulationResult = ({projectionResults, onBack}) => {
-  // NOTE: 運用方法の選択状態（"one_time"＝一括、"accumulated"＝積立）
-  const DISPLAY_PERIOD = "12_month";
+  const [aiAnalysis, setAiAnalysis] = useState(null);
   const [selectedSimulationType, setSelectedSimulationType] = useState("one_time");
+  const DISPLAY_PERIOD = "12_month";
 
-  // 選択された運用タイプ（"one_time" or "accumulated"）と表示対象期間（例: "12_month"）に基づいて
-  // 各銘柄の評価額(value)と運用額（reposit）を取り出し、整形する。
   const simulationResultsByTypeAndPeriod = projectionResults.map( result => {
     const selectedPeriodResults = result[selectedSimulationType].find(sim => sim.period === DISPLAY_PERIOD);
     return {
@@ -24,6 +22,11 @@ const SimulationResult = ({projectionResults, onBack}) => {
       deposit: selectedPeriodResults.deposit
     };
   });
+
+  useEffect(()=>{
+    CompanyApi.createProjectionsAnalyses({data: projectionResults})
+      .then(response => setAiAnalysis(response.data))
+  },[])
 
 // 各月について、全銘柄の同月のシミュレーション結果を合算し、
 // 「○ヶ月後」「預金額（purchase_amount）」「評価額（evaluation_amount）」を持つオブジェクトの配列を返す。
@@ -47,7 +50,7 @@ const SimulationResult = ({projectionResults, onBack}) => {
 
   return (
     <div className="container mx-auto p-4">
-      {/* NOTE: 運用方法の選択ボタン（一括 / 積立） */}
+
       <SimulationTypeSelector
         selectedSimulationType={selectedSimulationType}
         setSelectedSimulationType={setSelectedSimulationType}
@@ -58,7 +61,7 @@ const SimulationResult = ({projectionResults, onBack}) => {
 
       <SimulationChart data={getChartData()} />
 
-      {/* <SimulationInsight ai_analysis={ai_analysis} /> */}
+      <SimulationInsight ai_analysis={aiAnalysis}/>
 
       <SimulationResultTable simulationResultsByTypeAndPeriod={simulationResultsByTypeAndPeriod} />
     </div>

@@ -21,7 +21,7 @@ class CompanyApi {
 
     static createProjectionsAnalyses(payload) {
     return axios
-      .post(`${this.apiBaseUrl}/stock_prices/projections_analyses`, payload)
+      .post(`${this.apiBaseUrl}/stock_prices/projection_analyses`, payload)
       .catch(error => {
         alert("データの送信に失敗しました。")
       })
