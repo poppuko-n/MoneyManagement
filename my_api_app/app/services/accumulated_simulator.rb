@@ -1,8 +1,7 @@
 class AccumulatedSimulator
   TARGET_PERIODS = (1..12).to_a
 
-  def initialize(company, quantity, prices)
-    @company = company
+  def initialize(quantity, prices)
     @quantity = quantity
     @prices = prices
   end

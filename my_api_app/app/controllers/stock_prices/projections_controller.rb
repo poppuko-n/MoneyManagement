@@ -10,8 +10,8 @@ class StockPrices::ProjectionsController < ApplicationController
         name: company.name,
         current_price: ps.max_by(&:date)&.close_price,
         quantity: t[:quantity],
-        one_time: OneTimeSimulator.new(company, t[:quantity], ps).call,
-        accumulated: AccumulatedSimulator.new(company, t[:quantity], ps).call
+        one_time: OneTimeSimulator.new(t[:quantity], ps).call,
+        accumulated: AccumulatedSimulator.new(t[:quantity], ps).call
       }
     }
 
