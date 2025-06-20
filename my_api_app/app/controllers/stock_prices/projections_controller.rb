@@ -1,21 +1,21 @@
 class StockPrices::ProjectionsController < ApplicationController
-  # POST /stock_prices/projections
   def create
-    results = params[:data].map { |target| to_api(target) }
-    render json: results, status: :ok
-  end
+    codes = params[:data].map { |t| t[:code] }
+    companies = Company.where(code: codes).index_by(&:code)
+    prices = StockPrice.where(company_code: codes).group_by(&:company_code)
 
-  private
-
-  def to_api(target)
-    company_code, quantity  = target.values_at(:code, :quantity)
-    company = Company.find_by!(code: company_code)
-    {
-      name: company.name,
-      current_price: company.latest_stock_price,
-      quantity: quantity,
-      one_time: OneTimeSimulator.new(company, quantity).call,
-      accumulated: AccumulatedSimulator.new(company, quantity).call
+    results = params[:data].map { |t|
+      company = companies[t[:code]]
+      ps = prices[t[:code]]
+      {
+        name: company.name,
+        current_price: ps.max_by(&:date)&.close_price,
+        quantity: t[:quantity],
+        one_time: OneTimeSimulator.new(company, t[:quantity], ps).call,
+        accumulated: AccumulatedSimulator.new(company, t[:quantity], ps).call
+      }
     }
+
+    render json: results, status: :ok
   end
 end

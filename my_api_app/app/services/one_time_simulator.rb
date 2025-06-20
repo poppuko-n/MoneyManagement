@@ -1,8 +1,10 @@
 class OneTimeSimulator
   TARGET_PERIODS = (1..12).to_a
-  def initialize(company, quantity)
+
+  def initialize(company, quantity, prices)
     @company = company
     @quantity = quantity
+    @prices = prices
   end
 
   def call
@@ -13,16 +15,19 @@ class OneTimeSimulator
 
   def fetch_past_price(month)
     start_date = Date.today - month.months
-    # find_byだと完全一致なので範囲検索にしている。
-    @company.stock_prices.where(date: start_date..).pick(:close_price)
+    @prices.find { |p| p.date >= start_date }&.close_price
+  end
+
+  def latest_price
+    @prices.max_by(&:date)&.close_price
   end
 
   def calculate_one_time_investment_value(past_price)
-    @company.latest_stock_price**2 / past_price * @quantity
+    latest_price**2 / past_price * @quantity
   end
 
   def calculate_one_time_investment_deposit
-    @company.latest_stock_price * @quantity
+    latest_price * @quantity
   end
 
   def to_api(month)

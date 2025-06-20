@@ -1,8 +1,10 @@
 class AccumulatedSimulator
   TARGET_PERIODS = (1..12).to_a
-  def initialize(company, quantity)
+
+  def initialize(company, quantity, prices)
     @company = company
     @quantity = quantity
+    @prices = prices
   end
 
   def call
@@ -11,12 +13,12 @@ class AccumulatedSimulator
 
   private
 
-  def to_api(month)
-    {
-      period: "#{month}_month",
-      value: calculate_total_value(month).round,
-      deposit: calculate_monthly_deposit * month
-    }
+  def latest_price
+    @prices.max_by(&:date)&.close_price
+  end
+
+  def calculate_monthly_deposit
+    latest_price * @quantity
   end
 
   def calculate_total_value(month)
@@ -25,19 +27,24 @@ class AccumulatedSimulator
     end
   end
 
-  def calculate_monthly_deposit
-    @company.latest_stock_price * @quantity
-  end
-
   def calculate_average_growth_rate
     past_prices = TARGET_PERIODS.map { |m| calculate_past_average_price(m) }
-    past_prices.unshift(@company.latest_stock_price)
-    rates = past_prices.each_cons(2).map { |to, from| to / from }
-    (rates.sum / rates.size).ceil(2)
+    past_prices.unshift(latest_price)
+    rates = past_prices.each_cons(2).map { |to, from| to.to_f / from }
+    rates.sum / rates.size
   end
 
   def calculate_past_average_price(month)
     start_date = Date.today - month.months
-    @company.stock_prices.where(date: start_date..).limit(30).average(:close_price)
+    prices = @prices.select { |p| p.date >= start_date }.first(30)
+    prices.sum(&:close_price).to_f / prices.size
+  end
+
+  def to_api(month)
+    {
+      period: "#{month}_month",
+      value: calculate_total_value(month).round,
+      deposit: calculate_monthly_deposit * month
+    }
   end
 end
