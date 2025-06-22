@@ -1,11 +1,6 @@
-# JWTを用いたユーザー認証に関する以下の処理を担う。
-# - JWTトークンによるユーザー認証（authenticate_user）:
-#     - リクエストヘッダーからトークンを取得・デコードし、@current_user を設定。
-#     - 家計簿ログなど、ユーザーを特定して操作するAPIで使用。
-# - JWTトークンの生成（create_token）:
-#     - ログイン、新規登録時にトークンを発行し、クライアントへ返却。
-
 class ApplicationController < ActionController::API
+  include ActionController::Cookies
+
   def authenticate_user
     return render_unauthorized("ログインが必要です。") unless authorization_header?
 
