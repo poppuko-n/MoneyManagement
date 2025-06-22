@@ -31,8 +31,6 @@ const Expense = () => {
     }
   }, [year, month]);
 
-  // フロントでプルダウンをハードコーディングする代わりに、DB上のカテゴリを毎回取得する設計。
-  // これにより、カテゴリの追加・変更があってもサーバー側の管理のみで済む。
   const loadCategories = async() => {
     const data = await ExpenseApi.getCategories();
     setCategories(data);

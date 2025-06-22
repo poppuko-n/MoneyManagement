@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
       await axios.post(`${apiBaseUrl}/session`, siginInUser, { withCredentials: true });
       alert("ログインしました。");
     } catch(error) {
-      alert(error.response.data.errors.join(', '))
+      alert(error.response.data.errors.join('\n'))
     }
   };
 
@@ -35,7 +35,7 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(true);
       alert("登録完了しました。")
     } catch(error) {
-      alert(error.response.data.errors.join(', '));
+      alert(error.response.data.errors.join('\n'));
     }
   };
 

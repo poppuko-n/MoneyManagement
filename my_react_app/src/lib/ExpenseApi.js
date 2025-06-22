@@ -19,17 +19,13 @@ class ExpenseApi {
       }));
   }
 
-  static createExpense(expense) {
-    return axios
-      .post(`${this.apiBaseUrl}/expense_logs`, expense, {
-        withCredentials: true
-      })
-      .then(() => {
-        alert("登録が完了しました。");
-      })
-      .catch(error => {
-        alert(`${error.response.data.errors.join(', ')}`);
-      });
+  static async createExpense(expense) {
+    const response = await axios.post(
+      `${this.apiBaseUrl}/expense_logs`,
+      expense,
+      {withCredentials: true}
+    );
+    return response.data;
   }
 
   static showExpense(expenseId) {
