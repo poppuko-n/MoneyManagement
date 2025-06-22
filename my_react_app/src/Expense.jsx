@@ -18,7 +18,6 @@ const Expense = () => {
   const [expenses, setExpenses] = useState([]);
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
-  const { token } = useAuth(); // NOTE: 認証コンテキストからトークン取得
 
   // NOTE: 初回マウント時にカテゴリと現在の年月を初期化する処理
   useEffect(() => {
@@ -29,7 +28,7 @@ const Expense = () => {
   // NOTE: 年と月のいずれかが変更されるたびに、その年月の家計簿データをAPIから取得する処理
   useEffect(() => {
     if (year && month) {
-      fetchExpenses(token, year, month);
+      fetchExpenses(year, month);
     }
   }, [year, month]);
 
@@ -49,8 +48,8 @@ const Expense = () => {
   };
 
   // NOTE: 指定した年月の家計簿データを取得
-  const fetchExpenses = (token, year, month) => {
-    ExpenseApi.getExpenses(token, year, month).then(data => {
+  const fetchExpenses = (year, month) => {
+    ExpenseApi.getExpenses(year, month).then(data => {
       setExpenses(data.expenses);
     });
   };
@@ -89,7 +88,7 @@ const Expense = () => {
             onChange={() => {
               setIsPieChart(false);
               setIsDetail(true);
-              fetchExpenses(token, year, month);
+              fetchExpenses(year, month);
             }}
           />
         </motion.div>
@@ -107,7 +106,7 @@ const Expense = () => {
             onBack={() => {
               setIsPieChart(true);
               setIsDetail(false);
-              fetchExpenses(token, year, month);
+              fetchExpenses(year, month);
             }}
           />
         </motion.div>
@@ -122,7 +121,7 @@ const Expense = () => {
               setIsPieChart(true);
               setIsDetail(false);
               setIsCreating(false);
-              fetchExpenses(token, year, month);
+              fetchExpenses(year, month);
             }}
           />
         </Modal>
@@ -138,7 +137,7 @@ const Expense = () => {
               setIsPieChart(true);
               setIsDetail(false);
               setCurrentExpenseId(null);
-              fetchExpenses(token, year, month);
+              fetchExpenses(year, month);
             }}
           />
         </Modal>
