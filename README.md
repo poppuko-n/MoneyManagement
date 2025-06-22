@@ -130,10 +130,7 @@ https://moneymanagement.jp/
 | Backend        | Ruby on Rails (v8.0)                                                                         |
 | Infrastructure | Amazon Web Services (S3, CloudFront, EC2, RDS, Route 53, ELB, CloudWatch)                    |
 | Database       | MySQL (v8.0)                                                                                 |
-| CI/CD          | GitHub Actions                                                                               |
 | etc.           | Nginx, Tailwind CSS, draw.io, Git, GitHub                                                    |
-
-
 
 ## ER 図
 ![ER 図](document/img/er_diagram.png)
