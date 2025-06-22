@@ -12,5 +12,6 @@ Rails.application.routes.draw do
     resources :refreshes, only: %i[create]
   end
 
-  post "/login", to: "users#login"
+  post "/login", to: "sessions#create"
+  delete "/logout", to: "sessions#destroy"
 end
