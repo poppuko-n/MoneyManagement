@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { useAuth } from "./contexts/Authcontext.jsx"
 import ExpenseHeader from './ExpenseHeader';
 import ExpensePieChart from "./ExpensePieChart";
 import ExpenseDetail from "./ExpenseDetail";
@@ -34,11 +33,10 @@ const Expense = () => {
 
   // フロントでプルダウンをハードコーディングする代わりに、DB上のカテゴリを毎回取得する設計。
   // これにより、カテゴリの追加・変更があってもサーバー側の管理のみで済む。
-  const loadCategories = () => {
-    ExpenseApi.getCategories().then(data => {
-      setCategories(data);
-    })
-  }
+  const loadCategories = async() => {
+    const data = await ExpenseApi.getCategories();
+    setCategories(data);
+    }
 
   // NOTE: 年月の初期化（今月を設定）
   const initializeYearMonth = () => {

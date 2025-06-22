@@ -3,12 +3,9 @@ import axios from 'axios';
 class ExpenseApi {
   static apiBaseUrl = window.env?.API_BASE_URL || "http://localhost:3000";
 
-  static getCategories() {
-    return axios
-      .get(`${this.apiBaseUrl}/categories`, {
-        withCredentials: true
-      })
-      .then(response => response.data);
+  static async getCategories() {
+    const response = await axios.get(`${this.apiBaseUrl}/categories`, {withCredentials: true})
+    return response.data
   }
 
   static getExpenses(year, month) {
