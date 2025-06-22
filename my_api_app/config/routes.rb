@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resources :categories, only: %i[index]
   resources :expense_logs, only: %i[index show create update destroy]
   resources :companies, only: %i[index]
+  resource :session, only: [:show, :create, :destroy]
 
   namespace :stock_prices do
     resources :projections, only: %i[create]
@@ -12,6 +13,5 @@ Rails.application.routes.draw do
     resources :refreshes, only: %i[create]
   end
 
-  post "/login", to: "sessions#create"
-  delete "/logout", to: "sessions#destroy"
+
 end

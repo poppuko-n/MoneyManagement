@@ -1,4 +1,10 @@
 class SessionsController < ApplicationController
+  before_action :authenticate_user, only: [:show, :destroy]
+
+  def show
+    render json: { logged_in: true }, status: :ok
+  end
+
   def create
     user = User.find_by(name: params[:name])
     if user && user.authenticate(params[:password])
