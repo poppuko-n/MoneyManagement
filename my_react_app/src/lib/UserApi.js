@@ -14,19 +14,6 @@ class UserApi {
         alert(`${error.response.data.errors.join(', ')}`)
       })
   };
-
-  static signUpUser(user) {
-    return axios
-      .post(`${this.apiBaseUrl}/login`, user)
-      .then((response) => {
-        alert("ログインしました。")
-        return response;
-      })
-      .catch(error => {
-        alert(`${error.response.data.errors}`)
-      })
-  }
-
 };
 
 export default UserApi;

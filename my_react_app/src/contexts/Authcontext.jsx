@@ -1,36 +1,32 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 
-// 認証情報を管理・提供するContextを作成
 const AuthContext = createContext();
+const apiBaseUrl = window.env?.API_BASE_URL || "http://localhost:3000";
 
-// 認証状態を管理するProviderコンポーネント
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(() => localStorage.getItem('token'));
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  // コンポーネントがマウントされたときにlocalStorageからtokenを再取得
-  // これはリロード時に状態が失われるのを防ぐための安全策
   useEffect(() => {
-    const storedToken = localStorage.getItem('token');
-    setToken(storedToken);
+    axios.get(`${apiBaseUrl}/session`, { withCredentials: true })
+      .then(() => setIsLoggedIn(true))
+      .catch(() => setIsLoggedIn(false));
   }, []);
 
-   // ログイン関数：新しいトークンをlocalStorageと状態に保存
-  const login = (newToken) => {
-    localStorage.setItem('token', newToken);
-    setToken(newToken);
+  const login = async (credentials) => {
+    await axios.post(`${apiBaseUrl}/session`, credentials, { withCredentials: true });
+    setIsLoggedIn(true);
+    alert("ログインしました。");
   };
 
-  // ログアウト関数：トークンを削除し、状態もクリア
-  const logout = () => {
-    localStorage.removeItem('token');
-    setToken(null);
-    alert("ログアウトしました。")
+  const logout = async () => {
+    await axios.delete(`${apiBaseUrl}/session`, { withCredentials: true });
+    setIsLoggedIn(false);
+    alert("ログアウトしました。");
   };
-
-  const isLoggedIn = !!token;
 
   return (
-    <AuthContext.Provider value={{ token, login, logout, isLoggedIn }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
