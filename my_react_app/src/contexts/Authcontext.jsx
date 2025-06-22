@@ -13,10 +13,14 @@ export const AuthProvider = ({ children }) => {
       .catch(() => setIsLoggedIn(false));
   }, []);
 
-  const login = async (credentials) => {
-    await axios.post(`${apiBaseUrl}/session`, credentials, { withCredentials: true });
-    setIsLoggedIn(true);
-    alert("ログインしました。");
+  const login = async (siginInUser) => {
+    try{
+      setIsLoggedIn(true);
+      await axios.post(`${apiBaseUrl}/session`, siginInUser, { withCredentials: true });
+      alert("ログインしました。");
+    } catch(error) {
+      alert(error.response.data.errors.join(', '))
+    }
   };
 
   const logout = async () => {
@@ -25,8 +29,18 @@ export const AuthProvider = ({ children }) => {
     alert("ログアウトしました。");
   };
 
+  const createUser = async(newUser) => {
+    try{
+      await axios.post(`${apiBaseUrl}/users`, { user: newUser }, { withCredentials: true });
+      setIsLoggedIn(true);
+      alert("登録完了しました。")
+    } catch(error) {
+      alert(error.response.data.errors.join(', '));
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, createUser }}>
       {children}
     </AuthContext.Provider>
   );
