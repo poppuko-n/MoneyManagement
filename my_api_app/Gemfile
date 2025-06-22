@@ -9,7 +9,6 @@ gem "httparty"
 gem "rack-cors"
 gem "bootsnap", require: false
 gem "activerecord-import"
-gem "jwt"
 
 group :development, :test do
   gem "pry-rails"
