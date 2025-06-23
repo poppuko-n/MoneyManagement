@@ -1,22 +1,24 @@
 import { useState } from 'react';
 import ExpenseApi from './lib/ExpenseApi';
-import { useAuth } from "./contexts/Authcontext"
 
 const ExpenseNew = ({ onBack, getCategoriesBySelectType }) => {
   const today = new Date().toISOString().split('T')[0]; 
-  const { token } = useAuth();
   const [transactionType, setTransactionType] = useState('');
-  const [createExpense, setExpense] = useState({
+  const [newExpense, setNewExpense] = useState({
     category_id: '',
     date: today,
     item: '',
     amount: ''
   });
 
-  const handleCreate = () => {
-    ExpenseApi.createExpense(createExpense, token).then(() => {
+  const handleCreate = async() => {
+    try{
+      await ExpenseApi.createExpense(newExpense);
+      alert('登録が完了しました。')
       onBack();
-    });
+    } catch(error) {
+      alert(error.response.data.errors.join('\n'))
+    };
   };
 
   return (
@@ -44,8 +46,8 @@ const ExpenseNew = ({ onBack, getCategoriesBySelectType }) => {
           <label className="block text-base font-normal text-gray-900 mb-1">カテゴリ</label>
           <select
             className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={createExpense.category_id}
-            onChange={(e) => setExpense({ ...createExpense, category_id: e.target.value })}
+            value={newExpense.category_id}
+            onChange={(e) => setNewExpense({ ...newExpense, category_id: e.target.value })}
           >
             <option value="">選択してください</option>
             {getCategoriesBySelectType(transactionType).map((category) => (
@@ -61,8 +63,8 @@ const ExpenseNew = ({ onBack, getCategoriesBySelectType }) => {
           <input
             type="date"
             className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={createExpense.date}
-            onChange={(e) => setExpense({ ...createExpense, date: e.target.value })}
+            value={newExpense.date}
+            onChange={(e) => setNewExpense({ ...newExpense, date: e.target.value })}
           />
         </div>
 
@@ -72,8 +74,8 @@ const ExpenseNew = ({ onBack, getCategoriesBySelectType }) => {
             type="text"
             className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             placeholder="内容をご入力ください"
-            value={createExpense.item}
-            onChange={(e) => setExpense({ ...createExpense, item: e.target.value })}
+            value={newExpense.item}
+            onChange={(e) => setNewExpense({ ...newExpense, item: e.target.value })}
           />
         </div>
 
@@ -82,8 +84,8 @@ const ExpenseNew = ({ onBack, getCategoriesBySelectType }) => {
           <input
             type="number"
             className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={createExpense.amount}
-            onChange={(e) => setExpense({ ...createExpense, amount: e.target.value })}
+            value={newExpense.amount}
+            onChange={(e) => setNewExpense({ ...newExpense, amount: e.target.value })}
           />
         </div>
       </div>

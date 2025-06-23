@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import UserApi from './lib/UserApi';
 import { useAuth } from "./contexts/Authcontext.jsx"
 
 const SignIn = ({ onBack }) => {
@@ -10,12 +9,9 @@ const SignIn = ({ onBack }) => {
 
   const { login } = useAuth();
 
-  const handleSignIn = () => {
-    UserApi.signUpUser(siginInUser)
-    .then((response) => {
-      login(response.data.token)
-      onBack();
-    });
+  const handleSignIn = async () => {
+    await login(siginInUser); 
+    onBack();
   };
 
   return (

@@ -1,23 +1,19 @@
 import { useState } from 'react';
-import UserApi from './lib/UserApi';
 import { useAuth } from "./contexts/Authcontext.jsx"
 
 const SignUp = ({ onBack }) => {
-  const [createUser, setCreateUser] = useState({
+  const [newUser, setNewUser] = useState({
     name: "",
     password: "",
     password_confirmation: null
   });
 
-  const { login } = useAuth();
+  const { createUser } = useAuth();
 
   const handleCreate = () => {
-    UserApi.createUser(createUser)
-    .then((response) => {
-      login(response.data.token)
+      createUser(newUser);
       onBack();
-    })
-  };
+    };
 
   return (
     <div className="w-full">
@@ -32,8 +28,8 @@ const SignUp = ({ onBack }) => {
           <input
             type="text"
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={createUser.name}
-            onChange={(e) => setCreateUser({ ...createUser, name: e.target.value })}
+            value={newUser.name}
+            onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
             placeholder="ユーザー名を入力"
             autoComplete="username"
           />
@@ -44,8 +40,8 @@ const SignUp = ({ onBack }) => {
           <input
             type="password"
             className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={createUser.password}
-            onChange={(e) => setCreateUser({ ...createUser, password: e.target.value })}
+            value={newUser.password}
+            onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
             placeholder="パスワードを入力"
             autoComplete="new-password"
           />

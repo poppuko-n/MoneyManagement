@@ -1,23 +1,12 @@
-# 認証にはJWTを使用し、ApplicationControllerに定義された `create_token` を活用。
-
 class UsersController < ApplicationController
   # POST /users
   def create
     user = User.new(user_params)
     if user.save
-      render_with_token(user, :created)
+      session[:user_id] = user.id
+      render json: user, status: :ok
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
-    end
-  end
-
-  # POST /login
-  def login
-    user = User.find_by(name: params[:name])
-    if user && user.authenticate(params[:password])
-      render_with_token(user, :ok)
-    else
-      render json: { errors: [ "名前またはパスワードが違います。" ] }, status: :unauthorized
     end
   end
 
@@ -25,9 +14,5 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:name, :password, :password_confirmation)
-  end
-
-  def render_with_token(user, status)
-    render json: { token: create_token(user.id) }, status: status
   end
 end

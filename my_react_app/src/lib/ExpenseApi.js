@@ -1,90 +1,68 @@
 import axios from 'axios';
 
 class ExpenseApi {
-  static apiBaseUrl = window.env?.API_BASE_URL || "http://localhost:3000"
+  static apiBaseUrl = window.env?.API_BASE_URL || "http://localhost:3000";
 
-  static getCategories() {
-    return axios
-      .get(`${this.apiBaseUrl}/categories`)
-      .then(response => response.data);
+  static async getCategories() {
+    const response = await axios.get(`${this.apiBaseUrl}/categories`, {withCredentials: true})
+    return response.data
   }
 
-  static getExpenses(token, year, month) {
+  static getExpenses(year, month) {
     return axios
       .get(`${this.apiBaseUrl}/expense_logs`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        },
-        params: {
-          year: year,
-          month: month
-        }
+        params: { year, month },
+        withCredentials: true
       })
       .then(response => ({
         expenses: response.data
-      }))
+      }));
   }
 
-  static createExpense(expense, token) {
-    return axios
-      .post(`${this.apiBaseUrl}/expense_logs`,
-        expense, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
-      .then(() =>{
-        alert("登録が完了しました。")
-      })
-      .catch(error => {
-        alert(`${error.response.data.errors.join(', ')}`)
-      })
+  static async createExpense(expense) {
+    const response = await axios.post(
+      `${this.apiBaseUrl}/expense_logs`,
+      expense,
+      {withCredentials: true}
+    );
+    return response.data;
   }
 
-  static showExpense(expenseId, token){
+  static showExpense(expenseId) {
     return axios
-      .get(`${this.apiBaseUrl}/expense_logs/${expenseId}`,{
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-      )
+      .get(`${this.apiBaseUrl}/expense_logs/${expenseId}`, {
+        withCredentials: true
+      })
       .then(response => response.data)
-      .catch(error => {
-        alert("データの取得に失敗しました。")
-      })
+      .catch(() => {
+        alert("データの取得に失敗しました。");
+      });
   }
 
-  static updateExpense(expenseId, expense, token) {
+  static updateExpense(expenseId, expense) {
     return axios
-      .patch(`${this.apiBaseUrl}/expense_logs/${expenseId}`,
-        expense, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
-        })
+      .patch(`${this.apiBaseUrl}/expense_logs/${expenseId}`, expense, {
+        withCredentials: true
+      })
       .then(() => {
-        alert("更新が完了しました。")
+        alert("更新が完了しました。");
       })
       .catch(error => {
-        alert(`${error.response.data.errors.join(', ')}`)
-      })
+        alert(`${error.response.data.errors.join(', ')}`);
+      });
   }
 
-  static deleteExpense(expenseId, token) {
+  static deleteExpense(expenseId) {
     return axios
-      .delete(`${this.apiBaseUrl}/expense_logs/${expenseId}`,{
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      }
-      )
+      .delete(`${this.apiBaseUrl}/expense_logs/${expenseId}`, {
+        withCredentials: true
+      })
       .then(() => {
-        alert("削除が完了しました。")
+        alert("削除が完了しました。");
       })
-      .catch(error => {
-        alert("削除に失敗しました。")
-      })
+      .catch(() => {
+        alert("削除に失敗しました。");
+      });
   }
 }
 
