@@ -15,8 +15,8 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (siginInUser) => {
     try{
-      setIsLoggedIn(true);
       await axios.post(`${apiBaseUrl}/session`, siginInUser, { withCredentials: true });
+      setIsLoggedIn(true);
       alert("ログインしました。");
     } catch(error) {
       alert(error.response.data.errors.join('\n'))
