@@ -24,9 +24,13 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    await axios.delete(`${apiBaseUrl}/session`, { withCredentials: true });
-    setIsLoggedIn(false);
-    alert("ログアウトしました。");
+    try{
+      await axios.delete(`${apiBaseUrl}/session`, { withCredentials: true });
+      setIsLoggedIn(false);
+      alert("ログアウトしました。");
+    } catch(error) {
+      alert("ログアウトに失敗しました。再度お試しください。")
+    }
   };
 
   const createUser = async(newUser) => {
@@ -35,7 +39,7 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(true);
       alert("登録完了しました。")
     } catch(error) {
-      alert(error.response.data.errors.join('\n'));
+      alert(error.response?.data.errors.join('\n') || "登録に失敗しました。再度お試しください。");
     }
   };
 
