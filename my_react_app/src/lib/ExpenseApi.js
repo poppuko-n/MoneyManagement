@@ -8,35 +8,32 @@ class ExpenseApi {
     return response.data
   }
 
-  static getExpenses(year, month) {
-    return axios
-      .get(`${this.apiBaseUrl}/expense_logs`, {
+  static async getExpenseLogs(year, month) {
+    const response = await axios.get(
+      `${this.apiBaseUrl}/expense_logs`,
+      {
         params: { year, month },
         withCredentials: true
-      })
-      .then(response => ({
-        expenses: response.data
-      }));
+      }
+    );
+    return response.data;
   }
 
-  static async createExpense(expense) {
+  static async createExpenseLog(expenseLog) {
     const response = await axios.post(
       `${this.apiBaseUrl}/expense_logs`,
-      expense,
+      expenseLog,
       {withCredentials: true}
     );
     return response.data;
   }
 
-  static showExpense(expenseId) {
-    return axios
-      .get(`${this.apiBaseUrl}/expense_logs/${expenseId}`, {
-        withCredentials: true
-      })
-      .then(response => response.data)
-      .catch(() => {
-        alert("データの取得に失敗しました。");
-      });
+  static async showExpenseLog(expenseId) {
+    const response = await axios.get(
+      `${this.apiBaseUrl}/expense_logs/${expenseId}`,
+      { withCredentials: true}
+    )
+    return response.data;
   }
 
   static updateExpense(expenseId, expense) {

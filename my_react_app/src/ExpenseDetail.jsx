@@ -2,7 +2,6 @@ import editImage from "./assets/edit.svg";
 import deleteImage from "./assets/delete.svg";
 import arrowImage from "./assets/arrow.svg";
 import ExpenseApi from './lib/ExpenseApi';
-import { useAuth } from "./contexts/Authcontext"
 
 const ExpenseDetail =  ({ expenses, onSelectExpense, onBack }) => {
   const handleDelete = (id) => {
@@ -12,8 +11,6 @@ const ExpenseDetail =  ({ expenses, onSelectExpense, onBack }) => {
       })
     }
   };
-  
-  const { token } = useAuth();
 
   return (
     <div className="container mx-auto p-4">
