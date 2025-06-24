@@ -45,17 +45,10 @@ class ExpenseApi {
     return response.data;
   }
 
-  static deleteExpense(expenseId) {
-    return axios
-      .delete(`${this.apiBaseUrl}/expense_logs/${expenseId}`, {
-        withCredentials: true
-      })
-      .then(() => {
-        alert("削除が完了しました。");
-      })
-      .catch(() => {
-        alert("削除に失敗しました。");
-      });
+  static async deleteExpenseLog(expenseId) {
+    await axios.delete(`${this.apiBaseUrl}/expense_logs/${expenseId}`, {
+      withCredentials: true
+    });
   }
 }
 
