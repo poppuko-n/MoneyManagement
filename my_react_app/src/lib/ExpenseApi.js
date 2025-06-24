@@ -8,61 +8,47 @@ class ExpenseApi {
     return response.data
   }
 
-  static getExpenses(year, month) {
-    return axios
-      .get(`${this.apiBaseUrl}/expense_logs`, {
+  static async getExpenseLogs(year, month) {
+    const response = await axios.get(
+      `${this.apiBaseUrl}/expense_logs`,
+      {
         params: { year, month },
         withCredentials: true
-      })
-      .then(response => ({
-        expenses: response.data
-      }));
+      }
+    );
+    return response.data;
   }
 
-  static async createExpense(expense) {
+  static async createExpenseLog(expenseLog) {
     const response = await axios.post(
       `${this.apiBaseUrl}/expense_logs`,
-      expense,
+      expenseLog,
       {withCredentials: true}
     );
     return response.data;
   }
 
-  static showExpense(expenseId) {
-    return axios
-      .get(`${this.apiBaseUrl}/expense_logs/${expenseId}`, {
-        withCredentials: true
-      })
-      .then(response => response.data)
-      .catch(() => {
-        alert("データの取得に失敗しました。");
-      });
+  static async showExpenseLog(expenseId) {
+    const response = await axios.get(
+      `${this.apiBaseUrl}/expense_logs/${expenseId}`,
+      { withCredentials: true}
+    )
+    return response.data;
   }
 
-  static updateExpense(expenseId, expense) {
-    return axios
-      .patch(`${this.apiBaseUrl}/expense_logs/${expenseId}`, expense, {
-        withCredentials: true
-      })
-      .then(() => {
-        alert("更新が完了しました。");
-      })
-      .catch(error => {
-        alert(`${error.response.data.errors.join(', ')}`);
-      });
+  static async updateExpenseLog(expenseId, expense) {
+    const response = await axios.patch(
+      `${this.apiBaseUrl}/expense_logs/${expenseId}`,
+      expense,
+      { withCredentials: true }
+    );
+    return response.data;
   }
 
-  static deleteExpense(expenseId) {
-    return axios
-      .delete(`${this.apiBaseUrl}/expense_logs/${expenseId}`, {
-        withCredentials: true
-      })
-      .then(() => {
-        alert("削除が完了しました。");
-      })
-      .catch(() => {
-        alert("削除に失敗しました。");
-      });
+  static async deleteExpenseLog(expenseId) {
+    await axios.delete(`${this.apiBaseUrl}/expense_logs/${expenseId}`, {
+      withCredentials: true
+    });
   }
 }
 

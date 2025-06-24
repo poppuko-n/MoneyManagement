@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import ExpenseApi from './lib/ExpenseApi';
-import { useAuth } from "./contexts/Authcontext"
 
-const ExpenseEdit = ({ onBack, expenseId, getCategoriesBySelectType }) => {
+const ExpenseEdit = ({ onBack, expenseId, filterCategoriesByType }) => {
   const [tracsactionType, setTracsactionType] = useState('')
   const [editExpense, setEditExpense] = useState({
     category_id: '',
@@ -10,21 +9,30 @@ const ExpenseEdit = ({ onBack, expenseId, getCategoriesBySelectType }) => {
     item: '',
     amount: '',
   });
-  
-  const { token } = useAuth();
-
-  const handleUpdate = () => {
-    ExpenseApi.updateExpense(expenseId, editExpense, token).then(() => {
-      onBack();
-    });
-  };
 
   useEffect(() => {
-    ExpenseApi.showExpense(expenseId, token).then(data => {
-      setEditExpense(data);
-      setTracsactionType(data.transaction_type);
-    });
+    fetchExpenseLog()
   }, []);
+
+  const handleUpdate = async() => {
+    try {
+      await ExpenseApi.updateExpenseLog(expenseId, editExpense);
+      alert("更新が完了しました。")
+      onBack();
+    } catch(error) {
+      alert(error.response?.data.errors.join('\n') || "家計簿データの更新に失敗しました。");
+    }
+  };
+
+  const fetchExpenseLog = async() => {
+    try{
+      const data = await ExpenseApi.showExpenseLog(expenseId)
+      setEditExpense(data)
+      setTracsactionType(data.transaction_type)
+    } catch(error) {
+      alert(error.respons?.data.errors.join(`/n`) || "家計簿データの取得に失敗しました。")
+    }
+  }
 
   return (
     <div className="w-full">
@@ -48,11 +56,11 @@ const ExpenseEdit = ({ onBack, expenseId, getCategoriesBySelectType }) => {
           <label className="block text-base font-normal text-gray-900 mb-1">カテゴリ</label>
           <select
             className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-            value={editExpense.category_id || ''}
+            value={editExpense.category_id}
             onChange={(e) => setEditExpense({ ...editExpense, category_id: e.target.value })}
           >
             <option value="0">選択してください</option>
-            {getCategoriesBySelectType(tracsactionType).map((category) => (
+            {filterCategoriesByType(tracsactionType).map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
               </option>

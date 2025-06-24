@@ -18,41 +18,42 @@ const Expense = () => {
   const [year, setYear] = useState('');
   const [month, setMonth] = useState('');
 
-  // NOTE: 初回マウント時にカテゴリと現在の年月を初期化する処理
   useEffect(() => {
     loadCategories();
     initializeYearMonth();
   }, []);
 
-  // NOTE: 年と月のいずれかが変更されるたびに、その年月の家計簿データをAPIから取得する処理
+  // NOTE: year と month を監視して家計簿データを再取得
   useEffect(() => {
     if (year && month) {
       fetchExpenses(year, month);
     }
   }, [year, month]);
 
-  const loadCategories = async() => {
-    const data = await ExpenseApi.getCategories();
-    setCategories(data);
-    }
-
-  // NOTE: 年月の初期化（今月を設定）
   const initializeYearMonth = () => {
     const now = new Date;
     setYear(now.getFullYear());
     setMonth(String(now.getMonth() + 1).padStart(2, '0'));
   };
 
-  // NOTE: 指定した年月の家計簿データを取得
-  const fetchExpenses = (year, month) => {
-    ExpenseApi.getExpenses(year, month).then(data => {
-      setExpenses(data.expenses);
-    });
+  const loadCategories = async() => {
+    const data = await ExpenseApi.getCategories();
+    setCategories(data);
+    }
+
+  const fetchExpenses = async (year, month) => {
+    try {
+      const data = await ExpenseApi.getExpenseLogs(year, month);
+      setExpenses(data);
+    } catch (error) {
+      alert("家計簿データの取得に失敗しました。");
+    }
   };
 
-  // NOTE: 支出、収入に応じてカテゴリ一覧を返す
-  const getCategoriesBySelectType = (transactionType) => {
-    return categories.filter(category => category.transaction_type === transactionType);
+  const filterCategoriesByType = (transactionType) => {
+    return categories.filter(
+      (category) => category.transaction_type === transactionType
+    );
   };
 
   return (
@@ -61,7 +62,6 @@ const Expense = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1 }}>
 
-      {/* NOTE: ヘッダー（年月切替、新規作成） */}
       <ExpenseHeader
         expenses={expenses}
         year={year}
@@ -80,7 +80,7 @@ const Expense = () => {
           transition={{ duration: 1 }}>
           <ExpensePieChart
             expenses={expenses}
-            expense_categories={getCategoriesBySelectType("支出")}
+            expense_categories={filterCategoriesByType("支出")}
             onChange={() => {
               setIsPieChart(false);
               setIsDetail(true);
@@ -112,7 +112,7 @@ const Expense = () => {
       {isCreating && (
         <Modal onClose={() => setIsCreating(false)}>
           <ExpenseNew
-            getCategoriesBySelectType={getCategoriesBySelectType}
+            filterCategoriesByType={filterCategoriesByType}
             onBack={() => {
               setIsPieChart(true);
               setIsDetail(false);
@@ -123,11 +123,11 @@ const Expense = () => {
         </Modal>
       )}
 
-      {/* NOTE: 編集モーダル（選択した費目IDに基づく） */}
+      {/* NOTE: 編集モーダル */}
       {currentExpenseId && (
         <Modal onClose={() => setCurrentExpenseId(null)}>
           <ExpenseEdit
-            getCategoriesBySelectType={getCategoriesBySelectType}
+            filterCategoriesByType={filterCategoriesByType}
             expenseId={currentExpenseId}
             onBack={() => {
               setIsPieChart(true);

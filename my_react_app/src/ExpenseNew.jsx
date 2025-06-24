@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ExpenseApi from './lib/ExpenseApi';
 
-const ExpenseNew = ({ onBack, getCategoriesBySelectType }) => {
+const ExpenseNew = ({ onBack, filterCategoriesByType }) => {
   const today = new Date().toISOString().split('T')[0]; 
   const [transactionType, setTransactionType] = useState('');
   const [newExpense, setNewExpense] = useState({
@@ -13,7 +13,7 @@ const ExpenseNew = ({ onBack, getCategoriesBySelectType }) => {
 
   const handleCreate = async() => {
     try{
-      await ExpenseApi.createExpense(newExpense);
+      await ExpenseApi.createExpenseLog(newExpense);
       alert('登録が完了しました。')
       onBack();
     } catch(error) {
@@ -50,7 +50,7 @@ const ExpenseNew = ({ onBack, getCategoriesBySelectType }) => {
             onChange={(e) => setNewExpense({ ...newExpense, category_id: e.target.value })}
           >
             <option value="">選択してください</option>
-            {getCategoriesBySelectType(transactionType).map((category) => (
+            {filterCategoriesByType(transactionType).map((category) => (
               <option key={category.id} value={category.id}>
                 {category.name}
               </option>

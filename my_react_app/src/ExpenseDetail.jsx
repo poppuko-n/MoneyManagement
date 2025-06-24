@@ -2,18 +2,18 @@ import editImage from "./assets/edit.svg";
 import deleteImage from "./assets/delete.svg";
 import arrowImage from "./assets/arrow.svg";
 import ExpenseApi from './lib/ExpenseApi';
-import { useAuth } from "./contexts/Authcontext"
 
 const ExpenseDetail =  ({ expenses, onSelectExpense, onBack }) => {
-  const handleDelete = (id) => {
-    if (window.confirm("本当に削除しますか")) {
-      ExpenseApi.deleteExpense(id, token).then(() => {
-        onBack()
-      })
+  const handleDelete = (expense_id) => {
+    if (!window.confirm("本当に削除しますか")) return;
+
+    try{
+      ExpenseApi.deleteExpenseLog(expense_id);
+      onBack();
+    } catch {
+      alert("削除に失敗しました。再度お試しください。");
     }
   };
-  
-  const { token } = useAuth();
 
   return (
     <div className="container mx-auto p-4">
