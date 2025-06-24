@@ -14,10 +14,14 @@ const ExpenseEdit = ({ onBack, expenseId, filterCategoriesByType }) => {
     fetchExpenseLog()
   }, []);
 
-  const handleUpdate = () => {
-    ExpenseApi.updateExpense(expenseId, editExpense, token).then(() => {
+  const handleUpdate = async() => {
+    try {
+      await ExpenseApi.updateExpenseLog(expenseId, editExpense);
+      alert("更新が完了しました。")
       onBack();
-    });
+    } catch(error) {
+      alert(error.response?.data.errors.join('\n') || "家計簿データの更新に失敗しました。");
+    }
   };
 
   const fetchExpenseLog = async() => {
@@ -26,7 +30,7 @@ const ExpenseEdit = ({ onBack, expenseId, filterCategoriesByType }) => {
       setEditExpense(data)
       setTracsactionType(data.transaction_type)
     } catch(error) {
-      alert("家計簿データの取得に失敗しました。")
+      alert(error.respons?.data.errors.join(`/n`) || "家計簿データの取得に失敗しました。")
     }
   }
 

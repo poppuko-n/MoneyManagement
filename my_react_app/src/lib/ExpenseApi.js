@@ -36,17 +36,13 @@ class ExpenseApi {
     return response.data;
   }
 
-  static updateExpense(expenseId, expense) {
-    return axios
-      .patch(`${this.apiBaseUrl}/expense_logs/${expenseId}`, expense, {
-        withCredentials: true
-      })
-      .then(() => {
-        alert("更新が完了しました。");
-      })
-      .catch(error => {
-        alert(`${error.response.data.errors.join(', ')}`);
-      });
+  static async updateExpenseLog(expenseId, expense) {
+    const response = await axios.patch(
+      `${this.apiBaseUrl}/expense_logs/${expenseId}`,
+      expense,
+      { withCredentials: true }
+    );
+    return response.data;
   }
 
   static deleteExpense(expenseId) {
