@@ -55,7 +55,7 @@ const Simulation = () => {
     );
 
   // NOTE: API処理中は isLoading を true にしてローディングUIを表示、完了後に false に戻す。
-  const sendQuantitiesToServer = () => {
+  const sendQuantitiesToServer = async() => {
     const selectedCompanies = companies
       .filter((company) => quantities[company.code] > 0)
       .map((company) => ({
@@ -65,12 +65,15 @@ const Simulation = () => {
 
     setIsLoading(true);
 
-    CompanyApi.createProjections({data: selectedCompanies})
-      .then((response)=>{
-        setProjectionsResults(response.data);
-        setIsShowingSimulationResult(true)
-      })
-      .finally(()=>setIsLoading(false))
+    try {
+      const results = await CompanyApi.createProjections({ data: selectedCompanies });
+      setProjectionsResults(results);
+      setIsShowingSimulationResult(true);
+    } catch(error) {
+      alert("データ送信に失敗しました。")
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // NOTE: 表示対象の企業リスト（全体 or 選択済みのみ）を決定

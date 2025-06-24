@@ -8,12 +8,12 @@ class CompanyApi {
     return response.data
   }
 
-  static createProjections(payload) {
-    return axios
-      .post(`${this.apiBaseUrl}/stock_prices/projections`, payload)
-      .catch(error => {
-        alert("データの送信に失敗しました。")
-      })
+  static async createProjections(payload) {
+    const response = await axios.post(
+      `${this.apiBaseUrl}/stock_prices/projections`,
+      payload
+    );
+    return response.data;
   }
 
     static createProjectionsAnalyses(payload) {
