@@ -41,7 +41,7 @@ const Expense = () => {
     setCategories(data);
     }
 
-  const fetchExpenses = async (year, month) => {
+  const fetchExpenses = async () => {
     try {
       const data = await ExpenseApi.getExpenseLogs(year, month);
       setExpenses(data);
@@ -108,7 +108,6 @@ const Expense = () => {
         </motion.div>
       )}
 
-      {/* NOTE: 新規作成モーダル */}
       {isCreating && (
         <Modal onClose={() => setIsCreating(false)}>
           <ExpenseNew
@@ -123,7 +122,6 @@ const Expense = () => {
         </Modal>
       )}
 
-      {/* NOTE: 編集モーダル */}
       {currentExpenseId && (
         <Modal onClose={() => setCurrentExpenseId(null)}>
           <ExpenseEdit
