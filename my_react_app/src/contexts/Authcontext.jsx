@@ -19,7 +19,7 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(true);
       alert("ログインしました。");
     } catch(error) {
-      alert(error.response.data.errors.join('\n'))
+      alert(error.response?.data.errors.join('\n')|| "ログインに失敗しました。再度お試しください。")
     }
   };
 
