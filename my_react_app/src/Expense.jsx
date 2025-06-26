@@ -25,9 +25,7 @@ const Expense = () => {
 
   // NOTE: year と month を監視して家計簿データを再取得
   useEffect(() => {
-    if (year && month) {
-      fetchExpenses(year, month);
-    }
+    if (year && month) fetchExpenses();
   }, [year, month]);
 
   const initializeYearMonth = () => {
@@ -50,18 +48,17 @@ const Expense = () => {
     }
   };
 
-  const filterCategoriesByType = (transactionType) => {
-    return categories.filter(
-      (category) => category.transaction_type === transactionType
-    );
+  const filterCategoriesByType = (transactionType) =>
+    categories.filter((c) => c.transaction_type === transactionType);
+
+  const motionProps = {
+    initial: { opacity: 0, y: 100 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 1 },
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1 }}>
-
+    <motion.div {...motionProps}>
       <ExpenseHeader
         expenses={expenses}
         year={year}
@@ -74,17 +71,14 @@ const Expense = () => {
 
       {/* NOTE: 円グラフ表示。切り替えで明細表示へ */}
       {isPieChart && (
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}>
+        <motion.div {...motionProps}>
           <ExpensePieChart
             expenses={expenses}
             expense_categories={filterCategoriesByType("支出")}
             onChange={() => {
               setIsPieChart(false);
               setIsDetail(true);
-              fetchExpenses(year, month);
+              fetchExpenses();
             }}
           />
         </motion.div>
@@ -92,38 +86,35 @@ const Expense = () => {
 
       {/* NOTE: 明細表示。戻ると円グラフに切り替え */}
       {isDetail && (
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}>
+        <motion.div {...motionProps}>
           <ExpenseDetail
             expenses={expenses}
             onSelectExpense={setCurrentExpenseId}
             onBack={() => {
               setIsPieChart(true);
               setIsDetail(false);
-              fetchExpenses(year, month);
+              fetchExpenses();
             }}
           />
         </motion.div>
       )}
 
       {isCreating && (
-        <Modal onClose={() => setIsCreating(false)}>
+        <Modal>
           <ExpenseNew
             filterCategoriesByType={filterCategoriesByType}
             onBack={() => {
               setIsPieChart(true);
               setIsDetail(false);
               setIsCreating(false);
-              fetchExpenses(year, month);
+              fetchExpenses();
             }}
           />
         </Modal>
       )}
 
       {currentExpenseId && (
-        <Modal onClose={() => setCurrentExpenseId(null)}>
+        <Modal>
           <ExpenseEdit
             filterCategoriesByType={filterCategoriesByType}
             expenseId={currentExpenseId}
@@ -131,7 +122,7 @@ const Expense = () => {
               setIsPieChart(true);
               setIsDetail(false);
               setCurrentExpenseId(null);
-              fetchExpenses(year, month);
+              fetchExpenses();
             }}
           />
         </Modal>
