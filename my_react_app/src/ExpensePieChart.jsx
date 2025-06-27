@@ -17,7 +17,7 @@ const ExpensePieChart = ({expenses, categories, onBack})=> {
   
   return(
     <div className="container mx-auto">
-      <h2 className="text-xl font-bold text-center mb-4">カテゴリ別支出</h2>
+      <p className="font-bold text-center mb-4">カテゴリ別支出</p>
 
       <div className="flex flex-col md:flex-row justify-center items-center gap-8">
         <div className="w-full md:w-1/2 flex justify-center">
