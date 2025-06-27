@@ -81,7 +81,6 @@ const Simulation = () => {
     ? companies.filter((company) => quantities[company.code] > 0)
     : companies;
 
-  // NOTE: シミュレーション結果画面を表示している場合はこちらを表示
   if (isShowingSimulationResult ){
     return(
       <SimulationResult
