@@ -7,8 +7,6 @@ import Modal from "./Modal.jsx";
 import CompanyApi from './lib/CompanyApi.js'
 import { motion } from "framer-motion";
 
-// NOTE: 投資シミュレーション画面のメインコンポーネント。
-// ユーザーは企業を選び、数量を指定して投資結果のシミュレーションを行える。
 const Simulation = () => {
   const [companies, setCompanies] = useState([]);
   const [quantities, setQuantities] = useState({});
@@ -18,17 +16,23 @@ const Simulation = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isShowingSimulationResult , setIsShowingSimulationResult] = useState(false);
 
-   // NOTE: 初回マウント時に企業データをAPIから取得し、数量をすべて0で初期化
   useEffect(() => {
-    CompanyApi.getCompanies().then((response) => {
-      const initialQuantities = response.data.reduce((acc, company) => {
+    fetchCompanies();
+  }, []);
+
+  const fetchCompanies = async () => {
+    try {
+      const companies = await CompanyApi.getCompanies();
+      const initialQuantities = companies.reduce((acc, company) => {
         acc[company.code] = 0;
         return acc;
       }, {});
-      setCompanies(response.data);
+      setCompanies(companies);
       setQuantities(initialQuantities);
-    });
-  }, []);
+    } catch (error) {
+      alert("企業データの取得に失敗しました。");
+    }
+  };
 
   // NOTE: 投資予定数量(quantities)を増減する関数。0未満にはならないようにする
   const handleQuantityChange = (code, change) => {
@@ -51,7 +55,7 @@ const Simulation = () => {
     );
 
   // NOTE: API処理中は isLoading を true にしてローディングUIを表示、完了後に false に戻す。
-  const sendQuantitiesToServer = () => {
+  const sendQuantitiesToServer = async() => {
     const selectedCompanies = companies
       .filter((company) => quantities[company.code] > 0)
       .map((company) => ({
@@ -61,12 +65,15 @@ const Simulation = () => {
 
     setIsLoading(true);
 
-    CompanyApi.createProjections({data: selectedCompanies})
-      .then((response)=>{
-        setProjectionsResults(response.data);
-        setIsShowingSimulationResult(true)
-      })
-      .finally(()=>setIsLoading(false))
+    try {
+      const results = await CompanyApi.createProjections({ data: selectedCompanies });
+      setProjectionsResults(results);
+      setIsShowingSimulationResult(true);
+    } catch(error) {
+      alert("データ送信に失敗しました。")
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   // NOTE: 表示対象の企業リスト（全体 or 選択済みのみ）を決定
@@ -74,7 +81,6 @@ const Simulation = () => {
     ? companies.filter((company) => quantities[company.code] > 0)
     : companies;
 
-  // NOTE: シミュレーション結果画面を表示している場合はこちらを表示
   if (isShowingSimulationResult ){
     return(
       <SimulationResult

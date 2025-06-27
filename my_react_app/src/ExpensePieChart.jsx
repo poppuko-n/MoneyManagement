@@ -1,84 +1,73 @@
-import { PieChart, Pie, Cell, Tooltip, Legend } from "recharts";
-import foodCost from "./assets/foodcost.svg";
-import lifeCost from "./assets/lifecost.svg";
-import personCost from "./assets/personcost.svg";
-import trafficCost from "./assets/trafficcost.svg";
-import fiexdCost from "./assets/fixedcost.svg";
+import { PieChart, Pie, Cell, Legend } from "recharts";
 import arrowImage from "./assets/arrow.svg";
 
-const ExpensePieChart = ({expenses, expense_categories, onChange})=> {
+const ExpensePieChart = ({expenses, categories, onBack})=> {
 
-  const images = [foodCost, lifeCost, personCost, trafficCost, fiexdCost]
+  const COLORS = ["#FF6B6B", "#3B82F6", "#F4A261", "#2EC4B6", "#9B5DE5"];
+  const expenseCategories = categories.filter(c => c.transaction_type === "支出");
 
-  const expenseData = expense_categories.map((category, index) => ({
+  const expenseDataByCategory = expenseCategories.map((category) => ({
     name: category.name,
     value: expenses
-      .filter((expense) => expense.category_name === category.name)
-      .reduce((sum, expense) => sum + expense.amount, 0),
-    image: images[index]
+      .filter((e) => e.category_name === category.name)
+      .reduce((sum, e) => sum + e.amount, 0)
   }));
 
-  const totalExpense = expenseData.reduce((sum, data)=> sum + data.value, 0);
-  
-  const COLORS = ["#FF6B6B", "#3B82F6", "#F4A261", "#2EC4B6", "#9B5DE5"];
+  const totalExpense = expenseDataByCategory.reduce((sum, d)=> sum + d.value, 0);
   
   return(
-    <div className="container mx-auto p-4">
-      <h2 className="text-xl font-bold text-center mb-2">カテゴリ別支出</h2>
+    <div className="container mx-auto">
+      <p className="font-bold text-center mb-4">カテゴリ別支出</p>
 
       <div className="flex flex-col md:flex-row justify-center items-center gap-8">
         <div className="w-full md:w-1/2 flex justify-center">
           <PieChart width={450} height={400}>
             <Pie
-                data={expenseData}
+                data={expenseDataByCategory}
                 cx="50%"
                 cy="50%"
-                label={({ name, value }) => `${value.toLocaleString()}`} 
-                labelLine={false}
-                outerRadius={150}
-                fill="#8884d8"
                 dataKey="value"
                 startAngle={90}
                 endAngle={-270} >
-                {expenseData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                {expenseCategories.map((_, index) => (
+                  <Cell key={index} fill={COLORS[index]} />
                 ))}
           </Pie>
-          <Tooltip />
           <Legend verticalAlign="top" align="center" />
           </PieChart>
         </div>
 
-        <div className="w-full md:w-1/2">
-          <div className='flex justify-end mb-4'>
-            <button onClick={onChange} className='flex items-center'>
+        <div className="md:w-1/2">
+          <div className=" flex justify-end mb-2">
+            <button onClick={onBack} className="flex items-center">
               一覧へ
-              <img src={arrowImage} alt="arrow" className='w-5 h-5 ml-2' />
+              <img src={arrowImage} alt="arrow" className="w-4 h-4 ml-2" />
             </button>
           </div>
 
-          <table className="w-full border border-gray-300 bg-white">
+          <table className="w-full">
             <thead>
-              <tr className="bg-gray-100">
-                <th className="border px-4 py-2 text-left">カテゴリ</th>
-                <th className="border px-4 py-2 text-right">金額 (円)</th>
+              <tr className="font-bold bg-gray-100">
+                <td className="border px-4 py-2 text-left">カテゴリ</td>
+                <td className="border px-4 py-2 text-right">金額</td>
               </tr>
             </thead>
             <tbody>
-              {expenseData.map((data, index) => (
-                <tr key={index} className="hover:bg-gray-50 transition duration-200">
-                  <td className="border px-4 py-2 flex items-center">
-                    <img src={data.image} alt={data.name} className="w-6 h-6 mr-2" />
-                    <span style={{ color: COLORS[index % COLORS.length] }}>{data.name}</span>
+              {expenseDataByCategory.map((data, index) => (
+                <tr key={index}>
+                  <td className="border font-bold px-4 py-2" style={{color: COLORS[index]}}>
+                    {data.name}
                   </td>
                   <td className="border px-4 py-2 text-right">{data.value.toLocaleString()}</td>
                 </tr>
               ))}
-               <tr className="font-bold">
-                  <td className="border px-4 py-2 text-left">合計</td>
-                  <td className="border px-4 py-2 text-right">{totalExpense.toLocaleString()} 円</td>
-                </tr>
             </tbody>
+            <tfoot>
+              <tr className="font-bold">
+                <td className="border px-4 py-2">合計</td>
+                <td className="border px-4 py-2 text-right">{totalExpense.toLocaleString()} 円</td>
+              </tr>
+            </tfoot>
           </table>
         </div>
       </div>

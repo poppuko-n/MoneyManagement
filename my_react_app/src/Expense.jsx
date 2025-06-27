@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react';
+import { motion } from "framer-motion";
+import ExpenseApi from './lib/ExpenseApi';
 import ExpenseHeader from './ExpenseHeader';
 import ExpensePieChart from "./ExpensePieChart";
-import ExpenseDetail from "./ExpenseDetail";
+import ExpenseList from "./ExpenseList";
 import ExpenseNew from './ExpenseNew';
 import ExpenseEdit from './ExpenseEdit';
-import ExpenseApi from './lib/ExpenseApi';
 import Modal from './Modal';
-import { motion } from "framer-motion";
 
 const Expense = () => {
-  const [isCreating, setIsCreating] = useState(false);
-  const [isDetail, setIsDetail] = useState(false);
-  const [isPieChart, setIsPieChart] = useState(true);
+  const [isCreatingExpense, setIsCreatingExpense] = useState(false);
+  const [displayMode, setDisplayMode] = useState('chart');
   const [currentExpenseId, setCurrentExpenseId] = useState(null);
   const [categories, setCategories] = useState([]);
   const [expenses, setExpenses] = useState([]);
@@ -19,15 +18,13 @@ const Expense = () => {
   const [month, setMonth] = useState('');
 
   useEffect(() => {
-    loadCategories();
+    fetchCategories();
     initializeYearMonth();
   }, []);
 
   // NOTE: year と month を監視して家計簿データを再取得
   useEffect(() => {
-    if (year && month) {
-      fetchExpenses(year, month);
-    }
+    if (year && month) fetchExpenses();
   }, [year, month]);
 
   const initializeYearMonth = () => {
@@ -36,12 +33,12 @@ const Expense = () => {
     setMonth(String(now.getMonth() + 1).padStart(2, '0'));
   };
 
-  const loadCategories = async() => {
+  const fetchCategories = async() => {
     const data = await ExpenseApi.getCategories();
     setCategories(data);
     }
 
-  const fetchExpenses = async (year, month) => {
+  const fetchExpenses = async () => {
     try {
       const data = await ExpenseApi.getExpenseLogs(year, month);
       setExpenses(data);
@@ -50,18 +47,14 @@ const Expense = () => {
     }
   };
 
-  const filterCategoriesByType = (transactionType) => {
-    return categories.filter(
-      (category) => category.transaction_type === transactionType
-    );
+  const motionProps = {
+    initial: { opacity: 0, y: 100 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 1 },
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 100 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 1 }}>
-
+    <motion.div {...motionProps}>
       <ExpenseHeader
         expenses={expenses}
         year={year}
@@ -69,71 +62,49 @@ const Expense = () => {
         setYear={setYear}
         setMonth={setMonth}
         initializeYearMonth={initializeYearMonth}
-        onCreateNew={() => setIsCreating(true)}
+        onCreateNew={() => setIsCreatingExpense(true)}
       />
 
-      {/* NOTE: 円グラフ表示。切り替えで明細表示へ */}
-      {isPieChart && (
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}>
+      {displayMode === 'chart' && (
+        <motion.div {...motionProps}>
           <ExpensePieChart
             expenses={expenses}
-            expense_categories={filterCategoriesByType("支出")}
-            onChange={() => {
-              setIsPieChart(false);
-              setIsDetail(true);
-              fetchExpenses(year, month);
-            }}
+            categories={categories}
+            onBack={() => setDisplayMode('list')}
           />
         </motion.div>
       )}
 
-      {/* NOTE: 明細表示。戻ると円グラフに切り替え */}
-      {isDetail && (
-        <motion.div
-          initial={{ opacity: 0, y: 100 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}>
-          <ExpenseDetail
+      {displayMode === 'list' && (
+        <motion.div {...motionProps}>
+          <ExpenseList
             expenses={expenses}
-            onSelectExpense={setCurrentExpenseId}
-            onBack={() => {
-              setIsPieChart(true);
-              setIsDetail(false);
-              fetchExpenses(year, month);
-            }}
+            setCurrentExpenseId={setCurrentExpenseId}
+            onBack={() => setDisplayMode('chart')}
           />
         </motion.div>
       )}
 
-      {/* NOTE: 新規作成モーダル */}
-      {isCreating && (
-        <Modal onClose={() => setIsCreating(false)}>
+      {isCreatingExpense && (
+        <Modal>
           <ExpenseNew
-            filterCategoriesByType={filterCategoriesByType}
+            categories={categories}
             onBack={() => {
-              setIsPieChart(true);
-              setIsDetail(false);
-              setIsCreating(false);
-              fetchExpenses(year, month);
+              setIsCreatingExpense(false);
+              fetchExpenses();
             }}
           />
         </Modal>
       )}
 
-      {/* NOTE: 編集モーダル */}
       {currentExpenseId && (
-        <Modal onClose={() => setCurrentExpenseId(null)}>
+        <Modal>
           <ExpenseEdit
-            filterCategoriesByType={filterCategoriesByType}
+            categories={categories}
             expenseId={currentExpenseId}
             onBack={() => {
-              setIsPieChart(true);
-              setIsDetail(false);
               setCurrentExpenseId(null);
-              fetchExpenses(year, month);
+              fetchExpenses();
             }}
           />
         </Modal>
