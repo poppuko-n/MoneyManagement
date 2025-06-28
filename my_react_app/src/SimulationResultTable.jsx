@@ -1,5 +1,5 @@
-const SimulationResultTable = ({ ResultsByType }) => {
-  const results = ResultsByType.map(r => ({
+const SimulationResultTable = ({ resultsByType }) => {
+  const results = resultsByType.map(r => ({
     ...r,
     profitLoss: r.value - r.deposit,
     changeRate: (((r.value - r.deposit) / r.deposit) * 100).toFixed(2),

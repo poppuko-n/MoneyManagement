@@ -1,11 +1,11 @@
-import toggleOfImage from './assets/toggle_off.svg'
+import toggleOffImage from './assets/toggle_off.svg'
 import toggleOnImage from './assets/toggle_on.svg'
 
 const FilterToggleBar = ({ isFilteringSelectedCompanies, toggleFiltered }) => {
   return (
     <button className="flex items-center" onClick={toggleFiltered}>
       <img
-        src={isFilteringSelectedCompanies ? toggleOnImage : toggleOfImage}
+        src={isFilteringSelectedCompanies ? toggleOnImage : toggleOffImage}
         alt={isFilteringSelectedCompanies ? "toggleon" : "toggleoff"}
         className="w-10 mr-2"
       />

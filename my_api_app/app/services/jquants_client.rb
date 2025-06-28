@@ -2,7 +2,7 @@ class JquantsClient
   BASE_URL = "https://api.jquants.com/v1".freeze
 
   def initialize
-    @refresh_token = Rails.application.credentials.jqunts[:refresh_token]
+    @refresh_token = Rails.application.credentials.jquants[:refresh_token]
   end
 
   def fetch_daily_quotes(code, months_ago: 1)

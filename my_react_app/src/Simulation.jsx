@@ -11,10 +11,10 @@ import { motion } from "framer-motion";
 const Simulation = () => {
   const [companies, setCompanies] = useState([]);
   const [quantities, setQuantities] = useState({});
-  const [projectionResults, setProjectionsResults] = useState(null);
+  const [projectionResults, setProjectionResults] = useState(null);
   const [isFilteringSelectedCompanies, setIsFilteringSelectedCompanies] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [isShowingSimulationResult , setIsShowingSimulationResult] = useState(false);
+  const [isSimulationResultVisible, setIsSimulationResultVisible] = useState(false);
 
   useEffect(() => {
     fetchCompanies();
@@ -46,8 +46,8 @@ const Simulation = () => {
     setIsLoading(true);
     try {
       const results = await CompanyApi.createProjections({ data: selectedCompanies });
-      setProjectionsResults(results);
-      setIsShowingSimulationResult(true);
+      setProjectionResults(results);
+      setIsSimulationResultVisible(true);
     } catch(error) {
       alert("データ送信に失敗しました。")
     } finally {
@@ -59,7 +59,7 @@ const Simulation = () => {
     ? companies.filter(c => quantities[c.code] > 0)
     : companies;
 
-  if (isShowingSimulationResult ){
+  if (isSimulationResultVisible ){
     return(
       <SimulationResult projectionResults={projectionResults}/>
     );

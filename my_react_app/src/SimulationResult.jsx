@@ -10,7 +10,7 @@ const SimulationResult = ({projectionResults}) => {
   const [aiAnalysis, setAiAnalysis] = useState(null);
   const [simulationType, setSimulationType] = useState("one_time");
 
-  const ResultsByType = projectionResults.map(r => ({
+  const resultsByType = projectionResults.map(r => ({
     name: r.name,
     deposit: r[simulationType].at(-1).deposit,
     value: r[simulationType].at(-1).value
@@ -28,13 +28,13 @@ const SimulationResult = ({projectionResults}) => {
         simulationType={simulationType}
         setSimulationType={setSimulationType}
       />
-      <SimulationSummary ResultsByType={ResultsByType} />
+      <SimulationSummary resultsByType={resultsByType} />
       <SimulationChart
         projectionResults={projectionResults}
         simulationType={simulationType} 
       />
       <SimulationInsight aiAnalysis={aiAnalysis}/>
-      <SimulationResultTable ResultsByType={ResultsByType} />
+      <SimulationResultTable resultsByType={resultsByType} />
     </div>
   );
 };
