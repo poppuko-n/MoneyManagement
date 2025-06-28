@@ -56,7 +56,7 @@ const Simulation = () => {
   };
 
   const displayedCompanies = isFilteringSelectedCompanies
-    ? companies.filter((company) => quantities[company.code] > 0)
+    ? companies.filter(c => quantities[c.code] > 0)
     : companies;
 
   if (isShowingSimulationResult ){
@@ -73,20 +73,17 @@ const Simulation = () => {
       initial={{ opacity: 0, y:100 }}
       animate={{ opacity:1, y: 0 }}
       transition={{ duration: 1 }}
-      className="container mx-auto p-4">
+      className="p-10">
 
       {isLoading && (
         <Modal>
-          <div className="text-center p-6">
           <motion.p
             animate={{ opacity: [0.3, 1, 0.3] }}
             transition={{ repeat: Infinity, duration: 1.0 }}
-            className="text-xl font-semibold mb-2"
+            className="text-center text-xl font-bold"
           >
             株価予測中です…
           </motion.p>
-            <p className="text-sm text-gray-500">しばらくお待ちください</p>
-          </div>
         </Modal>
       )}
 
