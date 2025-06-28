@@ -47,7 +47,7 @@ const SignUp = ({ onBack }) => {
           />
         </div>
 
-        <div className="flex justify-end space-x-4">
+        <div className="flex justify-end gap-4">
           <button
             type="submit"
             className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md transition duration-200"

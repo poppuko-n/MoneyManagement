@@ -30,34 +30,34 @@ const ExpenseList =  ({ expenses, setExpenseId, onBack }) => {
       <table className="w-full">
         <thead>
           <tr className="border font-bold bg-gray-100 text-left">
-            <th className="border px-4 py-2">日付</th>
-            <th className="border px-4 py-2">種類</th>
-            <th className="border px-4 py-2">カテゴリ</th>
-            <th className="border px-4 py-2">項目</th>
-            <th className="border px-4 py-2 text-right w-40">金額</th>
-            <th className="border px-4 py-2 text-center w-20">編集</th>
-            <th className="border px-4 py-2 text-center w-20">削除</th>
+            <th className="border p-2">日付</th>
+            <th className="border p-2">種類</th>
+            <th className="border p-2">カテゴリ</th>
+            <th className="border p-2">項目</th>
+            <th className="border p-2 text-right w-40">金額</th>
+            <th className="border p-2 text-center w-20">編集</th>
+            <th className="border p-2 text-center w-20">削除</th>
           </tr>
         </thead>
         <tbody>
           {expenses.map((expense) => (
             <tr key={expense.id}>
-              <td className="border px-4 py-2">{expense.date}</td>
+              <td className="border p-2">{expense.date}</td>
               <td
-                className={`border px-4 py-2 font-bold ${
+                className={`border p-2 font-bold ${
                   expense.transaction_type === "収入" ? "text-green-600" : "text-red-600"
                 }`}
               >
                 {expense.transaction_type}
               </td>
-              <td className="border px-4 py-2">{expense.category_name}</td>
-              <td className="border px-4 py-2">{expense.item}</td>
+              <td className="border p-2">{expense.category_name}</td>
+              <td className="border p-2">{expense.item}</td>
               <td
-                className={`border px-4 py-2 text-right`}
+                className="border p-2 text-right"
               >
                 {expense.amount.toLocaleString()}
               </td>
-              <td className="border px-2 py-1 text-center">
+              <td className="border p-2 text-center">
                 <button onClick={() => setExpenseId(expense.id)}>
                   <img
                     src={editImage}
@@ -66,7 +66,7 @@ const ExpenseList =  ({ expenses, setExpenseId, onBack }) => {
                   />
                 </button>
               </td>
-              <td className="border px-2 py-1 text-center">
+              <td className="border p-2 text-center">
                 <button onClick={() => handleDelete(expense.id)}>
                   <img
                     src={deleteImage}

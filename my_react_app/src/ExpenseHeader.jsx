@@ -22,7 +22,7 @@ const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYear
           <select
             value={year}
             onChange={(e) => setYear(e.target.value)}
-            className="border px-2 py-2"
+            className="border p-2"
           >
             {years.map(y => (
               <option key={y} value={y}>{y}</option>
@@ -33,7 +33,7 @@ const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYear
           <select
             value={month}
             onChange={(e) => setMonth(e.target.value)}
-            className="border px-2 py-2"
+            className="border p-2"
           >
             {months.map(m => (
               <option key={m} value={m}>{m}</option>
@@ -43,7 +43,7 @@ const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYear
           
           <button
             onClick={initializeYearMonth}
-            className="border bg-gray-100 rounded px-2 py-1 hover:bg-gray-300"
+            className="border bg-gray-100 rounded p-2 hover:bg-gray-300"
           >
             今月
           </button>
@@ -54,7 +54,7 @@ const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYear
               onClick={onCreateNew}
               className="bg-red-400 text-white rounded-full p-4 flex justify-center hover:bg-red-300"
             >
-              <img src={addImage} alt="add"className="w-6 h-6" />
+              <img src={addImage} alt="add" className="w-6 h-6" />
               新規登録
             </button>
         </div>

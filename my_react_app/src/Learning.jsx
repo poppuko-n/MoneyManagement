@@ -13,7 +13,7 @@ function Learning() {
         initial={{ opacity: 0, y:100 }}
         animate={{ opacity:1, y: 0 }}
         transition={{ duration: 1 }}
-        className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        className="grid grid-cols-1 md:grid-cols-3 gap-6">
 
         {youtubeVideos.map((video) => (
           <a
