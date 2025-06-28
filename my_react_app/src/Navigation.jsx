@@ -11,7 +11,7 @@ const Navigation = () => {
   const navItems = [
     { label: "サービス", page: "home" },
     { label: "家計簿", page: "expense" },
-    { label: "シミュレーション", page: "select" },
+    { label: "シミュレーション", page: "simulation" },
     { label: "学習コンテンツ", page: "learning" },
   ];
 
@@ -37,8 +37,7 @@ const Navigation = () => {
 
       {currentPage === "home" && <Home />}
       {currentPage === "expense" && <Expense />}
-      {currentPage === "select" && (<Simulation setCurrentPage={setCurrentPage} />)}
-      {currentPage === "result" && (<SimulationResult onBack={() => setCurrentPage("select")} />)}
+      {currentPage === "simulation" && <Simulation />}
       {currentPage === "learning" && <Learning />}
     </div>
   );
