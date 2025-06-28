@@ -34,15 +34,8 @@ const Simulation = () => {
     }
   };
 
-  const handleQuantityChange = (code, change) => 
-    setQuantities(p => ({...p, [code]: Math.max(p[code] + change, 0),}));
-
-  const resetQuantity = code => 
-    setQuantities((c) => ({...c, [code]: 0,}));
-
   const totalAmount = companies.reduce(
-      (sum, c) => sum + c.latest_price * (quantities[c.code] || 0), 0
-    );
+      (sum, c) => sum + c.latest_price * (quantities[c.code] || 0), 0);
 
   // NOTE: API処理中は isLoading を true にしてローディングUIを表示、完了後に false に戻す。
   const sendQuantitiesToServer = async() => {
@@ -62,7 +55,6 @@ const Simulation = () => {
     }
   };
 
-  // NOTE: 表示対象の企業リスト（全体 or 選択済みのみ）を決定
   const displayedCompanies = isFilteringSelectedCompanies
     ? companies.filter((company) => quantities[company.code] > 0)
     : companies;
@@ -112,10 +104,9 @@ const Simulation = () => {
       </div>
 
       <SelectCompanyTable 
-        displayedCompanies = {displayedCompanies}
-        quantities = {quantities}
-        handleQuantityChange = {handleQuantityChange}
-        resetQuantity = {resetQuantity}
+        displayedCompanies={displayedCompanies}
+        quantities={quantities}
+        setQuantities={setQuantities}
       />
     </motion.div>
   );
