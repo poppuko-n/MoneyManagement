@@ -21,24 +21,6 @@ const SimulationResult = ({projectionResults}) => {
       .then(response => setAiAnalysis(response.data))
   },[])
 
-  const getChartData = () =>
-    Array.from({ length: 12 }, (_, i) => {
-      const period = `${i + 1}_month`;
-      const [deposit, value] = projectionResults.reduce(
-        ([d, v], r) => {
-          const sim = r[simulationType].find(s => s.period === period);
-          return [d + sim.deposit, v + +sim.value];
-        },
-        [0, 0]
-      );
-
-    return {
-      date: `${i + 1}ヶ月後`,
-      purchase_amount: deposit,
-      evaluation_amount: value,
-    };
-  });
-
   return (
     <div className="p-10">
       <p className="text-center text-2xl font-bold mb-4">シミュレーション結果</p>
@@ -47,8 +29,11 @@ const SimulationResult = ({projectionResults}) => {
         setSimulationType={setSimulationType}
       />
       <SimulationSummary ResultsByType={ResultsByType} />
-      <SimulationChart data={getChartData()} />
-      <SimulationInsight ai_analysis={aiAnalysis}/>
+      <SimulationChart
+        projectionResults={projectionResults}
+        simulationType={simulationType} 
+      />
+      <SimulationInsight aiAnalysis={aiAnalysis}/>
       <SimulationResultTable ResultsByType={ResultsByType} />
     </div>
   );
