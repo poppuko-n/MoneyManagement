@@ -8,18 +8,16 @@ import CompanyApi from './lib/CompanyApi.js';
 
 const SimulationResult = ({projectionResults}) => {
   const [aiAnalysis, setAiAnalysis] = useState(null);
-  const [selectedSimulationType, setSelectedSimulationType] = useState("one_time");
-  const DISPLAY_PERIOD = "12_month";
+  const [simulationType, setSimulationType] = useState("one_time");
 
-  const simulationResultsByTypeAndPeriod = projectionResults.map( result => {
-    const selectedPeriodResults = result[selectedSimulationType].find(sim => sim.period === DISPLAY_PERIOD);
+  const ResultsByType = projectionResults.map( r => {
+    const finalResult = r[simulationType].at(-1);
     return {
-      code: result.code,
-      name: result.name,
-      current_price: result.current_price,
-      quantity: result.quantity,
-      value: selectedPeriodResults.value,
-      deposit: selectedPeriodResults.deposit
+      name: r.name,
+      current_price: r.current_price,
+      quantity: r.quantity,
+      deposit: finalResult.deposit,
+      value: finalResult.value
     };
   });
 
@@ -35,7 +33,7 @@ const SimulationResult = ({projectionResults}) => {
     const period = `${i + 1}_month`;
     const [deposit, value] = projectionResults.reduce(
       ([d, v], r) => {
-        const sim = r[selectedSimulationType].find(s => s.period === period);
+        const sim = r[simulationType].find(s => s.period === period);
         return [d + sim.deposit, v + +sim.value];
       },
       [0, 0]
@@ -49,16 +47,16 @@ const SimulationResult = ({projectionResults}) => {
   });
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="p-10">
       <p className="text-center text-2xl font-bold mb-4">シミュレーション結果</p>
       <SimulationTypeSelector
-        selectedSimulationType={selectedSimulationType}
-        setSelectedSimulationType={setSelectedSimulationType}
+        simulationType={simulationType}
+        setSimulationType={setSimulationType}
       />
-      <SimulationSummary simulationResultsByTypeAndPeriod={simulationResultsByTypeAndPeriod} />
+      <SimulationSummary ResultsByType={ResultsByType} />
       <SimulationChart data={getChartData()} />
       <SimulationInsight ai_analysis={aiAnalysis}/>
-      <SimulationResultTable simulationResultsByTypeAndPeriod={simulationResultsByTypeAndPeriod} />
+      <SimulationResultTable ResultsByType={ResultsByType} />
     </div>
   );
 };

@@ -1,4 +1,4 @@
-const SimulationTypeSelector = ({ selectedSimulationType, setSelectedSimulationType }) => {
+const SimulationTypeSelector = ({ simulationType, setSimulationType }) => {
   const TYPES = [
     { value: "one_time", label: "一括" },
     { value: "accumulated", label: "積立" },
@@ -11,9 +11,9 @@ const SimulationTypeSelector = ({ selectedSimulationType, setSelectedSimulationT
         {TYPES.map(({ value, label }) => (
           <button
             key={value}
-            onClick={() => setSelectedSimulationType(value)}
+            onClick={() => setSimulationType(value)}
             className={`border flex-1 p-3 text-lg font-bold  ${
-              selectedSimulationType === value
+              simulationType === value
                 ? "bg-green-300 text-green-800"
                 : "bg-white text-black hover:bg-green-100"
             }`}

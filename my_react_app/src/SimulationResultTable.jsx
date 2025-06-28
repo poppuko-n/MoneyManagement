@@ -1,4 +1,4 @@
-const SimulationResultTable = ({ simulationResultsByTypeAndPeriod }) => {
+const SimulationResultTable = ({ ResultsByType }) => {
   const formatAmount = (amount) => amount.toLocaleString();
 
   return (
@@ -14,7 +14,7 @@ const SimulationResultTable = ({ simulationResultsByTypeAndPeriod }) => {
         </tr>
       </thead>
       <tbody>
-        {simulationResultsByTypeAndPeriod.map((item) => {
+        {ResultsByType.map((item) => {
           const profitLoss = item.value - item.deposit;
           const changeRate = ((profitLoss / item.deposit) * 100).toFixed(2);
           const profitLossClass =
