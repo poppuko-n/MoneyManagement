@@ -6,7 +6,7 @@ import SimulationResultTable from './SimulationResultTable';
 import SimulationInsight from './SimulationInsight';
 import CompanyApi from './lib/CompanyApi.js';
 
-const SimulationResult = ({projectionResults, onBack}) => {
+const SimulationResult = ({projectionResults}) => {
   const [aiAnalysis, setAiAnalysis] = useState(null);
   const [selectedSimulationType, setSelectedSimulationType] = useState("one_time");
   const DISPLAY_PERIOD = "12_month";
@@ -50,19 +50,14 @@ const SimulationResult = ({projectionResults, onBack}) => {
 
   return (
     <div className="container mx-auto p-4">
-
+      <p className="text-center text-2xl font-bold mb-4">シミュレーション結果</p>
       <SimulationTypeSelector
         selectedSimulationType={selectedSimulationType}
         setSelectedSimulationType={setSelectedSimulationType}
-        onBack={onBack}
       />
-      
       <SimulationSummary simulationResultsByTypeAndPeriod={simulationResultsByTypeAndPeriod} />
-
       <SimulationChart data={getChartData()} />
-
       <SimulationInsight ai_analysis={aiAnalysis}/>
-
       <SimulationResultTable simulationResultsByTypeAndPeriod={simulationResultsByTypeAndPeriod} />
     </div>
   );

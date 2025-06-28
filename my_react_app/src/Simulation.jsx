@@ -61,10 +61,7 @@ const Simulation = () => {
 
   if (isShowingSimulationResult ){
     return(
-      <SimulationResult
-        projectionResults={projectionResults}
-        onBack={()=>setIsShowingSimulationResult(false)}
-      />
+      <SimulationResult projectionResults={projectionResults}/>
     );
   }
 
