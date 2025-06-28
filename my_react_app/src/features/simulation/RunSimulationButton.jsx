@@ -1,6 +1,6 @@
 import playImage from '../../assets/play.svg'
 
-const SimulationButton = ({ totalAmount, sendQuantitiesToServer }) => {
+const RunSimulationButton = ({ totalAmount, sendQuantitiesToServer }) => {
 
   return (
     <button
@@ -18,4 +18,4 @@ const SimulationButton = ({ totalAmount, sendQuantitiesToServer }) => {
   );
 };
 
-export default SimulationButton;
+export default RunSimulationButton;

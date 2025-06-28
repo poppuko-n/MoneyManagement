@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
 import { motion } from "framer-motion";
 import ExpenseApi from '../../lib/ExpenseApi';
-import ExpenseHeader from './ExpenseHeader';
-import ExpensePieChart from "./ExpensePieChart";
-import ExpenseList from "./ExpenseList";
-import ExpenseNew from './ExpenseNew';
-import ExpenseEdit from './ExpenseEdit';
+import ExpensePageHeader from './ExpensePageHeader';
+import ExpenseDistributionChart from "./ExpenseDistributionChart";
+import ExpenseListView from "./ExpenseListView";
+import ExpenseCreateForm from './ExpenseCreateForm';
+import ExpenseEditForm from './ExpenseEditForm';
 import Modal from '../../components/Modal';
 
-const Expense = () => {
+const ExpenseManagementPage = () => {
   const [isNewExpenseModal, setIsNewExpenseModal] = useState(false);
   const [displayMode, setDisplayMode] = useState('chart');
   const [expenseId, setExpenseId] = useState(null);
@@ -55,7 +55,7 @@ const Expense = () => {
 
   return (
     <motion.div {...motionProps}>
-      <ExpenseHeader
+      <ExpensePageHeader
         expenses={expenses}
         year={year}
         month={month}
@@ -67,7 +67,7 @@ const Expense = () => {
 
       {displayMode === 'chart' && (
         <motion.div {...motionProps}>
-          <ExpensePieChart
+          <ExpenseDistributionChart
             expenses={expenses}
             categories={categories}
             onBack={() => setDisplayMode('list')}
@@ -77,7 +77,7 @@ const Expense = () => {
 
       {displayMode === 'list' && (
         <motion.div {...motionProps}>
-          <ExpenseList
+          <ExpenseListView
             expenses={expenses}
             setExpenseId={setExpenseId}
             onBack={() => {
@@ -90,7 +90,7 @@ const Expense = () => {
 
       {isNewExpenseModal && (
         <Modal>
-          <ExpenseNew
+          <ExpenseCreateForm
             categories={categories}
             onBack={() => {
               setIsNewExpenseModal(false);
@@ -102,7 +102,7 @@ const Expense = () => {
 
       {expenseId && (
         <Modal>
-          <ExpenseEdit
+          <ExpenseEditForm
             categories={categories}
             expenseId={expenseId}
             onBack={() => {
@@ -116,4 +116,4 @@ const Expense = () => {
   );
 };
 
-export default Expense;
+export default ExpenseManagementPage;

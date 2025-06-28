@@ -10,7 +10,7 @@ import checkbox from "../assets/checkbox.png";
 import { motion } from "framer-motion";
 import { useAuth } from "../contexts/Authcontext.jsx"
 
-const Home = ({setIsSignUp}) => {
+const LandingPage = ({setIsSignUp}) => {
   const {isLoggedIn} = useAuth();
 
   const steps = [
@@ -191,4 +191,4 @@ const Home = ({setIsSignUp}) => {
   );
 }
 
-export default Home;
+export default LandingPage;

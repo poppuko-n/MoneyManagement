@@ -1,4 +1,4 @@
-const SimulationTypeSelector = ({ simulationType, setSimulationType }) => {
+const SimulationModeSelector = ({ simulationType, setSimulationType }) => {
   const TYPES = [
     { value: "one_time", label: "一括" },
     { value: "accumulated", label: "積立" },
@@ -26,4 +26,4 @@ const SimulationTypeSelector = ({ simulationType, setSimulationType }) => {
   );
 };
 
-export default SimulationTypeSelector;
+export default SimulationModeSelector;

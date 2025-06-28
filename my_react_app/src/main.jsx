@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useAuth } from "./contexts/Authcontext.jsx"
-import Header from "./layouts/Header.jsx";
-import Navigation from "./layouts/Navigation.jsx";
-import SignIn from "./auth/SignIn.jsx";
-import SignUp from "./auth/SignUp.jsx";
+import AppHeader from "./layouts/AppHeader.jsx";
+import MainNavigation from "./layouts/MainNavigation.jsx";
+import LoginForm from "./auth/LoginForm.jsx";
+import RegisterForm from "./auth/RegisterForm.jsx";
 import Modal from "./components/Modal.jsx";
-import Home from "./pages/Home";
+import LandingPage from "./pages/LandingPage";
 
 const AppContainer = () => {
   const { isLoggedIn } = useAuth();
@@ -14,23 +14,23 @@ const AppContainer = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <Header
+      <AppHeader
         setIsSignIn={setIsSignIn}
         setIsSignUp={setIsSignUp}
       />
 
       {isSignIn && (
         <Modal>
-          <SignIn onBack = { () => setIsSignIn(false)}/>
+          <LoginForm onBack = { () => setIsSignIn(false)}/>
         </Modal>
       )}
       {isSignUp && (
         <Modal>
-          <SignUp onBack = { ()=> setIsSignUp(false)}/>
+          <RegisterForm onBack = { ()=> setIsSignUp(false)}/>
         </Modal>
       )}
       {isLoggedIn ? (
-        <Navigation />
+        <MainNavigation />
       ) : (
         <>
           <div className="bg-green-100 text-green-900 text-center p-4 mb-4 shadow">
@@ -50,7 +50,7 @@ const AppContainer = () => {
             </button>
             して始めましょう。
           </div>
-          <Home setIsSignUp={setIsSignUp} />
+          <LandingPage setIsSignUp={setIsSignUp} />
         </>
       )}
     </div>

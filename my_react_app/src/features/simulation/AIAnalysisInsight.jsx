@@ -1,7 +1,7 @@
 import ReactMarkdown from 'react-markdown';
 import { motion } from 'framer-motion';
 
-const SimulationInsight = ({ aiAnalysis }) => {
+const AIAnalysisInsight = ({ aiAnalysis }) => {
   return (
     <div className="bg-white rounded shadow p-6 mb-6">
       <h2 className="text-xl font-semibold mb-4 border-b pb-2">AIによる投資診断</h2>
@@ -27,4 +27,4 @@ const SimulationInsight = ({ aiAnalysis }) => {
   );
 };
 
-export default SimulationInsight;
+export default AIAnalysisInsight;

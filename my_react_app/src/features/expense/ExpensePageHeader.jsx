@@ -1,6 +1,6 @@
 import addImage from "../../assets/add.svg";
 
-const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYearMonth, onCreateNew}) => {
+const ExpensePageHeader = ({expenses, year, month, setYear, setMonth, initializeYearMonth, onCreateNew}) => {
   const incomeTotal = expenses
     .filter((e) => e.transaction_type === "収入")
     .reduce((sum, e) => sum + e.amount, 0);
@@ -80,4 +80,4 @@ const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYear
   );
 };
 
-export default ExpenseHeader;
+export default ExpensePageHeader;

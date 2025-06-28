@@ -1,6 +1,6 @@
-import { LineChart, Line, XAxis, YAxis, Legend, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
-const SimulationChart = ({ projectionResults, simulationType }) => {
+const ProfitLossChart = ({ projectionResults, simulationType }) => {
   const data = Array.from({ length: 12 }, (_, i) => {
       const period = `${i + 1}_month`;
       const [deposit, value] = projectionResults.reduce(
@@ -34,4 +34,4 @@ const SimulationChart = ({ projectionResults, simulationType }) => {
   );
 };
 
-export default SimulationChart;
+export default ProfitLossChart;

@@ -1,8 +1,8 @@
 import React from 'react';
-import { youtubeVideos } from '../movie/youtubeVideos';
+import { youtubeVideos } from '../../movie/youtubeVideos';
 import { motion } from 'framer-motion'
 
-function Learning() {
+function LearningContentPage() {
   return (
     <div className="max-w-6xl mx-auto p-6">
       <h1 className="text-2xl border-b border-black pb-2 inline-block mb-6">
@@ -39,4 +39,4 @@ function Learning() {
   );
 }
 
-export default Learning;
+export default LearningContentPage;

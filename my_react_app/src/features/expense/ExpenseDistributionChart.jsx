@@ -1,7 +1,7 @@
 import { PieChart, Pie, Cell, Legend } from "recharts";
 import arrowImage from "../../assets/arrow.svg";
 
-const ExpensePieChart = ({expenses, categories, onBack})=> {
+const ExpenseDistributionChart = ({expenses, categories, onBack})=> {
 
   const COLORS = ["#FF6B6B", "#3B82F6", "#F4A261", "#2EC4B6", "#9B5DE5"];
   const expenseCategories = categories.filter(c => c.transaction_type === "支出");
@@ -75,4 +75,4 @@ const ExpensePieChart = ({expenses, categories, onBack})=> {
   )
 }
 
-export default ExpensePieChart;
+export default ExpenseDistributionChart;

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
-import SimulationResult from "./SimulationResult.jsx"
-import SimulationButton from "./SimulationButton.jsx";
-import FilterToggleBar from "./FilterToggleBar.jsx";
-import SelectCompanyTable from "./SelectCompanyTable.jsx";
-import TotalAmountBox from "./TotalAmountBox.jsx";
+import SimulationResultsPage from "./SimulationResultsPage.jsx"
+import RunSimulationButton from "./RunSimulationButton.jsx";
+import CompanyFilterToggle from "./CompanyFilterToggle.jsx";
+import CompanySelectionTable from "./CompanySelectionTable.jsx";
+import InvestmentAmountDisplay from "./InvestmentAmountDisplay.jsx";
 import Modal from "../../components/Modal.jsx";
 import CompanyApi from '../../lib/CompanyApi.js'
 import { motion } from "framer-motion";
 
-const Simulation = () => {
+const InvestmentSimulationPage = () => {
   const [companies, setCompanies] = useState([]);
   const [quantities, setQuantities] = useState({});
   const [projectionResults, setProjectionResults] = useState(null);
@@ -61,7 +61,7 @@ const Simulation = () => {
 
   if (isSimulationResultVisible ){
     return(
-      <SimulationResult projectionResults={projectionResults}/>
+      <SimulationResultsPage projectionResults={projectionResults}/>
     );
   }
 
@@ -84,20 +84,20 @@ const Simulation = () => {
         </Modal>
       )}
 
-      <TotalAmountBox totalAmount={totalAmount}></TotalAmountBox>
+      <InvestmentAmountDisplay totalAmount={totalAmount}></InvestmentAmountDisplay>
 
       <div className="flex items-center justify-between mb-4"> 
-        <FilterToggleBar 
+        <CompanyFilterToggle 
           isFilteringSelectedCompanies={isFilteringSelectedCompanies}
           toggleFiltered={()=>setIsFilteringSelectedCompanies(!isFilteringSelectedCompanies)}
         />
-        <SimulationButton
+        <RunSimulationButton
           totalAmount= {totalAmount}
           sendQuantitiesToServer={sendQuantitiesToServer}
         />
       </div>
 
-      <SelectCompanyTable 
+      <CompanySelectionTable 
         displayedCompanies={displayedCompanies}
         quantities={quantities}
         setQuantities={setQuantities}
@@ -106,4 +106,4 @@ const Simulation = () => {
   );
 };
 
-export default Simulation;
+export default InvestmentSimulationPage;

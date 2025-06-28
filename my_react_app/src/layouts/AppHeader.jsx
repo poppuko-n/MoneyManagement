@@ -1,7 +1,7 @@
 import logoImage from "../assets/logo.png";
 import { useAuth } from "../contexts/Authcontext.jsx"
 
-const Header = ({ setIsSignIn, setIsSignUp }) => {
+const AppHeader = ({ setIsSignIn, setIsSignUp }) => {
 
   const { logout, isLoggedIn } = useAuth();
   
@@ -44,4 +44,4 @@ const Header = ({ setIsSignIn, setIsSignUp }) => {
   );
 };
 
-export default Header;
+export default AppHeader;

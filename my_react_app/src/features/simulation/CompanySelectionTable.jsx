@@ -1,7 +1,7 @@
 import addImage from '../../assets/add_circle.svg'
 import subtractImage from '../../assets/subtract_circle.svg'
 
-const SelectCompanyTable = ({ displayedCompanies, quantities, setQuantities }) => {
+const CompanySelectionTable = ({ displayedCompanies, quantities, setQuantities }) => {
   const handleQuantityChange = (code, change) => 
   setQuantities(p => ({...p, [code]: Math.max(p[code] + change, 0)}));
 
@@ -76,4 +76,4 @@ const SelectCompanyTable = ({ displayedCompanies, quantities, setQuantities }) =
   );
 };
 
-export default SelectCompanyTable;
+export default CompanySelectionTable;

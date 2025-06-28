@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import SimulationTypeSelector from './SimulationTypeSelector';
-import SimulationSummary from './SimulationSummary';
-import SimulationChart from './SimulationChart';
-import SimulationResultTable from './SimulationResultTable';
-import SimulationInsight from './SimulationInsight';
+import SimulationModeSelector from './SimulationModeSelector';
+import ResultsSummary from './ResultsSummary';
+import ProfitLossChart from './ProfitLossChart';
+import ResultsDataTable from './ResultsDataTable';
+import AIAnalysisInsight from './AIAnalysisInsight';
 import CompanyApi from '../../lib/CompanyApi.js';
 
-const SimulationResult = ({projectionResults}) => {
+const SimulationResultsPage = ({projectionResults}) => {
   const [aiAnalysis, setAiAnalysis] = useState(null);
   const [simulationType, setSimulationType] = useState("one_time");
 
@@ -24,19 +24,19 @@ const SimulationResult = ({projectionResults}) => {
   return (
     <div className="p-10">
       <p className="text-center text-2xl font-bold mb-4">シミュレーション結果</p>
-      <SimulationTypeSelector
+      <SimulationModeSelector
         simulationType={simulationType}
         setSimulationType={setSimulationType}
       />
-      <SimulationSummary resultsByType={resultsByType} />
-      <SimulationChart
+      <ResultsSummary resultsByType={resultsByType} />
+      <ProfitLossChart
         projectionResults={projectionResults}
         simulationType={simulationType} 
       />
-      <SimulationInsight aiAnalysis={aiAnalysis}/>
-      <SimulationResultTable resultsByType={resultsByType} />
+      <AIAnalysisInsight aiAnalysis={aiAnalysis}/>
+      <ResultsDataTable resultsByType={resultsByType} />
     </div>
   );
 };
 
-export default SimulationResult;
+export default SimulationResultsPage;
