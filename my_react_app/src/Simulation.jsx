@@ -1,8 +1,9 @@
 import { useState, useEffect } from "react";
 import SimulationResult from "./SimulationResult.jsx"
-import SelectCompanyHeader from "./SelectCompanyHeader.jsx";
+import SimulationButton from "./SimulationButton.jsx";
 import FilterToggleBar from "./FilterToggleBar.jsx";
 import SelectCompanyTable from "./SelectCompanyTable.jsx";
+import TotalAmountBox from "./TotalAmountBox.jsx";
 import Modal from "./Modal.jsx";
 import CompanyApi from './lib/CompanyApi.js'
 import { motion } from "framer-motion";
@@ -111,15 +112,18 @@ const Simulation = () => {
         </Modal>
       )}
 
-      <SelectCompanyHeader
-        totalAmount = {calculateTotalAmount}
-        onSubmit = {sendQuantitiesToServer}
-      />
+      <TotalAmountBox totalAmount={calculateTotalAmount}></TotalAmountBox>
 
-      <FilterToggleBar 
-        isFilteringSelectedCompanies={isFilteringSelectedCompanies}
-        toggleFiltered={()=>setIsFilteringSelectedCompanies(!isFilteringSelectedCompanies)}
-      />
+      <div className="flex items-center justify-between mb-4"> 
+        <FilterToggleBar 
+          isFilteringSelectedCompanies={isFilteringSelectedCompanies}
+          toggleFiltered={()=>setIsFilteringSelectedCompanies(!isFilteringSelectedCompanies)}
+        />
+        <SimulationButton
+          totalAmount= {calculateTotalAmount}
+          sendQuantitiesToServer={sendQuantitiesToServer}
+        />
+      </div>
 
       <SelectCompanyTable 
         displayedCompanies = {displayedCompanies}
