@@ -34,37 +34,23 @@ const Simulation = () => {
     }
   };
 
-  // NOTE: 投資予定数量(quantities)を増減する関数。0未満にはならないようにする
-  const handleQuantityChange = (code, change) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [code]: Math.max(prevQuantities[code] + change, 0),
-    }));
-  };
+  const handleQuantityChange = (code, change) => 
+    setQuantities(p => ({...p, [code]: Math.max(p[code] + change, 0),}));
 
-  const resetQuantity = (code) => {
-    setQuantities((prevQuantities) => ({
-      ...prevQuantities,
-      [code]: 0,
-    }));
-  };
+  const resetQuantity = code => 
+    setQuantities((c) => ({...c, [code]: 0,}));
 
-  const calculateTotalAmount = () =>
-    companies.reduce(
-      (total, company) => total + company.latest_price * (quantities[company.code] || 0), 0
+  const totalAmount = companies.reduce(
+      (sum, c) => sum + c.latest_price * (quantities[c.code] || 0), 0
     );
 
   // NOTE: API処理中は isLoading を true にしてローディングUIを表示、完了後に false に戻す。
   const sendQuantitiesToServer = async() => {
     const selectedCompanies = companies
-      .filter((company) => quantities[company.code] > 0)
-      .map((company) => ({
-        code: company.code,
-        quantity: quantities[company.code],
-      }));
+      .filter(c => quantities[c.code] > 0)
+      .map(c => ({ code: c.code, quantity: quantities[c.code] }));
 
     setIsLoading(true);
-
     try {
       const results = await CompanyApi.createProjections({ data: selectedCompanies });
       setProjectionsResults(results);
@@ -112,7 +98,7 @@ const Simulation = () => {
         </Modal>
       )}
 
-      <TotalAmountBox totalAmount={calculateTotalAmount}></TotalAmountBox>
+      <TotalAmountBox totalAmount={totalAmount}></TotalAmountBox>
 
       <div className="flex items-center justify-between mb-4"> 
         <FilterToggleBar 
@@ -120,7 +106,7 @@ const Simulation = () => {
           toggleFiltered={()=>setIsFilteringSelectedCompanies(!isFilteringSelectedCompanies)}
         />
         <SimulationButton
-          totalAmount= {calculateTotalAmount}
+          totalAmount= {totalAmount}
           sendQuantitiesToServer={sendQuantitiesToServer}
         />
       </div>
