@@ -3,7 +3,7 @@ import deleteImage from "./assets/delete.svg";
 import arrowImage from "./assets/arrow.svg";
 import ExpenseApi from './lib/ExpenseApi';
 
-const ExpenseList =  ({ expenses, setCurrentExpenseId, onBack }) => {
+const ExpenseList =  ({ expenses, setExpenseId, onBack }) => {
   const handleDelete = async(expense_id) => {
     if (!window.confirm("本当に削除しますか")) return;
 
@@ -58,7 +58,7 @@ const ExpenseList =  ({ expenses, setCurrentExpenseId, onBack }) => {
                 {expense.amount.toLocaleString()}
               </td>
               <td className="border px-2 py-1 text-center">
-                <button onClick={() => setCurrentExpenseId(expense.id)}>
+                <button onClick={() => setExpenseId(expense.id)}>
                   <img
                     src={editImage}
                     alt="edit"
