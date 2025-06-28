@@ -80,7 +80,10 @@ const Expense = () => {
           <ExpenseList
             expenses={expenses}
             setExpenseId={setExpenseId}
-            onBack={() => setDisplayMode('chart')}
+            onBack={() => {
+              setDisplayMode('chart')
+              fetchExpenses()}
+            }
           />
         </motion.div>
       )}

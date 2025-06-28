@@ -1,7 +1,7 @@
 import logoImage from "./assets/logo.png";
 import { useAuth } from "./contexts/Authcontext.jsx"
 
-const Header = ({ setIsSignIN, setIsSignUp }) => {
+const Header = ({ setIsSignIn, setIsSignUp }) => {
 
   const { logout, isLoggedIn } = useAuth();
   
@@ -27,7 +27,7 @@ const Header = ({ setIsSignIN, setIsSignUp }) => {
           <div className="flex items-center">
             <button
               className="bg-green-500 text-white px-4 py-2 mr-4 rounded hover:bg-green-600"
-              onClick={() => setIsSignIN(true)}
+              onClick={() => setIsSignIn(true)}
             >
               ログイン
             </button>

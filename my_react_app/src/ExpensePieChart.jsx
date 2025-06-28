@@ -48,24 +48,24 @@ const ExpensePieChart = ({expenses, categories, onBack})=> {
           <table className="w-full">
             <thead>
               <tr className="font-bold bg-gray-100">
-                <td className="border px-4 py-2 text-left">カテゴリ</td>
-                <td className="border px-4 py-2 text-right">金額</td>
+                <td className="border p-2 text-left">カテゴリ</td>
+                <td className="border p-2 text-right">金額</td>
               </tr>
             </thead>
             <tbody>
               {expenseDataByCategory.map((data, index) => (
                 <tr key={index}>
-                  <td className="border font-bold px-4 py-2" style={{color: COLORS[index]}}>
+                  <td className="border font-bold p-2" style={{color: COLORS[index]}}>
                     {data.name}
                   </td>
-                  <td className="border px-4 py-2 text-right">{data.value.toLocaleString()}</td>
+                  <td className="border p-2 text-right">{data.value.toLocaleString()}</td>
                 </tr>
               ))}
             </tbody>
             <tfoot>
               <tr className="font-bold">
-                <td className="border px-4 py-2">合計</td>
-                <td className="border px-4 py-2 text-right">{totalExpense.toLocaleString()} 円</td>
+                <td className="border p-2">合計</td>
+                <td className="border p-2 text-right">{totalExpense.toLocaleString()} 円</td>
               </tr>
             </tfoot>
           </table>

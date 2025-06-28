@@ -32,7 +32,7 @@ const ExpenseNew = ({ onBack, categories }) => {
         <div>
           <label>種類</label>
           <select
-            className="w-full px-4 py-2 border shadow text-sm"
+            className="w-full border p-2"
             value={newExpense.transaction_type}
             onChange={e => setTransactionType(e.target.value)}
           >
@@ -45,7 +45,7 @@ const ExpenseNew = ({ onBack, categories }) => {
         <div>
           <label>カテゴリ</label>
           <select
-            className="w-full px-4 py-2 border shadow text-sm"
+            className="w-full border p-2"
             value={newExpense.category_id}
             onChange={(e) => setNewExpense({ ...newExpense, category_id: e.target.value })}
           >
@@ -60,7 +60,7 @@ const ExpenseNew = ({ onBack, categories }) => {
           <label>日付</label>
           <input
             type="date"
-            className="w-full px-4 py-2 border shadow text-sm"
+            className="w-full border p-2"
             value={newExpense.date}
             onChange={(e) => setNewExpense({ ...newExpense, date: e.target.value })}
           />
@@ -70,7 +70,7 @@ const ExpenseNew = ({ onBack, categories }) => {
           <label>内容</label>
           <input
             type="text"
-            className="w-full px-4 py-2 border shadow text-sm"
+            className="w-full border p-2"
             placeholder="内容をご入力ください"
             value={newExpense.item}
             onChange={(e) => setNewExpense({ ...newExpense, item: e.target.value })}
@@ -81,7 +81,7 @@ const ExpenseNew = ({ onBack, categories }) => {
           <label>金額</label>
           <input
             type="number"
-            className="w-full px-4 py-2 border shadow text-sm"
+            className="w-full border p-2"
             value={newExpense.amount}
             onChange={(e) => setNewExpense({ ...newExpense, amount: e.target.value })}
           />

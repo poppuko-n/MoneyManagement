@@ -1,6 +1,6 @@
-const SimulationSummary = ({ ResultsByType }) => {
-  const investment = ResultsByType.reduce((sum, d) => sum + d.deposit, 0);
-  const evaluation = ResultsByType.reduce((sum, d) => sum + d.value, 0);
+const SimulationSummary = ({ resultsByType }) => {
+  const investment = resultsByType.reduce((sum, d) => sum + d.deposit, 0);
+  const evaluation = resultsByType.reduce((sum, d) => sum + d.value, 0);
   const profitLoss = evaluation - investment;
   const changeRate = (profitLoss / investment * 100).toFixed(2);
   const formatAmount = (amount) => amount.toLocaleString();

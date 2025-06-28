@@ -12,7 +12,7 @@ const SimulationTypeSelector = ({ simulationType, setSimulationType }) => {
           <button
             key={value}
             onClick={() => setSimulationType(value)}
-            className={`border flex-1 p-3 text-lg font-bold  ${
+            className={`border flex-1 p-2 text-lg font-bold  ${
               simulationType === value
                 ? "bg-green-300 text-green-800"
                 : "bg-white text-black hover:bg-green-100"

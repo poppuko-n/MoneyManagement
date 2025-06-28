@@ -15,7 +15,7 @@ const AppContainer = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header
-        setIsSignIN={setIsSignIn}
+        setIsSignIn={setIsSignIn}
         setIsSignUp={setIsSignUp}
       />
 

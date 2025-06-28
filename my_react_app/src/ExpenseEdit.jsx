@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import ExpenseApi from './lib/ExpenseApi';
 
 const ExpenseEdit = ({ onBack, expenseId, categories }) => {
-  const [tracsactionType, setTracsactionType] = useState('')
+  const [transactionType, setTransactionType] = useState('')
   const [editExpense, setEditExpense] = useState({
     category_id: '',
     date: '',
@@ -21,7 +21,7 @@ const ExpenseEdit = ({ onBack, expenseId, categories }) => {
     try{
       const data = await ExpenseApi.showExpenseLog(expenseId)
       setEditExpense(data)
-      setTracsactionType(data.transaction_type)
+      setTransactionType(data.transaction_type)
     } catch(error) {
       alert(error.respons?.data.errors.join(`/n`) || "家計簿データの取得に失敗しました。")
     }
@@ -45,9 +45,9 @@ const ExpenseEdit = ({ onBack, expenseId, categories }) => {
         <div>
           <label>種類</label>
           <select
-            className="w-full px-4 py-2 border shadow text-sm"
+            className="w-full border p-2"
             value={editExpense.transaction_type}
-            onChange={(e) => setTracsactionType(e.target.value)}
+            onChange={(e) => setTransactionType(e.target.value)}
           >
             <option value="">選択してください</option>
             <option value="支出">支出</option>
@@ -58,12 +58,12 @@ const ExpenseEdit = ({ onBack, expenseId, categories }) => {
         <div>
           <label>カテゴリ</label>
           <select
-            className="w-full px-4 py-2 border shadow text-sm"
+            className="w-full border p-2"
             value={editExpense.category_id}
             onChange={(e) => setEditExpense({ ...editExpense, category_id: e.target.value })}
           >
             <option value="">選択してください</option>
-            {filterCategoriesByType(tracsactionType).map((c) => (
+            {filterCategoriesByType(transactionType).map((c) => (
               <option key={c.id} value={c.id}>{c.name}</option>
             ))}
           </select>
@@ -73,7 +73,7 @@ const ExpenseEdit = ({ onBack, expenseId, categories }) => {
           <label>日付</label>
           <input
             type="date"
-            className="w-full px-4 py-2 border shadow text-sm"
+            className="w-full border p-2"
             value={editExpense.date}
             onChange={(e) => setEditExpense({ ...editExpense, date: e.target.value })}
           />
@@ -83,7 +83,7 @@ const ExpenseEdit = ({ onBack, expenseId, categories }) => {
           <label>内容</label>
           <input
             type="text"
-            className="w-full px-4 py-2 border shadow text-sm"
+            className="w-full border p-2"
             placeholder="内容をご入力ください"
             value={editExpense.item}
             onChange={(e) => setEditExpense({ ...editExpense, item: e.target.value })}
@@ -94,7 +94,7 @@ const ExpenseEdit = ({ onBack, expenseId, categories }) => {
           <label>金額</label>
           <input
             type="number"
-            className="w-full px-4 py-2 border shadow text-sm"
+            className="w-full border p-2"
             value={editExpense.amount}
             onChange={(e) => setEditExpense({ ...editExpense, amount: e.target.value })}
           />
