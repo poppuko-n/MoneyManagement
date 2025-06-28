@@ -1,4 +1,4 @@
-import addImage from "./assets/add.svg";
+import addImage from "../../assets/add.svg";
 
 const ExpenseHeader = ({expenses, year, month, setYear, setMonth, initializeYearMonth, onCreateNew}) => {
   const incomeTotal = expenses

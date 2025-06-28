@@ -1,14 +1,14 @@
-import homeImage from "./assets/home.png";
-import step1 from "./assets/step1.png";
-import step2 from "./assets/step2.png";
-import step3 from "./assets/step3.png";
-import service1 from "./assets/service1.png";
-import service2 from "./assets/service2.png";
-import service3 from "./assets/service3.png";
-import service4 from "./assets/service4.png";
-import checkbox from "./assets/checkbox.png";
+import homeImage from "../assets/home.png";
+import step1 from "../assets/step1.png";
+import step2 from "../assets/step2.png";
+import step3 from "../assets/step3.png";
+import service1 from "../assets/service1.png";
+import service2 from "../assets/service2.png";
+import service3 from "../assets/service3.png";
+import service4 from "../assets/service4.png";
+import checkbox from "../assets/checkbox.png";
 import { motion } from "framer-motion";
-import { useAuth } from "./contexts/Authcontext.jsx"
+import { useAuth } from "../contexts/Authcontext.jsx"
 
 const Home = ({setIsSignUp}) => {
   const {isLoggedIn} = useAuth();

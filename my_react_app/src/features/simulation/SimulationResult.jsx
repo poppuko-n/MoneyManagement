@@ -4,7 +4,7 @@ import SimulationSummary from './SimulationSummary';
 import SimulationChart from './SimulationChart';
 import SimulationResultTable from './SimulationResultTable';
 import SimulationInsight from './SimulationInsight';
-import CompanyApi from './lib/CompanyApi.js';
+import CompanyApi from '../../lib/CompanyApi.js';
 
 const SimulationResult = ({projectionResults}) => {
   const [aiAnalysis, setAiAnalysis] = useState(null);

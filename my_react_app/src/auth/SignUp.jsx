@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useAuth } from "./contexts/Authcontext.jsx"
+import { useAuth } from "../contexts/Authcontext.jsx"
 
 const SignUp = ({ onBack }) => {
   const [newUser, setNewUser] = useState({

@@ -1,5 +1,5 @@
-import toggleOffImage from './assets/toggle_off.svg'
-import toggleOnImage from './assets/toggle_on.svg'
+import toggleOffImage from '../../assets/toggle_off.svg'
+import toggleOnImage from '../../assets/toggle_on.svg'
 
 const FilterToggleBar = ({ isFilteringSelectedCompanies, toggleFiltered }) => {
   return (

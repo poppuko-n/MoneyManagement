@@ -4,8 +4,8 @@ import SimulationButton from "./SimulationButton.jsx";
 import FilterToggleBar from "./FilterToggleBar.jsx";
 import SelectCompanyTable from "./SelectCompanyTable.jsx";
 import TotalAmountBox from "./TotalAmountBox.jsx";
-import Modal from "./Modal.jsx";
-import CompanyApi from './lib/CompanyApi.js'
+import Modal from "../../components/Modal.jsx";
+import CompanyApi from '../../lib/CompanyApi.js'
 import { motion } from "framer-motion";
 
 const Simulation = () => {

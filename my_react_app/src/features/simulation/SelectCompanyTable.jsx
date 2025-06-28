@@ -1,5 +1,5 @@
-import addImage from './assets/add_circle.svg'
-import subtractImage from './assets/subtract_circle.svg'
+import addImage from '../../assets/add_circle.svg'
+import subtractImage from '../../assets/subtract_circle.svg'
 
 const SelectCompanyTable = ({ displayedCompanies, quantities, setQuantities }) => {
   const handleQuantityChange = (code, change) => 

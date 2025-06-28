@@ -1,5 +1,5 @@
 import React from 'react';
-import { youtubeVideos } from './movie/youtubeVideos';
+import { youtubeVideos } from '../movie/youtubeVideos';
 import { motion } from 'framer-motion'
 
 function Learning() {
