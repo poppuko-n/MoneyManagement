@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import SimulationResult from "./SimulationResult.jsx"
 import SelectCompanyHeader from "./SelectCompanyHeader.jsx";
-import SelectCompanyFilterBar from "./SelectCompanyFilterBar.jsx";
+import FilterToggleBar from "./FilterToggleBar.jsx";
 import SelectCompanyTable from "./SelectCompanyTable.jsx";
 import Modal from "./Modal.jsx";
 import CompanyApi from './lib/CompanyApi.js'
@@ -117,9 +117,7 @@ const Simulation = () => {
         onSubmit = {sendQuantitiesToServer}
       />
 
-      <SelectCompanyFilterBar 
-        filtername = {filtername}
-        setFilterName = {setFilterName}
+      <FilterToggleBar 
         isFilteringSelectedCompanies={isFilteringSelectedCompanies}
         toggleFiltered={()=>setIsFilteringSelectedCompanies(!isFilteringSelectedCompanies)}
       />
