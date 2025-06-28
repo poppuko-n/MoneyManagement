@@ -1,7 +1,7 @@
 import addImage from './assets/add_circle.svg'
 import subtractImage from './assets/subtract_circle.svg'
 
-const SelectCompanyTable = ({ displayedCompanies, filtername, quantities, handleQuantityChange, resetQuantity }) => {
+const SelectCompanyTable = ({ displayedCompanies, quantities, handleQuantityChange, resetQuantity }) => {
   const formatAmount = (value) => value.toLocaleString();
   
   return (
@@ -20,11 +20,6 @@ const SelectCompanyTable = ({ displayedCompanies, filtername, quantities, handle
 
     <tbody>
           {displayedCompanies
-            .filter((company) => {
-              return (
-                company.name.includes(filtername)
-              );
-            })
             .map((company) => (
               <tr key={company.code} className="text-center">
                 <td className="p-3 border-b">{company.code}</td>

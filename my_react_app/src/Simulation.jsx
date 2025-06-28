@@ -10,7 +10,6 @@ import { motion } from "framer-motion";
 const Simulation = () => {
   const [companies, setCompanies] = useState([]);
   const [quantities, setQuantities] = useState({});
-  const [filtername, setFilterName] = useState("");
   const [projectionResults, setProjectionsResults] = useState(null);
   const [isFilteringSelectedCompanies, setIsFilteringSelectedCompanies] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -124,7 +123,6 @@ const Simulation = () => {
 
       <SelectCompanyTable 
         displayedCompanies = {displayedCompanies}
-        filtername = {filtername}
         quantities = {quantities}
         handleQuantityChange = {handleQuantityChange}
         resetQuantity = {resetQuantity}
