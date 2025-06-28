@@ -9,9 +9,9 @@ import ExpenseEdit from './ExpenseEdit';
 import Modal from './Modal';
 
 const Expense = () => {
-  const [isCreatingExpense, setIsCreatingExpense] = useState(false);
+  const [isNewExpenseModal, setIsNewExpenseModal] = useState(false);
   const [displayMode, setDisplayMode] = useState('chart');
-  const [currentExpenseId, setCurrentExpenseId] = useState(null);
+  const [expenseId, setExpenseId] = useState(null);
   const [categories, setCategories] = useState([]);
   const [expenses, setExpenses] = useState([]);
   const [year, setYear] = useState('');
@@ -62,7 +62,7 @@ const Expense = () => {
         setYear={setYear}
         setMonth={setMonth}
         initializeYearMonth={initializeYearMonth}
-        onCreateNew={() => setIsCreatingExpense(true)}
+        onCreateNew={() => setIsNewExpenseModal(true)}
       />
 
       {displayMode === 'chart' && (
@@ -79,31 +79,31 @@ const Expense = () => {
         <motion.div {...motionProps}>
           <ExpenseList
             expenses={expenses}
-            setCurrentExpenseId={setCurrentExpenseId}
+            setExpenseId={setExpenseId}
             onBack={() => setDisplayMode('chart')}
           />
         </motion.div>
       )}
 
-      {isCreatingExpense && (
+      {isNewExpenseModal && (
         <Modal>
           <ExpenseNew
             categories={categories}
             onBack={() => {
-              setIsCreatingExpense(false);
+              setIsNewExpenseModal(false);
               fetchExpenses();
             }}
           />
         </Modal>
       )}
 
-      {currentExpenseId && (
+      {expenseId && (
         <Modal>
           <ExpenseEdit
             categories={categories}
-            expenseId={currentExpenseId}
+            expenseId={expenseId}
             onBack={() => {
-              setCurrentExpenseId(null);
+              setExpenseId(null);
               fetchExpenses();
             }}
           />

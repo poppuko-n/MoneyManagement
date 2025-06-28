@@ -1,38 +1,33 @@
-const SimulationResultTable = ({ simulationResultsByTypeAndPeriod }) => {
-  const formatAmount = (amount) => amount.toLocaleString();
+const SimulationResultTable = ({ ResultsByType }) => {
+  const results = ResultsByType.map(r => ({
+    ...r,
+    profitLoss: r.value - r.deposit,
+    changeRate: (((r.value - r.deposit) / r.deposit) * 100).toFixed(2),
+    profitLossClass: r.value - r.deposit > 0 ? "text-red-500" : "text-blue-500"
+  }));
 
   return (
-    <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow">
+    <table className="w-full text-center">
       <thead className="bg-gray-200">
         <tr>
-          <th className="p-3 border-b">銘柄名</th>
-          <th className="p-3 border-b">現在価格 (円)</th>
-          <th className="p-3 border-b">保有数量</th>
-          <th className="p-3 border-b">運用額 (円)</th>
-          <th className="p-3 border-b">評価額 (円)</th>
-          <th className="p-3 border-b">損益額 (増減率 %)</th>
+          <th className="p-3">銘柄名</th>
+          <th className="p-3">運用額</th>
+          <th className="p-3">評価額</th>
+          <th className="p-3">損益額 (増減率 %)</th>
         </tr>
       </thead>
-      <tbody>
-        {simulationResultsByTypeAndPeriod.map((item) => {
-          const profitLoss = item.value - item.deposit;
-          const changeRate = ((profitLoss / item.deposit) * 100).toFixed(2);
-          const profitLossClass =
-            profitLoss > 0 ? "text-red-500" : profitLoss < 0 ? "text-blue-500" : "text-gray-500";
 
-          return (
-            <tr key={item.name} className="text-center">
-              <td className="p-3 border-b">{item.name}</td>
-              <td className="p-3 border-b">{formatAmount(item.current_price)}</td>
-              <td className="p-3 border-b">{formatAmount(item.quantity)}</td>
-              <td className="p-3 border-b">{formatAmount(item.deposit)} 円</td>
-              <td className="p-3 border-b">{formatAmount(item.value)} 円</td>
-              <td className={`p-3 border-b ${profitLossClass}`}>
-                {formatAmount(profitLoss)} 円 ({changeRate} %)
-              </td>
-            </tr>
-          );
-        })}
+      <tbody>
+        {results.map(({ name, deposit, value, profitLoss, changeRate, profitLossClass }) => (
+          <tr key={name} className="border-b">
+            <td className="p-3">{name}</td>
+            <td className="p-3">{deposit.toLocaleString()} 円</td>
+            <td className="p-3">{value.toLocaleString()} 円</td>
+            <td className={`p-3 ${profitLossClass}`}>
+              {profitLoss.toLocaleString()} 円 ({changeRate} %)
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
