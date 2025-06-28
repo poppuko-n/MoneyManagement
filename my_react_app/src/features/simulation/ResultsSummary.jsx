@@ -1,4 +1,4 @@
-const SimulationSummary = ({ resultsByType }) => {
+const ResultsSummary = ({ resultsByType }) => {
   const investment = resultsByType.reduce((sum, d) => sum + d.deposit, 0);
   const evaluation = resultsByType.reduce((sum, d) => sum + d.value, 0);
   const profitLoss = evaluation - investment;
@@ -27,4 +27,4 @@ const SimulationSummary = ({ resultsByType }) => {
   );
 };
 
-export default SimulationSummary;
+export default ResultsSummary;

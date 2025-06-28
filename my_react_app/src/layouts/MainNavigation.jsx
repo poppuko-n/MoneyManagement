@@ -1,11 +1,10 @@
 import { useState } from "react";
-import Home from "../pages/Home";
-import Expense from "../features/expense/Expense";
-import Simulation from "../features/simulation/Simulation";
-import SimulationResult from "../features/simulation/SimulationResult";
-import Learning from "../pages/Learning";
+import LandingPage from "../pages/LandingPage";
+import ExpenseManagementPage from "../features/expense/ExpenseManagementPage";
+import InvestmentSimulationPage from "../features/simulation/InvestmentSimulationPage";
+import LearningContentPage from "../features/learning/LearningContentPage";
 
-const Navigation = () => {
+const MainNavigation = () => {
   const [currentPage, setCurrentPage] = useState("home");
 
   const navItems = [
@@ -35,12 +34,12 @@ const Navigation = () => {
         </div>
       </nav>
 
-      {currentPage === "home" && <Home />}
-      {currentPage === "expense" && <Expense />}
-      {currentPage === "simulation" && <Simulation />}
-      {currentPage === "learning" && <Learning />}
+      {currentPage === "home" && <LandingPage />}
+      {currentPage === "expense" && <ExpenseManagementPage />}
+      {currentPage === "simulation" && <InvestmentSimulationPage />}
+      {currentPage === "learning" && <LearningContentPage />}
     </div>
   );
 };
 
-export default Navigation;
+export default MainNavigation;

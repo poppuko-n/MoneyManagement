@@ -1,4 +1,4 @@
-const SimulationResultTable = ({ resultsByType }) => {
+const ResultsDataTable = ({ resultsByType }) => {
   const results = resultsByType.map(r => ({
     ...r,
     profitLoss: r.value - r.deposit,
@@ -33,4 +33,4 @@ const SimulationResultTable = ({ resultsByType }) => {
   );
 };
 
-export default SimulationResultTable;
+export default ResultsDataTable;
