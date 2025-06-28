@@ -17,16 +17,15 @@ const Navigation = () => {
 
   return (
     <div>
-      {/* ナビゲーションバー */}
       <nav className="bg-green-600 py-4">
-        <div className="container mx-auto flex justify-around items-center">
+        <div className="flex justify-around items-center">
           {navItems.map(({ label, page }) => (
             <button
               key={page}
               onClick={() => setCurrentPage(page)}
-              className={`px-5 py-2 rounded-md font-semibold transition duration-200 ${
+              className={`px-5 py-2 rounded font-bold ${
                 currentPage === page
-                  ? "bg-white text-green-600 shadow-md"
+                  ? "bg-white text-green-600"
                   : "text-white hover:bg-green-500 hover:bg-opacity-30"
               }`}
             >
@@ -36,15 +35,10 @@ const Navigation = () => {
         </div>
       </nav>
 
-      {/* 各ページ表示 */}
       {currentPage === "home" && <Home />}
       {currentPage === "expense" && <Expense />}
-      {currentPage === "select" && (
-        <Simulation setCurrentPage={setCurrentPage} />
-      )}
-      {currentPage === "result" && (
-        <SimulationResult onBack={() => setCurrentPage("select")} />
-      )}
+      {currentPage === "select" && (<Simulation setCurrentPage={setCurrentPage} />)}
+      {currentPage === "result" && (<SimulationResult onBack={() => setCurrentPage("select")} />)}
       {currentPage === "learning" && <Learning />}
     </div>
   );
