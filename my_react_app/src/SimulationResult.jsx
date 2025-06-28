@@ -14,8 +14,6 @@ const SimulationResult = ({projectionResults}) => {
     const finalResult = r[simulationType].at(-1);
     return {
       name: r.name,
-      current_price: r.current_price,
-      quantity: r.quantity,
       deposit: finalResult.deposit,
       value: finalResult.value
     };
