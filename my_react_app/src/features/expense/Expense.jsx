@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { motion } from "framer-motion";
-import ExpenseApi from './lib/ExpenseApi';
+import ExpenseApi from '../../lib/ExpenseApi';
 import ExpenseHeader from './ExpenseHeader';
 import ExpensePieChart from "./ExpensePieChart";
 import ExpenseList from "./ExpenseList";
 import ExpenseNew from './ExpenseNew';
 import ExpenseEdit from './ExpenseEdit';
-import Modal from './Modal';
+import Modal from '../../components/Modal';
 
 const Expense = () => {
   const [isNewExpenseModal, setIsNewExpenseModal] = useState(false);

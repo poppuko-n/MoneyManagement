@@ -1,5 +1,5 @@
 import { PieChart, Pie, Cell, Legend } from "recharts";
-import arrowImage from "./assets/arrow.svg";
+import arrowImage from "../../assets/arrow.svg";
 
 const ExpensePieChart = ({expenses, categories, onBack})=> {
 

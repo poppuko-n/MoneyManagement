@@ -1,4 +1,4 @@
-import playImage from './assets/play.svg'
+import playImage from '../../assets/play.svg'
 
 const SimulationButton = ({ totalAmount, sendQuantitiesToServer }) => {
 

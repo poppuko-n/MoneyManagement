@@ -1,9 +1,9 @@
 import { useState } from "react";
-import Home from "./Home";
-import Expense from "./Expense";
-import Simulation from "./Simulation";
-import SimulationResult from "./SimulationResult";
-import Learning from "./Learning";
+import Home from "../pages/Home";
+import Expense from "../features/expense/Expense";
+import Simulation from "../features/simulation/Simulation";
+import SimulationResult from "../features/simulation/SimulationResult";
+import Learning from "../pages/Learning";
 
 const Navigation = () => {
   const [currentPage, setCurrentPage] = useState("home");

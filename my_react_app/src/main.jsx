@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useAuth } from "./contexts/Authcontext.jsx"
-import Header from "./Header.jsx";
-import Navigation from "./Navigation.jsx";
-import SignIn from "./SignIn.jsx";
-import SignUp from "./SignUp.jsx";
-import Modal from "./Modal.jsx";
-import Home from "./Home";
+import Header from "./layouts/Header.jsx";
+import Navigation from "./layouts/Navigation.jsx";
+import SignIn from "./auth/SignIn.jsx";
+import SignUp from "./auth/SignUp.jsx";
+import Modal from "./components/Modal.jsx";
+import Home from "./pages/Home";
 
 const AppContainer = () => {
   const { isLoggedIn } = useAuth();

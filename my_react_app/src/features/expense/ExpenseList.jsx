@@ -1,7 +1,7 @@
-import editImage from "./assets/edit.svg";
-import deleteImage from "./assets/delete.svg";
-import arrowImage from "./assets/arrow.svg";
-import ExpenseApi from './lib/ExpenseApi';
+import editImage from "../../assets/edit.svg";
+import deleteImage from "../../assets/delete.svg";
+import arrowImage from "../../assets/arrow.svg";
+import ExpenseApi from '../../lib/ExpenseApi';
 
 const ExpenseList =  ({ expenses, setExpenseId, onBack }) => {
   const handleDelete = async(expense_id) => {

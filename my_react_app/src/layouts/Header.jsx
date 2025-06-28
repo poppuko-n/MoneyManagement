@@ -1,5 +1,5 @@
-import logoImage from "./assets/logo.png";
-import { useAuth } from "./contexts/Authcontext.jsx"
+import logoImage from "../assets/logo.png";
+import { useAuth } from "../contexts/Authcontext.jsx"
 
 const Header = ({ setIsSignIn, setIsSignUp }) => {
 

@@ -1,40 +1,53 @@
-import { useState } from 'react';
-import ExpenseApi from './lib/ExpenseApi';
+import { useEffect, useState } from 'react';
+import ExpenseApi from '../../lib/ExpenseApi';
 
-const ExpenseNew = ({ onBack, categories }) => {
-  const today = new Date().toISOString().split('T')[0]; 
-  const [transactionType, setTransactionType] = useState('');
-  const [newExpense, setNewExpense] = useState({
+const ExpenseEdit = ({ onBack, expenseId, categories }) => {
+  const [transactionType, setTransactionType] = useState('')
+  const [editExpense, setEditExpense] = useState({
     category_id: '',
-    date: today,
+    date: '',
     item: '',
-    amount: ''
+    amount: '',
   });
-
+  
   const filterCategoriesByType = (transactionType) =>
     categories.filter((c) => c.transaction_type === transactionType);
+  
+  useEffect(() => {
+    fetchExpenseLog()
+  }, []);
 
-  const handleCreate = async() => {
+  const fetchExpenseLog = async() => {
     try{
-      await ExpenseApi.createExpenseLog(newExpense);
-      alert('登録が完了しました。')
+      const data = await ExpenseApi.showExpenseLog(expenseId)
+      setEditExpense(data)
+      setTransactionType(data.transaction_type)
+    } catch(error) {
+      alert(error.respons?.data.errors.join(`/n`) || "家計簿データの取得に失敗しました。")
+    }
+  }
+
+  const handleUpdate = async() => {
+    try {
+      await ExpenseApi.updateExpenseLog(expenseId, editExpense);
+      alert("更新が完了しました。")
       onBack();
     } catch(error) {
-      alert(error.response.data.errors.join('\n'))
-    };
+      alert(error.response?.data.errors.join('\n') || "家計簿データの更新に失敗しました。");
+    }
   };
 
   return (
     <div>
-      <p className="text-2xl font-bold mb-6 text-center text-indigo-700">新規登録</p>
+      <p className="text-2xl font-bold mb-6 text-center text-indigo-700">編集画面</p>
 
       <div className="space-y-4">
         <div>
           <label>種類</label>
           <select
             className="w-full border p-2"
-            value={newExpense.transaction_type}
-            onChange={e => setTransactionType(e.target.value)}
+            value={editExpense.transaction_type}
+            onChange={(e) => setTransactionType(e.target.value)}
           >
             <option value="">選択してください</option>
             <option value="支出">支出</option>
@@ -46,8 +59,8 @@ const ExpenseNew = ({ onBack, categories }) => {
           <label>カテゴリ</label>
           <select
             className="w-full border p-2"
-            value={newExpense.category_id}
-            onChange={(e) => setNewExpense({ ...newExpense, category_id: e.target.value })}
+            value={editExpense.category_id}
+            onChange={(e) => setEditExpense({ ...editExpense, category_id: e.target.value })}
           >
             <option value="">選択してください</option>
             {filterCategoriesByType(transactionType).map((c) => (
@@ -61,8 +74,8 @@ const ExpenseNew = ({ onBack, categories }) => {
           <input
             type="date"
             className="w-full border p-2"
-            value={newExpense.date}
-            onChange={(e) => setNewExpense({ ...newExpense, date: e.target.value })}
+            value={editExpense.date}
+            onChange={(e) => setEditExpense({ ...editExpense, date: e.target.value })}
           />
         </div>
 
@@ -72,8 +85,8 @@ const ExpenseNew = ({ onBack, categories }) => {
             type="text"
             className="w-full border p-2"
             placeholder="内容をご入力ください"
-            value={newExpense.item}
-            onChange={(e) => setNewExpense({ ...newExpense, item: e.target.value })}
+            value={editExpense.item}
+            onChange={(e) => setEditExpense({ ...editExpense, item: e.target.value })}
           />
         </div>
 
@@ -82,15 +95,15 @@ const ExpenseNew = ({ onBack, categories }) => {
           <input
             type="number"
             className="w-full border p-2"
-            value={newExpense.amount}
-            onChange={(e) => setNewExpense({ ...newExpense, amount: e.target.value })}
+            value={editExpense.amount}
+            onChange={(e) => setEditExpense({ ...editExpense, amount: e.target.value })}
           />
         </div>
       </div>
 
       <div className="mt-6 flex justify-end gap-4">
         <button
-          onClick={handleCreate}
+          onClick={handleUpdate}
           className="bg-indigo-600 text-white font-bold py-2 px-4 rounded hover:bg-indigo-700"
         >
           登録
@@ -106,4 +119,4 @@ const ExpenseNew = ({ onBack, categories }) => {
   );
 };
 
-export default ExpenseNew;
+export default ExpenseEdit;
