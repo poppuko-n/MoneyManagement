@@ -6,11 +6,11 @@ const Header = ({ setIsSignIN, setIsSignUp }) => {
   const { logout, isLoggedIn } = useAuth();
   
   return (
-    <header className="bg-white mb-2">
-      <div className="container mx-auto flex items-center justify-between py-4 px-6">
+    <header>
+      <div className="container mx-auto flex justify-between py-4 px-6">
         <div className="flex items-center">
           <img src={logoImage} alt="Logo" className="h-10 mr-2" />
-          <a href="/" className="ml-2 text-2xl font-bold text-gray-800 tracking-wide">
+          <a href="/" className="ml-2 text-2xl font-bold">
             <span>Money</span>
             <span className="text-green-600">Management</span>
           </a>
@@ -24,9 +24,9 @@ const Header = ({ setIsSignIN, setIsSignUp }) => {
             ログアウト
           </button>
         ) : (
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="flex items-center">
             <button
-              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+              className="bg-green-500 text-white px-4 py-2 mr-4 rounded hover:bg-green-600"
               onClick={() => setIsSignIN(true)}
             >
               ログイン
