@@ -20,35 +20,31 @@ const AppContainer = () => {
       />
 
       {isSignIn && (
-        <Modal onClose={() => setIsSignIn(false)}>
-          <SignIn 
-            onBack = { () => setIsSignIn(false)}
-          />
+        <Modal>
+          <SignIn onBack = { () => setIsSignIn(false)}/>
         </Modal>
       )}
       {isSignUp && (
-        <Modal onClose={() => setIsSignUp(false)}>
-          <SignUp 
-            onBack = { ()=> setIsSignUp(false)}
-          />
+        <Modal>
+          <SignUp onBack = { ()=> setIsSignUp(false)}/>
         </Modal>
       )}
       {isLoggedIn ? (
         <Navigation />
       ) : (
         <>
-          <div className="bg-green-100 text-green-900 text-center py-4 px-6 my-6 rounded-md mx-4 shadow-md">
+          <div className="bg-green-100 text-green-900 text-center p-4 mb-4 shadow">
             家計管理と投資体験を、今ここから。
             <button
               onClick={() => setIsSignIn(true)}
-              className="font-semibold underline text-green-800 hover:text-green-600 mx-1"
+              className="font-bold underline text-green-800 hover:text-green-600 mx-1"
             >
               ログイン
             </button>
             または
             <button
               onClick={() => setIsSignUp(true)}
-              className="font-semibold underline text-green-800 hover:text-green-600 mx-1"
+              className="font-bold underline text-green-800 hover:text-green-600 mx-1"
             >
               登録
             </button>
@@ -57,8 +53,6 @@ const AppContainer = () => {
           <Home setIsSignUp={setIsSignUp} />
         </>
       )}
-
-
     </div>
   );
 };
