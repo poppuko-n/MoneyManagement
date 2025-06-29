@@ -2,7 +2,7 @@ const AvailableBudgetDisplay = ({ availableBudget, totalAmount }) => {
   const remainingBudget = availableBudget - totalAmount;
 
   return (
-    <div className="shadow p-6 flex justify-around">
+    <div className="shadow p-6 flex justify-around mb-6">
       <div>
         <p className="mb-1">投資可能額</p>
         <p className="font-bold">¥{availableBudget.toLocaleString()}</p>
