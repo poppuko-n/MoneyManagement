@@ -108,10 +108,12 @@ const InvestmentSimulationPage = () => {
         </Modal>
       )}
 
-      <AvailableBudgetDisplay
-        availableBudget={budgetData.availableForInvestment}
-        totalAmount={totalAmount}
-      />
+      {budgetData && (
+        <AvailableBudgetDisplay
+          availableBudget={budgetData.availableForInvestment}
+          totalAmount={totalAmount}
+        />
+      )}
 
       <div className="flex items-center justify-between mb-4"> 
         <CompanyFilterToggle 
