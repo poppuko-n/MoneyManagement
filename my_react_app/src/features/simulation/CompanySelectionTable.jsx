@@ -34,7 +34,8 @@ const CompanySelectionTable = ({ displayedCompanies, quantities, setQuantities }
                 <input
                   id={company.code}
                   type="number"
-                  value={quantities[company.code]}
+                  value={quantities[company.code] || ""}
+                  placeholder="0"
                   className="border w-16"
                   onChange={(e) => {
                     const newValue = Math.max(parseInt(e.target.value, 10) || 0, 0);
