@@ -5,32 +5,33 @@ const InvestmentBudgetModal = ({ budgetData, onClose }) => {
 
   return (
     <>
-      <div className="mb-6">
-        <p className="font-bold mb-2">収支状況</p>
-        <p>直近3ヶ月の平均収支から投資可能額を算出しました</p>
+      <div className="mb-6 text-center">
+        <h2 className="text-2xl font-bold mb-3">収支状況</h2>
+        <p className="text-sm">直近3ヶ月の平均収支から投資可能額を算出しました</p>
       </div>
 
       <div className="mb-6">
-        <div className="flex justify-between p-3 border-b">
+        <div className="flex justify-between p-4 border-b">
           <span>月収入</span>
-          <span>¥{income.toLocaleString()}</span>
+          <span className="text-blue-600 font-bold">¥{income.toLocaleString()}</span>
         </div>
 
-        <div className="flex justify-between p-3 border-b">
+        <div className="flex justify-between p-4 border-b">
           <span>月支出</span>
-          <span>¥{spending.toLocaleString()}</span>
+          <span className="text-red-600 font-bold">¥{spending.toLocaleString()}</span>
         </div>
 
-        <div className="flex justify-between p-3 border-b">
-          <span>収支</span>
-          <span>¥{balance.toLocaleString()}</span>
+        <div className="flex justify-between p-4 border-b">
+          <span className="font-bold">収支</span>
+          <span className="font-bold">¥{balance.toLocaleString()}</span>
         </div>
       </div>
 
-      <div className="p-4">
-        <p className="mb-2">あなたの投資可能額は</p>
-        <p className="text-2xl font-bold">¥{availableForInvestment.toLocaleString()}</p>
-        <p>です</p>
+      <div className="border border-gray-300 rounded-lg p-6 mb-6">
+        <div className="text-center">
+          <p className="mb-3">投資可能額</p>
+          <p className="text-3xl font-bold">¥{availableForInvestment.toLocaleString()}</p>
+        </div>
       </div>
 
       <div className="flex justify-center">
