@@ -25,9 +25,10 @@ const AvailableBudgetDisplay = ({ availableBudget, totalAmount }) => {
 
       <div className="w-full bg-gray-200">
         <div
-          className={`h-3 duration-1000 ${
-            usagePercentage > 100 ? 'bg-red-500' : 'bg-blue-500'
-          }`}
+                      className={`h-3 duration-1000 ${
+              usagePercentage > 100 ? 'bg-red-500' : 
+              usagePercentage > 70 ? 'bg-orange-500' : 'bg-blue-500'
+            }`}
           style={{ width: `${Math.min(usagePercentage, 100)}%` }}
         ></div>
       </div>
