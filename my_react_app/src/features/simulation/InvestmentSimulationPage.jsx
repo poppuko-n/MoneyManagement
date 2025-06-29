@@ -3,9 +3,12 @@ import SimulationResultsPage from "./SimulationResultsPage.jsx"
 import RunSimulationButton from "./RunSimulationButton.jsx";
 import CompanyFilterToggle from "./CompanyFilterToggle.jsx";
 import CompanySelectionTable from "./CompanySelectionTable.jsx";
-import InvestmentAmountDisplay from "./InvestmentAmountDisplay.jsx";
+
+import AvailableBudgetDisplay from "./AvailableBudgetDisplay.jsx";
+import InvestmentBudgetModal from "./InvestmentBudgetModal.jsx";
 import Modal from "../../components/Modal.jsx";
 import CompanyApi from '../../lib/CompanyApi.js'
+import BudgetCalculator from '../../lib/BudgetCalculator.js'
 import { motion } from "framer-motion";
 
 const InvestmentSimulationPage = () => {
@@ -15,9 +18,12 @@ const InvestmentSimulationPage = () => {
   const [isFilteringSelectedCompanies, setIsFilteringSelectedCompanies] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isSimulationResultVisible, setIsSimulationResultVisible] = useState(false);
+  const [budgetData, setBudgetData] = useState(null);
+  const [showBudgetModal, setShowBudgetModal] = useState(false);
 
   useEffect(() => {
     fetchCompanies();
+    fetchBudgetData();
   }, []);
 
   const fetchCompanies = async () => {
@@ -34,10 +40,19 @@ const InvestmentSimulationPage = () => {
     }
   };
 
+  const fetchBudgetData = async () => {
+    try {
+      const budget = await BudgetCalculator.getRecentAverageBudget();
+      setBudgetData(budget);
+      setShowBudgetModal(true);
+    } catch (error) {
+      alert("予算データの取得に失敗しました。");
+    }
+  };
+
   const totalAmount = companies.reduce(
       (sum, c) => sum + c.latest_price * (quantities[c.code] || 0), 0);
 
-  // NOTE: API処理中は isLoading を true にしてローディングUIを表示、完了後に false に戻す。
   const sendQuantitiesToServer = async() => {
     const selectedCompanies = companies
       .filter(c => quantities[c.code] > 0)
@@ -84,7 +99,21 @@ const InvestmentSimulationPage = () => {
         </Modal>
       )}
 
-      <InvestmentAmountDisplay totalAmount={totalAmount}></InvestmentAmountDisplay>
+      {showBudgetModal && (
+        <Modal>
+          <InvestmentBudgetModal
+            budgetData={budgetData}
+            onClose={() => setShowBudgetModal(false)}
+          />
+        </Modal>
+      )}
+
+      {budgetData && (
+        <AvailableBudgetDisplay
+          availableBudget={budgetData.availableForInvestment}
+          totalAmount={totalAmount}
+        />
+      )}
 
       <div className="flex items-center justify-between mb-4"> 
         <CompanyFilterToggle 
