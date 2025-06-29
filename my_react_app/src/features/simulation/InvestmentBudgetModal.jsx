@@ -13,12 +13,12 @@ const InvestmentBudgetModal = ({ budgetData, onClose }) => {
       <div className="mb-6">
         <div className="flex justify-between p-3 border-b">
           <span>月収入</span>
-          <span>¥{income.toLocaleString()}</span>
+          <span className="text-blue-600 font-bold">¥{income.toLocaleString()}</span>
         </div>
 
         <div className="flex justify-between p-3 border-b">
           <span>月支出</span>
-          <span>¥{spending.toLocaleString()}</span>
+          <span className="text-red-600 font-bold">¥{spending.toLocaleString()}</span>
         </div>
 
         <div className="flex justify-between p-3 border-b">
