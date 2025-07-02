@@ -53,4 +53,4 @@ class AiAnalyzer
       T
     end.join("\n")
   end
-end
+end 
