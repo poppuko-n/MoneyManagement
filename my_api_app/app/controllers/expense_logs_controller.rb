@@ -1,10 +1,10 @@
 class ExpenseLogsController < ApplicationController
-  before_action :authenticate_user, only: %i[index create show update destroy ]
+  before_action :authenticate_user, only: %i[index create show update destroy]
   before_action :set_expense_log, only: %i[show update destroy]
 
   # GET /expense_logs
   def index
-    expense_logs = @current_user.expense_logs.with_category.in_date_range(month_range_from_params)
+    expense_logs = @current_user.expense_logs.with_category.in_date_range(selected_month_range)
     render json: expense_logs.map(&:as_json_with_category), status: :ok
   end
 
@@ -44,11 +44,7 @@ class ExpenseLogsController < ApplicationController
     params.require(:expense_log).permit(:category_id, :date, :item, :amount)
   end
 
-  def set_expense_log
-    @expense_log = @current_user.expense_logs.preload(:category).find(params[:id])
-  end
-
-  def month_range_from_params
+  def selected_month_range
     year, month = params.values_at(:year, :month).map(&:to_i)
     date = Date.new(year, month)
     date.beginning_of_month..date.end_of_month

@@ -7,4 +7,8 @@ class ApplicationController < ActionController::API
 
     render json: { error: "unauthorized" }, status: :unauthorized
   end
+
+  def set_expense_log
+    @expense_log = @current_user.expense_logs.find(params[:id])
+  end
 end
