@@ -11,8 +11,10 @@ RSpec.describe ExpenseLog, type: :model do
       let(:april_2025_range) { Date.new(2025, 4, 1)..Date.new(2025, 4, 30) }
       subject { ExpenseLog.for_user_in_range(user1, april_2025_range) }
       it 'ログイン中のユーザーが指定した期間のログのみを取得する' do
-        expect(subject).to eq([ food_log ])
-        expect(subject).not_to include(salary_log)
+        aggregate_failures do
+          expect(subject).to eq([ food_log ])
+          expect(subject).not_to include(salary_log)
+        end
       end
     end
   end
@@ -35,40 +37,50 @@ RSpec.describe ExpenseLog, type: :model do
       context 'dateが未入力' do
         let(:date) { '' }
         it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          expect(subject).not_to be_valid
-          expect(subject.errors[:date]).to include('を入力してください')
+          aggregate_failures do
+            expect(subject).not_to be_valid
+            expect(subject.errors[:date]).to include('を入力してください')
+          end
         end
       end
 
       context 'itemが未入力' do
         let(:item) { '' }
         it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          expect(subject).not_to be_valid
-          expect(subject.errors[:item]).to include('を入力してください')
+          aggregate_failures do
+            expect(subject).not_to be_valid
+            expect(subject.errors[:item]).to include('を入力してください')
+          end
         end
       end
 
       context 'amountが未入力' do
         let(:amount) { '' }
         it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          expect(subject).not_to be_valid
-          expect(subject.errors[:amount]).to include('を入力してください')
+          aggregate_failures do
+            expect(subject).not_to be_valid
+            expect(subject.errors[:amount]).to include('を入力してください')
+          end
         end
       end
 
       context 'amountが数値でない場合' do
         let(:amount) { 'test' }
         it 'valid?メソッドがfalseを返し、errorsに「数値で入力してください」と格納されること' do
-          expect(subject).not_to be_valid
-          expect(subject.errors[:amount]).to include('は数値で入力してください')
+          aggregate_failures do
+            expect(subject).not_to be_valid
+            expect(subject.errors[:amount]).to include('は数値で入力してください')
+          end
         end
       end
 
       context 'amountが整数でない場合' do
         let(:amount) { 0 }
         it 'valid?メソッドがfalseを返し、errorsに「より大きい値にしてください」と格納されること' do
-          expect(subject).not_to be_valid
-          expect(subject.errors[:amount]).to include('0より大きい値にしてください')
+          aggregate_failures do
+            expect(subject).not_to be_valid
+            expect(subject.errors[:amount]).to include('0より大きい値にしてください')
+          end
         end
       end
     end

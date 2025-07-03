@@ -18,32 +18,40 @@ RSpec.describe Company, type: :model do
       context 'codeが未入力' do
         let(:code) { '' }
         it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          expect(subject).not_to be_valid
-          expect(subject.errors[:code]).to include("を入力してください")
+          aggregate_failures do
+            expect(subject).not_to be_valid
+            expect(subject.errors[:code]).to include("を入力してください")
+          end
         end
       end
 
       context 'nameが未入力' do
         let(:name) { '' }
         it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          expect(subject).not_to be_valid
-          expect(subject.errors[:name]).to include("を入力してください")
+          aggregate_failures do
+            expect(subject).not_to be_valid
+            expect(subject.errors[:name]).to include("を入力してください")
+          end
         end
       end
 
       context 'sector_nameが未入力' do
         let(:sector_name) { '' }
         it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          expect(subject).not_to be_valid
-          expect(subject.errors[:sector_name]).to include("を入力してください")
+          aggregate_failures do
+            expect(subject).not_to be_valid
+            expect(subject.errors[:sector_name]).to include("を入力してください")
+          end
         end
       end
 
       context 'codeが重複している場合' do
         subject { Company.new(code: 1, name: "新会社", sector_name: "新業種") }
         it 'valid?メソッドがfalseを返し、errorsに「すでに存在します」と格納されること' do
-          expect(subject).not_to be_valid
-          expect(subject.errors[:code]).to include("はすでに存在します")
+          aggregate_failures do
+            expect(subject).not_to be_valid
+            expect(subject.errors[:code]).to include("はすでに存在します")
+          end
         end
       end
     end
