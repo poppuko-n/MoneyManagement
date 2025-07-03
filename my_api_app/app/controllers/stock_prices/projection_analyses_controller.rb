@@ -4,4 +4,4 @@ class StockPrices::ProjectionAnalysesController < ApplicationController
     results = AiAnalyzer.new(params[:data]).call
     render json: results, status: :ok
   end
-end 
+end

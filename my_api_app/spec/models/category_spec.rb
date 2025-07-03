@@ -15,8 +15,10 @@ RSpec.describe Category, type: :model do
         let(:name) { '' }
 
         it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          expect(subject).not_to be_valid
-          expect(subject.errors[:name]).to include('を入力してください')
+          aggregate_failures do
+            expect(subject).not_to be_valid
+            expect(subject.errors[:name]).to include('を入力してください')
+          end
         end
       end
 
@@ -24,8 +26,10 @@ RSpec.describe Category, type: :model do
         let(:transaction_type) { '' }
 
         it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          expect(subject).not_to be_valid
-          expect(subject.errors[:transaction_type]).to include('を入力してください')
+          aggregate_failures do
+            expect(subject).not_to be_valid
+            expect(subject.errors[:transaction_type]).to include('を入力してください')
+          end
         end
       end
     end

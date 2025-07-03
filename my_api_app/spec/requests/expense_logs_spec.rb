@@ -1,11 +1,11 @@
 require 'rails_helper'
 
 RSpec.describe "Expense_logs", type: :request do
-  let(:user1) { create(:user, name: 'テストユーザー1') }
+  let(:user1) { create(:user, name: 'テストユーザー1', password: 'password1') }
   let(:food) { create(:category, name: '食費', transaction_type: '支出') }
   let(:salary) { create(:category, name: '給与', transaction_type: '収入') }
-  let(:headers) { { "Authorization" => "Bearer #{token}" } }
-  let(:token) { generate_token(user1) }
+
+  before { login_as(user1) }
 
   describe "GET /expense_logs" do
     context 'ログインユーザーがアクセスした時' do
@@ -13,7 +13,7 @@ RSpec.describe "Expense_logs", type: :request do
       let!(:salary_log) { create(:expense_log, date: Date.new(2025, 5, 1), item: '給与', amount: 200000,  category: salary,  user: user1) }
       let!(:other_log) { create(:expense_log, date: Date.new(2024, 5, 1), item: '去年の給与', amount: 200000,  category: salary,  user: user1) }
       it '指定した年月の家計記録を取得することができる' do
-        get '/expense_logs', params: { year: '2025', month: '05' }, headers: headers
+        get '/expense_logs', params: { year: '2025', month: '05' }
         aggregate_failures do
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body.size).to eq(2)
@@ -36,7 +36,7 @@ RSpec.describe "Expense_logs", type: :request do
                 item: "昼食",
                 amount: 1000
               }
-            }, headers: headers
+            }
           }.to change(ExpenseLog, :count).by(1)
 
           expect(response).to have_http_status(201)
@@ -62,7 +62,7 @@ RSpec.describe "Expense_logs", type: :request do
                 item: '',
                 amount: ''
               }
-            }, headers: headers
+            }
           }.not_to change(ExpenseLog, :count)
 
           expect(response).to have_http_status(422)
@@ -90,7 +90,7 @@ RSpec.describe "Expense_logs", type: :request do
             item: "更新された昼食",
             amount: 2000
           }
-        }, headers: headers
+        }
         aggregate_failures do
           expect(response).to have_http_status(:ok)
           expect(response.parsed_body['item']).to eq('更新された昼食')
@@ -111,7 +111,7 @@ RSpec.describe "Expense_logs", type: :request do
             item: '',
             amount: 2000
           }
-        }, headers: headers
+        }
         aggregate_failures do
           expect(response).to have_http_status(422)
           expect(response.parsed_body['errors']).to eq([ "内容 を入力してください" ])
@@ -131,7 +131,7 @@ RSpec.describe "Expense_logs", type: :request do
             item: "更新された昼食",
             amount: 2000
           }
-        }, headers: headers
+        }
         expect(response).to have_http_status(404)
       end
     end
@@ -143,7 +143,7 @@ RSpec.describe "Expense_logs", type: :request do
       it 'ログを削除することができる' do
         aggregate_failures do
           expect {
-            delete "/expense_logs/#{food_log.id}", headers: headers
+            delete "/expense_logs/#{food_log.id}"
           }.to change(ExpenseLog, :count).by(-1)
 
           expect(response).to have_http_status(204)
@@ -156,7 +156,7 @@ RSpec.describe "Expense_logs", type: :request do
       it 'ログを削除することができない' do
         aggregate_failures do
           expect {
-            delete "/expense_logs/#{food_log.id+100}", headers: headers
+            delete "/expense_logs/#{food_log.id+100}"
           }.not_to change(ExpenseLog, :count)
           expect(response).to have_http_status(404)
         end

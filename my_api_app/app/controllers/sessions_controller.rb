@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  before_action :authenticate_user, only: [:show, :destroy]
+  before_action :authenticate_user, only: [ :show, :destroy ]
 
   def show
     render json: { logged_in: true }, status: :ok

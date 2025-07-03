@@ -14,8 +14,10 @@ RSpec.describe User, type: :model do
       context '名前が未入力' do
         let(:name) { '' }
         it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.full_messages).to include("名前 を入力してください")
+          aggregate_failures do
+            expect(subject).not_to be_valid
+            expect(subject.errors.full_messages).to include("名前 を入力してください")
+          end
         end
       end
 
@@ -23,8 +25,10 @@ RSpec.describe User, type: :model do
         before { User.create!(name: name, password: password) }
 
         it 'valid?メソッドがfalseを返し、errorsに「すでに存在します」と格納されること' do
-          expect(subject).not_to be_valid
-          expect(subject.errors.full_messages).to include('名前 はすでに存在します')
+          aggregate_failures do
+            expect(subject).not_to be_valid
+            expect(subject.errors.full_messages).to include('名前 はすでに存在します')
+          end
         end
       end
     end
