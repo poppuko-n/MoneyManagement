@@ -1,19 +1,15 @@
 RSpec.describe Company, type: :model do
-  let!(:sector_food) { create(:sector, name: '食品') }
-  let!(:sector_energy) { create(:sector, name: 'エネルギー資源') }
-
-  let!(:company_alpha)  { create(:company, code: 1, name: 'アルファ食品', equity: 100, sector: sector_food) }
-  let!(:company_beta)  { create(:company, code: 2, name: 'ベータ食品', equity: 200, sector: sector_food) }
-  let!(:company_ganma)  { create(:company, code: 3, name: 'ガンマエネルギー', equity: 300, sector: sector_food) }
+  let!(:company_alpha) { create(:company, code: 1, name: 'アルファ食品', sector_name: '食品') }
+  let!(:company_beta) { create(:company, code: 2, name: 'ベータ食品', sector_name: '食品') }
 
   describe 'バリデーションのテスト' do
-    subject { Company.new(code: code, name: name, sector: sector) }
-    let(:sector) { sector_food }
-    let(:code) { 4 }
+    subject { Company.new(code: code, name: name, sector_name: sector_name) }
+    let(:sector_name) { '食品' }
+    let(:code) { 3 }
     let(:name) { "test_company" }
 
     context '正常系' do
-      it '有効なカテゴリである' do
+      it '有効な企業である' do
         expect(subject).to be_valid
       end
     end
@@ -35,28 +31,27 @@ RSpec.describe Company, type: :model do
         end
       end
 
-      context 'sectorが未入力' do
-        let(:sector) { nil }
+      context 'sector_nameが未入力' do
+        let(:sector_name) { '' }
         it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
           expect(subject).not_to be_valid
-          expect(subject.errors[:sector]).to include("を入力してください")
+          expect(subject.errors[:sector_name]).to include("を入力してください")
         end
       end
-    end
 
-    context 'nameとsectorの重複チェック' do
-      subject { Company.new(code: 1, name: "アルファ食品", sector: sector) }
-      it 'valid?メソッドがfalseを返し、errorsに「すでに存在します」と格納されること' do
-        expect(subject).not_to be_valid
-        expect(subject.errors[:code]).to include("はすでに存在します")
-        expect(subject.errors[:name]).to include("はすでに存在します")
+      context 'codeが重複している場合' do
+        subject { Company.new(code: 1, name: "新会社", sector_name: "新業種") }
+        it 'valid?メソッドがfalseを返し、errorsに「すでに存在します」と格納されること' do
+          expect(subject).not_to be_valid
+          expect(subject.errors[:code]).to include("はすでに存在します")
+        end
       end
     end
   end
 
   describe 'アソシエーションのテスト' do
-    it '業種を関連づけられる' do
-      expect(company_alpha.sector).to eq(sector_food)
+    it '株価データを関連づけられる' do
+      expect(company_alpha.stock_prices).to be_empty
     end
   end
 end
