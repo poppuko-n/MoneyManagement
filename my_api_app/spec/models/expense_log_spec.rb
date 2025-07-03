@@ -7,25 +7,12 @@ RSpec.describe ExpenseLog, type: :model do
     let!(:food_log) { create(:expense_log, date: Date.new(2025, 4, 1), item: '昼食', amount: 1000,  category: food,  user: user1) }
     let!(:salary_log) { create(:expense_log, date: Date.new(2024, 4, 1), item: '給与', amount: 200000,  category: salary,  user: user1) }
 
-    describe '::for_user_in_month' do
-      subject { ExpenseLog.for_user_in_month(user1.id, 2025, 4) }
-      it 'ログイン中のユーザーが指定した年月のログのみを取得する' do
+    describe '::for_user_in_range' do
+      let(:april_2025_range) { Date.new(2025, 4, 1)..Date.new(2025, 4, 30) }
+      subject { ExpenseLog.for_user_in_range(user1, april_2025_range) }
+      it 'ログイン中のユーザーが指定した期間のログのみを取得する' do
         expect(subject).to eq([ food_log ])
         expect(subject).not_to include(salary_log)
-      end
-    end
-
-    describe '::for_user' do
-      subject { ExpenseLog.for_user(user1.id) }
-      it 'ログイン中のユーザーのログ一覧を取得する' do
-        expect(subject).to eq([ salary_log, food_log ])
-      end
-    end
-
-    describe '::find_for_user' do
-      subject { ExpenseLog.find_for_user(user1.id, food_log.id) }
-      it '指定したログのみ取得する' do
-        expect(subject).to eq(food_log)
       end
     end
   end
