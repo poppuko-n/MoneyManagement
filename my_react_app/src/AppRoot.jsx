@@ -1,5 +1,4 @@
 import { createRoot } from "react-dom/client";
-import { StrictMode } from "react";
 import { AuthProvider } from "./contexts/Authcontext.jsx"
 import AppContainer from "./main.jsx";
 import "./index.css";
@@ -7,9 +6,7 @@ import "./index.css";
 const AppRoot = () => {
   return(
   <AuthProvider>
-    <StrictMode>
-      <AppContainer />
-    </StrictMode>
+    <AppContainer />
   </AuthProvider>
   );
 };
