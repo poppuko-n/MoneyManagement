@@ -4,7 +4,7 @@ class ExpenseLogsController < ApplicationController
 
   # GET /expense_logs
   def index
-    expense_logs = ExpenseLog.for_user_in_range(@current_user, month_range_from_params).preload(:category)
+    expense_logs = ExpenseLog.for_user_in_range_with_category(@current_user, month_range_from_params).preload(:category)
     render json: expense_logs.map(&:as_json_with_category), status: :ok
   end
 
@@ -45,7 +45,7 @@ class ExpenseLogsController < ApplicationController
   end
 
   def set_expense_log
-    @expense_log = @current_user.expense_logs.find(params[:id])
+    @expense_log = @current_user.expense_logs.preload(:category).find(params[:id])
   end
 
   def month_range_from_params
