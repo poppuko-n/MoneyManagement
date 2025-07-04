@@ -7,10 +7,8 @@ RSpec.describe User, type: :model do
 
     it '名前が空の場合はユーザーを作成できない' do
       user = User.new(name: '', password: 'secure_password123')
-      aggregate_failures do
-        expect(user).not_to be_valid
-        expect(user.errors.full_messages).to include("名前 を入力してください")
-      end
+      expect(user).not_to be_valid
+      expect(user.errors.full_messages).to include("名前 を入力してください")
     end
 
     it '同じ名前のユーザーは作成できない' do
@@ -18,10 +16,8 @@ RSpec.describe User, type: :model do
       
       duplicate_user = User.new(name: '田中太郎', password: 'another_password')
       
-      aggregate_failures do
-        expect(duplicate_user).not_to be_valid
-        expect(duplicate_user.errors.full_messages).to include('名前 はすでに存在します')
-      end
+      expect(duplicate_user).not_to be_valid
+      expect(duplicate_user.errors.full_messages).to include('名前 はすでに存在します')
     end
   end
 
