@@ -1,47 +1,49 @@
 RSpec.describe User, type: :model do
-  describe 'バリデーションのテスト' do
-    subject { User.new(name: name, password: password) }
-    let(:name) { 'テストユーザー' }
-    let(:password) { 'password' }
-
-    context '正常系' do
-      it '有効なカテゴリである' do
-        expect(subject).to be_valid
-      end
+  describe 'バリデーション' do
+    it '名前とパスワードが揃っていればユーザーを作成できる' do
+      user = User.new(name: '田中太郎', password: 'secure_password123')
+      expect(user).to be_valid
     end
 
-    context '異常系' do
-      context '名前が未入力' do
-        let(:name) { '' }
-        it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          aggregate_failures do
-            expect(subject).not_to be_valid
-            expect(subject.errors.full_messages).to include("名前 を入力してください")
-          end
-        end
-      end
+    it '名前が空の場合はユーザーを作成できない' do
+      user = User.new(name: '', password: 'secure_password123')
+      expect(user).not_to be_valid
+      expect(user.errors.full_messages).to include("名前 を入力してください")
+    end
 
-      context '名前が重複している場合' do
-        before { User.create!(name: name, password: password) }
-
-        it 'valid?メソッドがfalseを返し、errorsに「すでに存在します」と格納されること' do
-          aggregate_failures do
-            expect(subject).not_to be_valid
-            expect(subject.errors.full_messages).to include('名前 はすでに存在します')
-          end
-        end
-      end
+    it '同じ名前のユーザーは作成できない' do
+      create(:user, name: '田中太郎')
+      
+      duplicate_user = User.new(name: '田中太郎', password: 'another_password')
+      
+      expect(duplicate_user).not_to be_valid
+      expect(duplicate_user.errors.full_messages).to include('名前 はすでに存在します')
     end
   end
 
-  describe 'アソシエーションのテスト' do
-    let!(:user) { create(:user, name: 'テストユーザー', password: 'password') }
-    let!(:food) { create(:category, name: '食費', transaction_type: '支出') }
-    let!(:salary) { create(:category, name: '給与', transaction_type: '収入') }
-    let!(:food_log) { create(:expense_log, date: Date.today, item: '昼食', amount: 1000,  category: food,  user: user) }
-    let!(:salary_log) { create(:expense_log, date: Date.today, item: '給与', amount: 200000,  category: salary,  user: user) }
-    it '家計簿記録を関連づけられる' do
-      expect(user.expense_logs).to eq([ food_log, salary_log ])
+  describe 'アソシエーション' do
+    let(:user) { create(:user) }
+    let(:category) { create(:category) }
+
+    it 'ユーザーは複数の家計簿記録を持てる（has_many関係）' do
+      lunch_log = ExpenseLog.create(
+        date: Date.new(2024, 1, 15),
+        item: 'ランチ',
+        amount: 800,
+        category: category,
+        user: user
+      )
+      
+      coffee_log = ExpenseLog.create(
+        date: Date.new(2024, 1, 16),
+        item: 'スターバックス',
+        amount: 450,
+        category: category,
+        user: user
+      )
+      
+      expect(user.expense_logs.count).to eq(2)
+      expect(user.expense_logs).to include(lunch_log, coffee_log)
     end
   end
 end

@@ -34,6 +34,12 @@ rescue ActiveRecord::PendingMigrationError => e
 end
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
+  
+  # デフォルトでaggregate_failuresを有効にする
+  config.define_derived_metadata do |meta|
+    meta[:aggregate_failures] = true
+  end
+  
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')

@@ -3,5 +3,7 @@ FactoryBot.define do
     date { Date.today }
     item { '内容' }
     amount { 1000 }
+    association :category
+    association :user
   end
 end
