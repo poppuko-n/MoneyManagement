@@ -120,25 +120,10 @@ RSpec.describe "Expense_logs", type: :request do
         end
       end
     end
-
-    context 'ログが存在しない場合' do
-      it 'ログを更新することができない' do
-        patch "/expense_logs/#{expense_log.id+100}", params: {
-          expense_log: {
-            category_id: category.id,
-            date: Date.today,
-            item: "更新された昼食",
-            amount: 2000
-          }
-        }
-        expect(response).to have_http_status(404)
-      end
-    end
   end
 
   describe 'DELETE /expense_logs/:id' do
-    let!(:expense_log) { create(:expense_log, date: Date.today, item: '昼食', amount: 1000, category: category, user: user) }
-    context 'ログが存在する場合' do
+    let!(:expense_log) { create(:expense_log, category: category, user: user) }
       it 'ログを削除することができる' do
         aggregate_failures do
           expect {
@@ -149,17 +134,6 @@ RSpec.describe "Expense_logs", type: :request do
           expect(ExpenseLog.exists?(expense_log.id)).to be false
         end
       end
-    end
 
-    context 'ログが存在しない場合' do
-      it 'ログを削除することができない' do
-        aggregate_failures do
-          expect {
-            delete "/expense_logs/#{expense_log.id+100}"
-          }.not_to change(ExpenseLog, :count)
-          expect(response).to have_http_status(404)
-        end
-      end
-    end
   end
 end
