@@ -7,18 +7,19 @@ RSpec.describe "Expense_logs", type: :request do
   before { login_as(user) }
 
   describe "GET /expense_logs" do
-    context 'ログインユーザーがアクセスした時' do
-      let!(:current_log) { create(:expense_log, date: Date.new(2025, 5, 1), item: '昼食', amount: 1000, category: category, user: user) }
-      let!(:current_log2) { create(:expense_log, date: Date.new(2025, 5, 1), item: '夕食', amount: 1500, category: category, user: user) }
-      let!(:other_log) { create(:expense_log, date: Date.new(2024, 5, 1), item: '去年の昼食', amount: 800, category: category, user: user) }
-      it '指定した年月の家計記録を取得することができる' do
-        get '/expense_logs', params: { year: '2025', month: '05' }
-        aggregate_failures do
-          expect(response).to have_http_status(:ok)
-          expect(response.parsed_body.size).to eq(2)
-          expect(response.parsed_body.map { |e| e['item'] }).to include('昼食', '夕食')
-          expect(response.parsed_body.map { |e| e['item'] }).not_to include('去年の昼食')
-        end
+    before do
+      create(:expense_log, date: Date.new(2025, 5, 1), item: '昼食', amount: 1000, category: category, user: user)
+      create(:expense_log, date: Date.new(2025, 5, 1), item: '夕食', amount: 1500, category: category, user: user)
+      create(:expense_log, date: Date.new(2024, 5, 1), item: '去年の昼食', amount: 800, category: category, user: user)
+    end
+    
+    it '指定した年月の家計記録を取得することができる' do
+      get '/expense_logs', params: { year: '2025', month: '05' }
+      aggregate_failures do
+        expect(response).to have_http_status(:ok)
+        expect(response.parsed_body.size).to eq(2)
+        expect(response.parsed_body.map { |e| e['item'] }).to include('昼食', '夕食')
+        expect(response.parsed_body.map { |e| e['item'] }).not_to include('去年の昼食')
       end
     end
   end
@@ -85,7 +86,7 @@ RSpec.describe "Expense_logs", type: :request do
         patch "/expense_logs/#{expense_log.id}", params: {
           expense_log: {
             category_id: category.id,
-            date: Date.today,
+            date: expense_log.date,
             item: "更新された昼食",
             amount: 2000
           }
@@ -106,9 +107,9 @@ RSpec.describe "Expense_logs", type: :request do
         patch "/expense_logs/#{expense_log.id}", params: {
           expense_log: {
             category_id: category.id,
-            date: Date.today,
+            date: expense_log.date,
             item: '',
-            amount: 2000
+            amount: expense_log.amount
           }
         }
         aggregate_failures do
@@ -123,17 +124,17 @@ RSpec.describe "Expense_logs", type: :request do
   end
 
   describe 'DELETE /expense_logs/:id' do
-    let!(:expense_log) { create(:expense_log, category: category, user: user) }
-      it 'ログを削除することができる' do
-        aggregate_failures do
-          expect {
-            delete "/expense_logs/#{expense_log.id}"
-          }.to change(ExpenseLog, :count).by(-1)
+    it 'ログを削除することができる' do
+      expense_log = create(:expense_log, category: category, user: user)
+      
+      aggregate_failures do
+        expect {
+          delete "/expense_logs/#{expense_log.id}"
+        }.to change(ExpenseLog, :count).by(-1)
 
-          expect(response).to have_http_status(204)
-          expect(ExpenseLog.exists?(expense_log.id)).to be false
-        end
+        expect(response).to have_http_status(204)
+        expect(ExpenseLog.exists?(expense_log.id)).to be false
       end
-
+    end
   end
 end
