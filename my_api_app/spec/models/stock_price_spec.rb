@@ -21,7 +21,7 @@ RSpec.describe StockPrice, type: :model do
   end
 
   describe 'アソシエーション' do
-    it 'company_codeを外部キーとしてCompanyモデルに所属している' do
+    it 'Companyに所属している（belongs_to関係）' do
       stock_price = create(:stock_price, company: company)
       expect(stock_price.company).to eq(company)
     end

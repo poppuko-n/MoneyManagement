@@ -19,7 +19,7 @@ RSpec.describe Category, type: :model do
   end
 
   describe 'アソシエーション' do
-    it '複数のExpenseLogを持つことができる' do
+    it '複数のExpenseLogを持っている（has_many関係）' do
       category = create(:category)
       user = create(:user)
       expense_log1 = create(:expense_log, category: category, user: user)

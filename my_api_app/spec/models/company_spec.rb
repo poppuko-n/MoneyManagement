@@ -32,7 +32,7 @@ RSpec.describe Company, type: :model do
   end
 
   describe 'アソシエーション' do
-    it 'codeを外部キーとして複数のStockPriceを持つ' do
+    it '複数のStockPriceを持っている（has_many関係）' do
       company = create(:company)
       stock_price = create(:stock_price, company: company)
       expect(company.stock_prices).to include(stock_price)
