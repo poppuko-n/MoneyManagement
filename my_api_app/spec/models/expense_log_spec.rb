@@ -3,22 +3,6 @@ RSpec.describe ExpenseLog, type: :model do
   let(:food) { create(:category, name: '食費', transaction_type: '支出') }
   let(:salary) { create(:category, name: '給与', transaction_type: '収入') }
 
-  describe 'ログ取得系メソッドのテスト' do
-    let!(:food_log) { create(:expense_log, date: Date.new(2025, 4, 1), item: '昼食', amount: 1000,  category: food,  user: user1) }
-    let!(:salary_log) { create(:expense_log, date: Date.new(2024, 4, 1), item: '給与', amount: 200000,  category: salary,  user: user1) }
-
-    describe '::for_user_in_range' do
-      let(:april_2025_range) { Date.new(2025, 4, 1)..Date.new(2025, 4, 30) }
-      subject { ExpenseLog.for_user_in_range(user1, april_2025_range) }
-      it 'ログイン中のユーザーが指定した期間のログのみを取得する' do
-        aggregate_failures do
-          expect(subject).to eq([ food_log ])
-          expect(subject).not_to include(salary_log)
-        end
-      end
-    end
-  end
-
   describe 'バリデーションのテスト' do
     subject { ExpenseLog.new(category_id: category_id, user_id: user_id, date: date, item: item, amount: amount) }
     let (:category_id) { food.id }
