@@ -6,7 +6,7 @@ class Company < ApplicationRecord
   validates :sector_name, presence: true
 
   def self.all_with_latest_prices
-    latest_prices = StockPrice.latest_prices_by_company_code
+    latest_prices = StockPrice.latest_prices_by_code
     all.map { |c| c.as_json.merge("latest_price" => latest_prices[c.code]) }
   end
 
