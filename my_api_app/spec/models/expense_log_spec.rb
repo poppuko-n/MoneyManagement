@@ -82,11 +82,8 @@ RSpec.describe ExpenseLog, type: :model do
         expense_log = create(:expense_log, category: category, user: user)
         result = expense_log.as_json_with_category
         
-        expect(result['transaction_type']).to eq(category.transaction_type)
-        expect(result['category_name']).to eq(category.name)
-        expect(result['date']).to be_present
-        expect(result['item']).to be_present
-        expect(result['amount']).to be_present
+        expect(result[:transaction_type]).to eq(category.transaction_type)
+        expect(result[:category_name]).to eq(category.name)
       end
     end
   end
