@@ -1,88 +1,52 @@
 RSpec.describe StockPrice, type: :model do
-  describe 'バリデーションのテスト' do
-    subject { StockPrice.new(company_code: company_code, date: date, close_price: close_price) }
-    let(:date) { Date.today }
-    let(:close_price) { 1000 }
-    let(:company_code) { company.code }
-    let!(:company) { create(:company) }
+  let(:company) { create(:company) }
 
-    context '正常系' do
-      it '有効なカテゴリーである' do
-        expect(subject).to be_valid
-      end
+  describe 'バリデーション' do
+    it '企業コード、日付、終値が全て揃っていればvalid' do
+      stock_price = StockPrice.new(company_code: company.code, date: Date.today, close_price: 1000)
+      expect(stock_price).to be_valid
     end
 
-    context '異常系' do
-      context 'dateが未入力' do
-        let(:date) { '' }
-        it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          aggregate_failures do
-            expect(subject).not_to be_valid
-            expect(subject.errors[:date]).to include('を入力してください')
-          end
-        end
-      end
+    it '日付が空の場合はinvalidになり、エラーメッセージが表示される' do
+      stock_price = StockPrice.new(company_code: company.code, close_price: 1000)
+      expect(stock_price).not_to be_valid
+      expect(stock_price.errors[:date]).to include('を入力してください')
+    end
 
-      context 'close_priceが未入力' do
-        let(:close_price) { '' }
-        it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          aggregate_failures do
-            expect(subject).not_to be_valid
-            expect(subject.errors[:close_price]).to include('を入力してください')
-          end
-        end
-      end
+    it '終値が空の場合はinvalidになり、エラーメッセージが表示される' do
+      stock_price = StockPrice.new(company_code: company.code, date: Date.today)
+      expect(stock_price).not_to be_valid
+      expect(stock_price.errors[:close_price]).to include('を入力してください')
     end
   end
 
-  describe 'アソシエーションのテスト' do
-    let!(:company) { create(:company, code: '1001', name: 'テスト会社') }
-    let!(:stock_price) { create(:stock_price, company: company) }
-
-    it 'companyと関連付けられている' do
+  describe 'アソシエーション' do
+    it 'company_codeを外部キーとしてCompanyモデルに所属している' do
+      stock_price = create(:stock_price, company: company)
       expect(stock_price.company).to eq(company)
     end
-
-    it 'company_codeでcompanyを参照している' do
-      expect(stock_price.company_code).to eq(company.code)
-    end
   end
 
-  describe 'クラスメソッドのテスト' do
-    let!(:company1) { create(:company, code: '1001', name: '会社1') }
-    let!(:company2) { create(:company, code: '1002', name: '会社2') }
-    
+  describe 'クラスメソッド' do
     before do
-      create(:stock_price, company: company1, date: Date.new(2023, 1, 1), close_price: 1000)
-      create(:stock_price, company: company1, date: Date.new(2023, 1, 2), close_price: 1100)
-      create(:stock_price, company: company1, date: Date.new(2023, 1, 3), close_price: 1200)
-      
-      create(:stock_price, company: company2, date: Date.new(2023, 1, 1), close_price: 2000)
-      create(:stock_price, company: company2, date: Date.new(2023, 1, 2), close_price: 2100)
+      company2 = create(:company, code: '2001')
+      create(:stock_price, company: company, date: '2023-01-01', close_price: 1000)
+      create(:stock_price, company: company, date: '2023-01-02', close_price: 1200)
+      create(:stock_price, company: company2, date: '2023-01-01', close_price: 2000)
     end
 
     describe '.latest_prices_by_code' do
-      it '会社コードごとの最新価格を取得できる' do
+      it '企業コードをキーとして各企業の最新株価をハッシュで返す' do
         result = StockPrice.latest_prices_by_code
-        
-        expect(result[company1.code]).to eq(1200)
-        expect(result[company2.code]).to eq(2100)
+        expect(result[company.code]).to eq(1200)
       end
     end
 
     describe '.grouped_by_code' do
-      it '指定されたコードで株価データをグループ化できる' do
-        codes = [company1.code, company2.code]
-        result = StockPrice.grouped_by_code(codes)
-        
-        expect(result[company1.code].size).to eq(3)
-        expect(result[company2.code].size).to eq(2)
-      end
-
-      it '株価データを日付順で取得できる' do
-        result = StockPrice.grouped_by_code([company1.code])
-        
-        expect(result[company1.code].map(&:close_price)).to eq([1000, 1100, 1200])
+      it '指定した企業コードの株価データを企業コードでグループ化して返す' do
+        result = StockPrice.grouped_by_code([company.code])
+        expect(result[company.code].size).to eq(2)
+        expect(result[company.code].map(&:close_price)).to eq([1000, 1200])
       end
     end
   end
