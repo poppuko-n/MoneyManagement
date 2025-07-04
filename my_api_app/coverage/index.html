@@ -13,7 +13,7 @@
       <img src="./assets/0.13.1/loading.gif" alt="loading"/>
     </div>
     <div id="wrapper" class="hide">
-      <div class="timestamp">Generated <abbr class="timeago" title="2025-07-04T23:31:50+09:00">2025-07-04T23:31:50+09:00</abbr></div>
+      <div class="timestamp">Generated <abbr class="timeago" title="2025-07-04T23:44:24+09:00">2025-07-04T23:44:24+09:00</abbr></div>
       <ul class="group_tabs"></ul>
 
       <div id="content">
@@ -274,7 +274,7 @@
             <td class="cell--number">4</td>
             <td class="cell--number">4</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">1.00</td>
+            <td class="cell--number">1.50</td>
             
           </tr>
         
@@ -296,7 +296,7 @@
             <td class="cell--number">5</td>
             <td class="cell--number">5</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">1.00</td>
+            <td class="cell--number">2.20</td>
             
           </tr>
         
@@ -318,18 +318,18 @@
             <td class="cell--number">4</td>
             <td class="cell--number">4</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">2.50</td>
+            <td class="cell--number">3.00</td>
             
           </tr>
         
           <tr class="t-file">
             <td class="strong t-file__name"><a href="#990604c93ae1fd1550a4b9bd8d1f8ea1d664f6f1" class="src_link" title="spec/models/category_spec.rb">spec/models/category_spec.rb</a></td>
             <td class="green strong cell--number t-file__coverage">100.00 %</td>
-            <td class="cell--number">37</td>
+            <td class="cell--number">32</td>
             <td class="cell--number">21</td>
             <td class="cell--number">21</td>
             <td class="cell--number">0</td>
-            <td class="cell--number">1.43</td>
+            <td class="cell--number">1.00</td>
             
           </tr>
         
@@ -4659,9 +4659,9 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="3">
+          <li class="covered" data-hits="2" data-linenumber="3">
             
-              <span class="hits">1</span>
+              <span class="hits">2</span>
             
 
             
@@ -4671,9 +4671,9 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="4">
+          <li class="covered" data-hits="2" data-linenumber="4">
             
-              <span class="hits">1</span>
+              <span class="hits">2</span>
             
 
             
@@ -4869,9 +4869,9 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="3">
+          <li class="covered" data-hits="3" data-linenumber="3">
             
-              <span class="hits">1</span>
+              <span class="hits">3</span>
             
 
             
@@ -4881,9 +4881,9 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="4">
+          <li class="covered" data-hits="3" data-linenumber="4">
             
-              <span class="hits">1</span>
+              <span class="hits">3</span>
             
 
             
@@ -4893,9 +4893,9 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="5">
+          <li class="covered" data-hits="3" data-linenumber="5">
             
-              <span class="hits">1</span>
+              <span class="hits">3</span>
             
 
             
@@ -5091,9 +5091,9 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="3">
+          <li class="covered" data-hits="2" data-linenumber="3">
             
-              <span class="hits">1</span>
+              <span class="hits">2</span>
             
 
             
@@ -5103,9 +5103,9 @@
         </div>
       
         <div>
-          <li class="covered" data-hits="7" data-linenumber="4">
+          <li class="covered" data-hits="8" data-linenumber="4">
             
-              <span class="hits">7</span>
+              <span class="hits">8</span>
             
 
             
@@ -5185,43 +5185,43 @@
 
             
 
-            <code class="ruby">  describe &#39;バリデーションのテスト&#39; do</code>
+            <code class="ruby">  describe &#39;バリデーション&#39; do</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="4" data-linenumber="3">
+          <li class="covered" data-hits="1" data-linenumber="3">
             
-              <span class="hits">4</span>
-            
-
+              <span class="hits">1</span>
             
 
-            <code class="ruby">    subject { Category.new(name: name, transaction_type: transaction_type) }</code>
+            
+
+            <code class="ruby">    it &#39;カテゴリ名と取引種別が全て揃っていればvalid&#39; do</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="4">
+          <li class="covered" data-hits="1" data-linenumber="4">
             
-              <span class="hits">3</span>
-            
-
+              <span class="hits">1</span>
             
 
-            <code class="ruby">    let(:name) { &#39;教育費&#39; }</code>
+            
+
+            <code class="ruby">      category = Category.new(name: &#39;食費&#39;, transaction_type: &#39;支出&#39;)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="3" data-linenumber="5">
+          <li class="covered" data-hits="1" data-linenumber="5">
             
-              <span class="hits">3</span>
-            
-
+              <span class="hits">1</span>
             
 
-            <code class="ruby">    let(:transaction_type) { &#39;支出&#39; }</code>
+            
+
+            <code class="ruby">      expect(category).to be_valid</code>
           </li>
         </div>
       
@@ -5231,19 +5231,17 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="7">
-            
-              <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="7">
             
 
             
 
-            <code class="ruby">    context &#39;正常系&#39; do</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -5255,7 +5253,7 @@
 
             
 
-            <code class="ruby">      it &#39;有効なカテゴリである&#39; do</code>
+            <code class="ruby">    it &#39;カテゴリ名が空の場合はinvalidになり、エラーメッセージが表示される&#39; do</code>
           </li>
         </div>
       
@@ -5267,27 +5265,31 @@
 
             
 
-            <code class="ruby">        expect(subject).to be_valid</code>
+            <code class="ruby">      category = Category.new(transaction_type: &#39;支出&#39;)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="10">
+          <li class="covered" data-hits="1" data-linenumber="10">
+            
+              <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">      end</code>
+            <code class="ruby">      expect(category).not_to be_valid</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="11">
+          <li class="covered" data-hits="1" data-linenumber="11">
+            
+              <span class="hits">1</span>
             
 
             
 
-            <code class="ruby">    end</code>
+            <code class="ruby">      expect(category.errors[:name]).to include(&#39;を入力してください&#39;)</code>
           </li>
         </div>
       
@@ -5297,19 +5299,17 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">    end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="13">
-            
-              <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="13">
             
 
             
 
-            <code class="ruby">    context &#39;異常系&#39; do</code>
+            <code class="ruby"></code>
           </li>
         </div>
       
@@ -5321,29 +5321,31 @@
 
             
 
-            <code class="ruby">      context &#39;name が未入力&#39; do</code>
+            <code class="ruby">    it &#39;取引種別が空の場合はinvalidになり、エラーメッセージが表示される&#39; do</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="15">
+          <li class="covered" data-hits="1" data-linenumber="15">
             
-              <span class="hits">2</span>
-            
-
+              <span class="hits">1</span>
             
 
-            <code class="ruby">        let(:name) { &#39;&#39; }</code>
+            
+
+            <code class="ruby">      category = Category.new(name: &#39;食費&#39;)</code>
           </li>
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="16">
+          <li class="covered" data-hits="1" data-linenumber="16">
+            
+              <span class="hits">1</span>
             
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">      expect(category).not_to be_valid</code>
           </li>
         </div>
       
@@ -5355,83 +5357,85 @@
 
             
 
-            <code class="ruby">        it &#39;valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること&#39; do</code>
+            <code class="ruby">      expect(category.errors[:transaction_type]).to include(&#39;を入力してください&#39;)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="18">
-            
-              <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="18">
             
 
             
 
-            <code class="ruby">          aggregate_failures do</code>
+            <code class="ruby">    end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="19">
-            
-              <span class="hits">1</span>
+          <li class="never" data-hits="" data-linenumber="19">
             
 
             
 
-            <code class="ruby">            expect(subject).not_to be_valid</code>
+            <code class="ruby">  end</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="20">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">            expect(subject.errors[:name]).to include(&#39;を入力してください&#39;)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="21">
-            
-
-            
-
-            <code class="ruby">          end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="22">
-            
-
-            
-
-            <code class="ruby">        end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="23">
-            
-
-            
-
-            <code class="ruby">      end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="24">
+          <li class="never" data-hits="" data-linenumber="20">
             
 
             
 
             <code class="ruby"></code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="21">
+            
+              <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">  describe &#39;アソシエーション&#39; do</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="22">
+            
+              <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">    it &#39;複数のExpenseLogを持つことができる&#39; do</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="23">
+            
+              <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">      category = create(:category)</code>
+          </li>
+        </div>
+      
+        <div>
+          <li class="covered" data-hits="1" data-linenumber="24">
+            
+              <span class="hits">1</span>
+            
+
+            
+
+            <code class="ruby">      user = create(:user)</code>
           </li>
         </div>
       
@@ -5443,19 +5447,19 @@
 
             
 
-            <code class="ruby">      context &#39;transaction_type が未入力&#39; do</code>
+            <code class="ruby">      expense_log1 = create(:expense_log, category: category, user: user)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="2" data-linenumber="26">
+          <li class="covered" data-hits="1" data-linenumber="26">
             
-              <span class="hits">2</span>
-            
-
+              <span class="hits">1</span>
             
 
-            <code class="ruby">        let(:transaction_type) { &#39;&#39; }</code>
+            
+
+            <code class="ruby">      expense_log2 = create(:expense_log, category: category, user: user)</code>
           </li>
         </div>
       
@@ -5465,7 +5469,7 @@
 
             
 
-            <code class="ruby"></code>
+            <code class="ruby">      </code>
           </li>
         </div>
       
@@ -5477,7 +5481,7 @@
 
             
 
-            <code class="ruby">        it &#39;valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること&#39; do</code>
+            <code class="ruby">      expect(category.expense_logs).to include(expense_log1, expense_log2)</code>
           </li>
         </div>
       
@@ -5489,66 +5493,12 @@
 
             
 
-            <code class="ruby">          aggregate_failures do</code>
+            <code class="ruby">      expect(category.expense_logs.size).to eq(2)</code>
           </li>
         </div>
       
         <div>
-          <li class="covered" data-hits="1" data-linenumber="30">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">            expect(subject).not_to be_valid</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="covered" data-hits="1" data-linenumber="31">
-            
-              <span class="hits">1</span>
-            
-
-            
-
-            <code class="ruby">            expect(subject.errors[:transaction_type]).to include(&#39;を入力してください&#39;)</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="32">
-            
-
-            
-
-            <code class="ruby">          end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="33">
-            
-
-            
-
-            <code class="ruby">        end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="34">
-            
-
-            
-
-            <code class="ruby">      end</code>
-          </li>
-        </div>
-      
-        <div>
-          <li class="never" data-hits="" data-linenumber="35">
+          <li class="never" data-hits="" data-linenumber="30">
             
 
             
@@ -5558,7 +5508,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="36">
+          <li class="never" data-hits="" data-linenumber="31">
             
 
             
@@ -5568,7 +5518,7 @@
         </div>
       
         <div>
-          <li class="never" data-hits="" data-linenumber="37">
+          <li class="never" data-hits="" data-linenumber="32">
             
 
             
