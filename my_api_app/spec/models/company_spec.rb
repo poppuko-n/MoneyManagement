@@ -1,65 +1,86 @@
 RSpec.describe Company, type: :model do
-  let!(:company_alpha) { create(:company, code: 1, name: 'アルファ食品', sector_name: '食品') }
-  let!(:company_beta) { create(:company, code: 2, name: 'ベータ食品', sector_name: '食品') }
-
-  describe 'バリデーションのテスト' do
-    subject { Company.new(code: code, name: name, sector_name: sector_name) }
-    let(:sector_name) { '食品' }
-    let(:code) { 3 }
-    let(:name) { "test_company" }
-
-    context '正常系' do
-      it '有効な企業である' do
-        expect(subject).to be_valid
-      end
+  describe 'バリデーション' do
+    it '企業コード、企業名、業種名が全て揃っていればvalid' do
+      company = Company.new(code: 1001, name: 'テスト会社', sector_name: '情報・通信業')
+      expect(company).to be_valid
     end
 
-    context '異常系' do
-      context 'codeが未入力' do
-        let(:code) { '' }
-        it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          aggregate_failures do
-            expect(subject).not_to be_valid
-            expect(subject.errors[:code]).to include("を入力してください")
-          end
-        end
-      end
+    it '企業コードが空の場合はinvalidになり、エラーメッセージが表示される' do
+      company = Company.new(name: 'テスト会社', sector_name: '情報・通信業')
+      expect(company).not_to be_valid
+      expect(company.errors[:code]).to include('を入力してください')
+    end
 
-      context 'nameが未入力' do
-        let(:name) { '' }
-        it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          aggregate_failures do
-            expect(subject).not_to be_valid
-            expect(subject.errors[:name]).to include("を入力してください")
-          end
-        end
-      end
+    it '企業名が空の場合はinvalidになり、エラーメッセージが表示される' do
+      company = Company.new(code: 1001, sector_name: '情報・通信業')
+      expect(company).not_to be_valid
+      expect(company.errors[:name]).to include('を入力してください')
+    end
 
-      context 'sector_nameが未入力' do
-        let(:sector_name) { '' }
-        it 'valid?メソッドがfalseを返し、errorsに「入力してください」と格納されること' do
-          aggregate_failures do
-            expect(subject).not_to be_valid
-            expect(subject.errors[:sector_name]).to include("を入力してください")
-          end
-        end
-      end
+    it '業種名が空の場合はinvalidになり、エラーメッセージが表示される' do
+      company = Company.new(code: 1001, name: 'テスト会社')
+      expect(company).not_to be_valid
+      expect(company.errors[:sector_name]).to include('を入力してください')
+    end
 
-      context 'codeが重複している場合' do
-        subject { Company.new(code: 1, name: "新会社", sector_name: "新業種") }
-        it 'valid?メソッドがfalseを返し、errorsに「すでに存在します」と格納されること' do
-          aggregate_failures do
-            expect(subject).not_to be_valid
-            expect(subject.errors[:code]).to include("はすでに存在します")
-          end
-        end
-      end
+    it '企業コードが重複している場合はinvalidになり、エラーメッセージが表示される' do
+      create(:company, code: 1001)
+      company = Company.new(code: 1001, name: '別の会社', sector_name: '別の業種')
+      expect(company).not_to be_valid
+      expect(company.errors[:code]).to include('はすでに存在します')
     end
   end
 
-  describe 'アソシエーションのテスト' do
-    it '株価データを関連づけられる' do
-      expect(company_alpha.stock_prices).to be_empty
+  describe 'アソシエーション' do
+    it 'codeを外部キーとして複数のStockPriceを持つ' do
+      company = create(:company)
+      stock_price = create(:stock_price, company: company)
+      expect(company.stock_prices).to include(stock_price)
+    end
+  end
+
+  describe 'クラスメソッド' do
+    let(:company1) { create(:company, code: 1001, name: '会社1') }
+    let(:company2) { create(:company, code: 1002, name: '会社2') }
+    
+    before do
+      create(:stock_price, company: company1, date: '2023-01-01', close_price: 1000)
+      create(:stock_price, company: company1, date: '2023-01-02', close_price: 1100)
+      create(:stock_price, company: company1, date: '2023-01-03', close_price: 1200)
+      
+      create(:stock_price, company: company2, date: '2023-01-01', close_price: 2000)
+      create(:stock_price, company: company2, date: '2023-01-02', close_price: 2500)
+    end
+
+    describe '.all_with_latest_prices' do
+      it '全CompanyオブジェクトをJSONに変換し、最新株価を付与したハッシュの配列を返す' do
+        result = Company.all_with_latest_prices
+        
+        expect(result).to be_an(Array)
+        expect(result.size).to eq(2)
+        
+        company1_data = result.find { |c| c['code'] == company1.code }
+        expect(company1_data['code']).to eq(company1.code)
+        expect(company1_data['name']).to eq(company1.name)
+        expect(company1_data['sector_name']).to eq(company1.sector_name)
+        expect(company1_data['latest_price']).to eq(1200)
+        
+        company2_data = result.find { |c| c['code'] == company2.code }
+        expect(company2_data['code']).to eq(company2.code)
+        expect(company2_data['name']).to eq(company2.name)
+        expect(company2_data['sector_name']).to eq(company2.sector_name)
+        expect(company2_data['latest_price']).to eq(2500)
+        
+      end
+    end
+
+    describe '.indexed_by_code' do
+      it '指定した企業コードに対応するCompanyオブジェクトをハッシュで返す' do
+        result = Company.indexed_by_code([company1.code, company2.code])
+        
+        expect(result[company1.code]).to eq(company1)
+        expect(result[company2.code]).to eq(company2)
+      end
     end
   end
 end
