@@ -10,7 +10,7 @@ class Company < ApplicationRecord
     all.map { |c| c.as_json.merge("latest_price" => latest_prices[c.code]) }
   end
 
-  def self.map_by_code(codes)
+  def self.indexed_by_code(codes)
     where(code: codes).index_by(&:code)
   end
 end

@@ -1,25 +1,35 @@
 class StockPrices::ProjectionsController < ApplicationController
-  def create
-    companies = Company.map_by_code(company_codes)
-    prices = StockPrice.grouped_by_company_code(company_codes)
+    def create
+    company_map = Company.indexed_by_code(set_target_codes)
+    price_groups = StockPrice.grouped_by_code(set_target_codes)
     
-    render json: params[:data].map { |data| build_projection_result(data, companies, prices) }
+    render json: set_target_codes.map { |code| build_projection_result(code, company_map, price_groups) }
   end
 
   private
 
-  def company_codes
-    params[:data].map { |t| t[:code] }
+  def set_target_codes
+    params[:data].map { |d| d[:code] }
   end
 
-  def build_projection_result(data, companies, prices)
+  # @param [Hash<String, Company>] company_map 
+  # @param [Hash<String, Array<StockPrice>>] price_groups
+  def build_projection_result(code, company_map, price_groups)
+    company = company_map[code]
+    prices = price_groups[code]
+    quantity = quantity_for_code(code)
+    
     {
-      name: companies[data[:code]].name,
-      current_price: prices[data[:code]].max_by(&:date).close_price,
-      quantity: data[:quantity],
-      one_time: simulate_one_time(data[:quantity], prices[data[:code]]),
-      accumulated: simulate_accumulated(data[:quantity], prices[data[:code]])
+      name: company.name,
+      current_price: prices.max_by(&:date)&.close_price,
+      quantity: quantity,
+      one_time: simulate_one_time(quantity, prices),
+      accumulated: simulate_accumulated(quantity, prices)
     }
+  end
+
+  def quantity_for_code(code)
+    params[:data].find { |d| d[:code] == code }[:quantity]
   end
 
   def simulate_one_time(quantity, prices)

@@ -9,7 +9,7 @@ class StockPrice < ApplicationRecord
     where(id: latest_ids).pluck(:company_code, :close_price).to_h
   end
 
-  def self.grouped_by_company_code(codes)
+  def self.grouped_by_code(codes)
     where(company_code: codes).group_by(&:company_code)
   end
 end
