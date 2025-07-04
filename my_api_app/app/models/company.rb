@@ -5,15 +5,12 @@ class Company < ApplicationRecord
   validates :name, presence: true
   validates :sector_name, presence: true
 
-  def latest_stock_price
-    stock_prices.order(date: :desc).limit(1).pluck(:close_price).first
+  def self.all_with_latest_prices
+    latest_prices = StockPrice.latest_prices_by_code
+    all.map { |c| c.as_json.merge("latest_price" => latest_prices[c.code]) }
   end
 
-  def self.all_with_latest_prices(latest_price_map)
-    all.map { |c| c.as_json.merge(latest_price: latest_price_map[c.code]) }
-  end
-
-  def self.map_by_code(codes)
+  def self.indexed_by_code(codes)
     where(code: codes).index_by(&:code)
   end
 end
