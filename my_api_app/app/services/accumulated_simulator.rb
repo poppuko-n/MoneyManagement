@@ -30,11 +30,11 @@ class AccumulatedSimulator
   def calculate_total_value(month, monthly_growth_rates)
     total_value = 0
     
+
     month.times do |i|
       total_value += @monthly_deposit
-      
-      current_month_growth_rate = monthly_growth_rates[month - 1 - i]
-      total_value *= current_month_growth_rate
+      growth_rate = monthly_growth_rates[i]
+      total_value *= growth_rate
     end
     
     total_value
@@ -44,14 +44,13 @@ class AccumulatedSimulator
     monthly_averages = TARGET_PERIODS.map { |month| calculate_monthly_average_price(month) }
     monthly_averages.unshift(@latest_price)
     
-    # 各月間の成長率を配列で格納
-    monthly_averages.each_cons(2).map { |current, previous| current.to_f / previous }
+    monthly_averages.each_cons(2).map { |current, previous| current.to_f / previous }.reverse
   end
 
   def calculate_monthly_average_price(month)
     start_date = month.months.ago
     end_date = (month - 1).months.ago
-
+    
     month_prices = @prices.select { |p| p.date >= start_date && p.date < end_date }
     month_prices.sum(&:close_price).to_f / month_prices.count
   end
