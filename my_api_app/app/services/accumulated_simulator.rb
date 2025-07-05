@@ -1,49 +1,61 @@
 class AccumulatedSimulator
   TARGET_PERIODS = (1..12).to_a
 
+  # 積立投資シミュレーションを実行するクラス
+  #
+  # @param quantity [Integer] 毎月の投資数量
+  # @param prices [Array<StockPrice>] 株価データの配列
   def initialize(quantity, prices)
     @quantity = quantity
-    @prices = prices
+    @prices = prices.sort_by(&:date)
+    @latest_price = @prices.last.close_price
+    @monthly_deposit = @latest_price * @quantity
   end
 
   def call
-    TARGET_PERIODS.map { |month| to_api(month) }
+    monthly_growth_rates = calculate_monthly_growth_rates
+    TARGET_PERIODS.map { |month| build_monthly_result(month, monthly_growth_rates) }
   end
 
   private
 
-  def latest_price
-    @prices.max_by(&:date)&.close_price
-  end
-
-  def calculate_monthly_deposit
-    latest_price * @quantity
-  end
-
-  def calculate_total_value(month)
-    month.times.sum do |i|
-      calculate_monthly_deposit * (calculate_average_growth_rate ** (month - i))
-    end
-  end
-
-  def calculate_average_growth_rate
-    past_prices = TARGET_PERIODS.map { |m| calculate_past_average_price(m) }
-    past_prices.unshift(latest_price)
-    rates = past_prices.each_cons(2).map { |to, from| to.to_f / from }
-    rates.sum / rates.size
-  end
-
-  def calculate_past_average_price(month)
-    start_date = Date.today - month.months
-    prices = @prices.select { |p| p.date >= start_date }.first(30)
-    prices.sum(&:close_price).to_f / prices.size
-  end
-
-  def to_api(month)
+  def build_monthly_result(month, monthly_growth_rates)
     {
       period: "#{month}_month",
-      value: calculate_total_value(month).round,
-      deposit: calculate_monthly_deposit * month
+      value: calculate_total_value(month, monthly_growth_rates).round,
+      deposit: @monthly_deposit * month
     }
   end
+
+  def calculate_total_value(month, monthly_growth_rates)
+    total_value = 0
+    
+    month.times do |i|
+      total_value += @monthly_deposit
+      
+      current_month_growth_rate = monthly_growth_rates[month - 1 - i]
+      total_value *= current_month_growth_rate
+    end
+    
+    total_value
+  end
+
+  def calculate_monthly_growth_rates
+    monthly_averages = TARGET_PERIODS.map { |month| calculate_monthly_average_price(month) }
+    monthly_averages.unshift(@latest_price)
+    
+    # 各月間の成長率を配列で格納
+    monthly_averages.each_cons(2).map { |current, previous| current.to_f / previous }
+  end
+
+  def calculate_monthly_average_price(month)
+    start_date = month.months.ago
+    end_date = (month - 1).months.ago
+    
+    # バイナリサーチで効率化可能だが、select で十分
+    month_prices = @prices.select { |p| p.date >= start_date && p.date < end_date }
+    
+    month_prices.sum(&:close_price).to_f / month_prices.count
+  end
 end
+
