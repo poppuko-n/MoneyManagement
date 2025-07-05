@@ -72,14 +72,5 @@ RSpec.describe Company, type: :model do
         expect(company2_data['latest_price']).to eq(2500)
       end
     end
-
-    describe '.indexed_by_code' do
-      it '指定した企業コードに対応するCompanyオブジェクトをハッシュで返す' do
-        result = Company.indexed_by_code([ company1.code, company2.code ])
-
-        expect(result[company1.code]).to eq(company1)
-        expect(result[company2.code]).to eq(company2)
-      end
-    end
   end
 end
