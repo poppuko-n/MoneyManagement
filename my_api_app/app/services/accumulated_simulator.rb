@@ -51,10 +51,8 @@ class AccumulatedSimulator
   def calculate_monthly_average_price(month)
     start_date = month.months.ago
     end_date = (month - 1).months.ago
-    
-    # バイナリサーチで効率化可能だが、select で十分
+
     month_prices = @prices.select { |p| p.date >= start_date && p.date < end_date }
-    
     month_prices.sum(&:close_price).to_f / month_prices.count
   end
 end
