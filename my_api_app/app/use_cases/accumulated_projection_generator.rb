@@ -1,4 +1,4 @@
-class AccumulatedSimulator
+class AccumulatedProjectionGenerator
   TARGET_PERIODS = (1..12).to_a
 
   # 積立投資シミュレーションを実行するクラス

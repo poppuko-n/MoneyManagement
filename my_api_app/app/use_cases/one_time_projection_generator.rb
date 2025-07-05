@@ -1,4 +1,4 @@
-class OneTimeSimulator
+class OneTimeProjectionGenerator
   TARGET_PERIODS = (1..12).to_a
 
   # 一括投資シミュレーションを実行するクラス
