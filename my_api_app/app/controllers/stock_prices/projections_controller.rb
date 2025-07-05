@@ -8,6 +8,6 @@ class StockPrices::ProjectionsController < ApplicationController
   private
 
   def projection_params
-    params.require(:data).map { |i| i.permit(:code, :quantity) }
+    JSON.parse(params[:data])
   end
 end

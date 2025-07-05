@@ -1,13 +1,12 @@
 class ProjectionGenerator
   def initialize(request_data)
     @request_data = request_data
-    @target_codes = @request_data.map { |d| d[:code] }
+    @target_codes = @request_data.map { |d| d["code"] }
   end
 
   def call
     company_map = Company.indexed_by_code(@target_codes)
     price_groups = StockPrice.grouped_by_code(@target_codes)
-
     @target_codes.map { |code| build_projection_result(code, company_map, price_groups) }
   end
 
@@ -28,6 +27,6 @@ class ProjectionGenerator
   end
 
   def quantity_for_code(code)
-    @request_data.find { |d| d[:code] == code }[:quantity]
+    @request_data.find { |d| d["code"] == code }["quantity"]
   end
 end

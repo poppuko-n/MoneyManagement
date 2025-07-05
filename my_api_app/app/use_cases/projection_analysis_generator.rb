@@ -1,11 +1,10 @@
-class AiAnalyzer
+class ProjectionAnalysisGenerator
   BASE_URL = "https://api.openai.com/v1/chat/completions".freeze
-  def initialize(results)
-    @results = results
+  def initialize(projection_results)
+    @projection_results = projection_results
   end
 
   def call
-    prompt = build_prompt(build_simulation_result_list)
     response = HTTParty.post(
       BASE_URL,
       headers: {
@@ -14,15 +13,15 @@ class AiAnalyzer
       },
       body: {
         model: "gpt-4",
-        messages: [ { role: "user", content: prompt } ]
+        messages: [ { role: "user", content: build_prompt } ]
       }.to_json
-      )
+    )
     JSON.parse(response.body)["choices"][0]["message"]["content"]
   end
 
   private
 
-  def build_prompt(build_simulation_result_list)
+  def build_prompt
     <<~PROMPT
       あなたは投資初心者向けのアドバイザー。
       以下はシミュレーション結果。
@@ -37,19 +36,16 @@ class AiAnalyzer
       - ２つ以上の銘柄がある場合は、銘柄毎ではなく全体的な傾向を分析して。
       - 回答は、敬語で。
       ### シミュレーション結果
-      #{build_simulation_result_list}
+      #{format_results}
     PROMPT
   end
 
-  def build_simulation_result_list
-    @results.map do |result|
-      name = result[:name]
-      one_time = result[:one_time]
-      accumulated = result[:accumulated]
+  def format_results
+    @projection_results.map do |result|
       <<~T
-        #{name}
-        一括: #{one_time.map { |s| "#{s[:period]}=#{s[:value]}(#{s[:deposit]})" }.join(", ")}
-        積立: #{accumulated.map { |s| "#{s[:period]}=#{s[:value]}(#{s[:deposit]})" }.join(", ")}
+        #{result["name"]}
+        一括: #{result["one_time"].map { |s| "#{s["period"]}=#{s["value"]}(#{s["deposit"]})" }.join(", ")}
+        積立: #{result["accumulated"].map { |s| "#{s["period"]}=#{s["value"]}(#{s["deposit"]})" }.join(", ")}
       T
     end.join("\n")
   end

@@ -1,7 +1,13 @@
 class StockPrices::ProjectionAnalysesController < ApplicationController
-  # POST /stock_price/projections_analyses
-  def create
-    results = AiAnalyzer.new(params[:data]).call
-    render json: results, status: :ok
+  # GET /stock_prices/projection_analyses
+  def index
+    result = ProjectionAnalysisGenerator.new(projection_results).call
+    render json: result, status: :ok
+  end
+
+  private
+
+  def projection_results
+    JSON.parse(params[:data])
   end
 end

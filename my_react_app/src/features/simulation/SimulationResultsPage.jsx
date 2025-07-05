@@ -17,7 +17,7 @@ const SimulationResultsPage = ({projectionResults}) => {
   }));
 
   useEffect(()=>{
-    CompanyApi.createProjectionsAnalyses({data: projectionResults})
+    CompanyApi.getProjectionAnalyses(projectionResults)
       .then(response => setAiAnalysis(response.data))
   },[])
 
