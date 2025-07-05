@@ -8,11 +8,10 @@ class CompanyApi {
     return response.data
   }
 
-  static async createProjections(payload) {
-    const response = await axios.post(
-      `${this.apiBaseUrl}/stock_prices/projections`,
-      payload
-    );
+  static async getProjections(payload) {
+    const response = await axios.get(`${this.apiBaseUrl}/stock_prices/projections`, {
+      params: { data: payload }
+    });
     return response.data;
   }
 

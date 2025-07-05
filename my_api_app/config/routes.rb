@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resource :session, only: [ :show, :create, :destroy ]
 
   namespace :stock_prices do
-    resources :projections, only: %i[create]
+    resources :projections, only: %i[index]
     resources :projection_analyses, only: %i[create]
     resources :refreshes, only: %i[create]
   end

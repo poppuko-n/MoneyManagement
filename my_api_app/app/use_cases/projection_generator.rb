@@ -30,4 +30,4 @@ class ProjectionGenerator
   def quantity_for_code(code)
     @request_data.find { |d| d[:code] == code }[:quantity]
   end
-end 
+end

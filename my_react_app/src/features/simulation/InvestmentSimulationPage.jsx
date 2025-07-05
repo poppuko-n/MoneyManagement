@@ -60,7 +60,7 @@ const InvestmentSimulationPage = () => {
 
     setIsLoading(true);
     try {
-      const results = await CompanyApi.createProjections({ data: selectedCompanies });
+      const results = await CompanyApi.getProjections(selectedCompanies);
       setProjectionResults(results);
       setIsSimulationResultVisible(true);
     } catch(error) {
