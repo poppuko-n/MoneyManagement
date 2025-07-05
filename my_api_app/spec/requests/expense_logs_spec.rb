@@ -12,7 +12,7 @@ RSpec.describe "Expense_logs", type: :request do
       create(:expense_log, date: Date.new(2025, 5, 1), item: '夕食', amount: 1500, category: category, user: user)
       create(:expense_log, date: Date.new(2024, 5, 1), item: '去年の昼食', amount: 800, category: category, user: user)
     end
-    
+
     it '指定した年月の家計記録を取得することができる' do
       get '/expense_logs', params: { year: '2025', month: '05' }
       expect(response).to have_http_status(:ok)
@@ -116,7 +116,7 @@ RSpec.describe "Expense_logs", type: :request do
   describe 'DELETE /expense_logs/:id' do
     it 'ログを削除することができる' do
       expense_log = create(:expense_log, category: category, user: user)
-      
+
       expect {
         delete "/expense_logs/#{expense_log.id}"
       }.to change(ExpenseLog, :count).by(-1)

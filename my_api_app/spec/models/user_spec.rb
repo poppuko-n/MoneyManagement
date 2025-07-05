@@ -13,9 +13,9 @@ RSpec.describe User, type: :model do
 
     it '同じ名前のユーザーは作成できない' do
       create(:user, name: '田中太郎')
-      
+
       duplicate_user = User.new(name: '田中太郎', password: 'another_password')
-      
+
       expect(duplicate_user).not_to be_valid
       expect(duplicate_user.errors.full_messages).to include('名前 はすでに存在します')
     end
@@ -33,7 +33,7 @@ RSpec.describe User, type: :model do
         category: category,
         user: user
       )
-      
+
       coffee_log = ExpenseLog.create(
         date: Date.new(2024, 1, 16),
         item: 'スターバックス',
@@ -41,7 +41,7 @@ RSpec.describe User, type: :model do
         category: category,
         user: user
       )
-      
+
       expect(user.expense_logs.count).to eq(2)
       expect(user.expense_logs).to include(lunch_log, coffee_log)
     end
