@@ -12,8 +12,7 @@ class AccumulatedProjectionGenerator
   end
 
   def call
-    growth_rates = calculate_growth_rates
-    TARGET_PERIODS.map { |month| create_monthly_result(month, growth_rates) }
+    TARGET_PERIODS.map { |month| create_monthly_result(month, calculate_growth_rates) }
   end
 
   private
@@ -21,21 +20,21 @@ class AccumulatedProjectionGenerator
   def create_monthly_result(month, growth_rates)
     {
       period: "#{month}_month",
-      value: calculate_monthly_value(month, growth_rates),
+      value: calculate_accumulated_value_for_month(month, growth_rates),
       deposit: @monthly_purchase_amount * month
     }
   end
 
-  def calculate_monthly_value(month, growth_rates)
-    accumulated_value = 0
+  def calculate_accumulated_value_for_month(month, growth_rates)
+    value = 0
 
+    # 評価額に積立額を加え、成長率をかけて複利運用
     month.times do |month_index|
-      accumulated_value += @monthly_purchase_amount
-      growth_rate = growth_rates[month_index]
-      accumulated_value *= growth_rate
+      value += @monthly_purchase_amount
+      value *= growth_rates[month_index]
     end
 
-    accumulated_value.round
+    value.round
   end
 
   def calculate_growth_rates
@@ -48,7 +47,7 @@ class AccumulatedProjectionGenerator
   def calculate_average_price_for_month(month)
     period_start = month.months.ago
     period_end = (month - 1).months.ago
-
+    # 積立投資の分散効果を表現するため、1ヶ月間の株価の平均を算出
     prices_in_period = @prices.select { |price| price.date >= period_start && price.date < period_end }
     prices_in_period.sum(&:close_price).to_f / prices_in_period.count
   end
