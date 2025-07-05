@@ -62,7 +62,7 @@ RSpec.describe ExpenseLog, type: :model do
       it '指定した期間内のExpenseLogを取得する' do
         range = Date.new(2023, 1, 1)..Date.new(2023, 2, 28)
         result = ExpenseLog.in_date_range(range)
-        
+
         expect(result.count).to eq(2)
         expect(result.pluck(:date)).to include(Date.new(2023, 1, 15), Date.new(2023, 2, 10))
       end
@@ -81,7 +81,7 @@ RSpec.describe ExpenseLog, type: :model do
       it 'JSONにカテゴリの取引種別と名前を付与したハッシュを返す' do
         expense_log = create(:expense_log, category: category, user: user)
         result = expense_log.as_json_with_category
-        
+
         expect(result[:transaction_type]).to eq(category.transaction_type)
         expect(result[:category_name]).to eq(category.name)
       end

@@ -4,7 +4,7 @@ class OneTimeSimulator
   # 一括投資シミュレーションを実行するクラス
   #
   # @param quantity [Integer] 投資数量
-  # @param prices [Array<StockPrice>] 
+  # @param prices [Array<StockPrice>]
   def initialize(quantity, prices)
     @quantity = quantity
     @prices = prices.sort_by(&:date)
@@ -39,7 +39,7 @@ class OneTimeSimulator
   def calculate_monthly_growth_rates
     monthly_prices = TARGET_PERIODS.map { |month| find_monthly_price(month) }
     monthly_prices.unshift(@current_price)
-    
+
     monthly_prices.each_cons(2).map { |current, previous| current.to_f / previous }.reverse
   end
 

@@ -24,7 +24,7 @@ RSpec.describe Category, type: :model do
       user = create(:user)
       expense_log1 = create(:expense_log, category: category, user: user)
       expense_log2 = create(:expense_log, category: category, user: user)
-      
+
       expect(category.expense_logs).to include(expense_log1, expense_log2)
       expect(category.expense_logs.size).to eq(2)
     end

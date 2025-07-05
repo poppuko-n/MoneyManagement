@@ -2,7 +2,7 @@ class StockPrices::ProjectionsController < ApplicationController
     def create
     company_map = Company.indexed_by_code(set_target_codes)
     price_groups = StockPrice.grouped_by_code(set_target_codes)
-    
+
     render json: set_target_codes.map { |code| build_projection_result(code, company_map, price_groups) }
   end
 
@@ -12,13 +12,13 @@ class StockPrices::ProjectionsController < ApplicationController
     params[:data].map { |d| d[:code] }
   end
 
-  # @param [Hash<String, Company>] company_map 
+  # @param [Hash<String, Company>] company_map
   # @param [Hash<String, Array<StockPrice>>] price_groups
   def build_projection_result(code, company_map, price_groups)
     company = company_map[code]
     prices = price_groups[code]
     quantity = quantity_for_code(code)
-    
+
     {
       name: company.name,
       current_price: prices.max_by(&:date)&.close_price,

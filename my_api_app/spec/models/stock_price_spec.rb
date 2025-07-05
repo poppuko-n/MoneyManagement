@@ -44,9 +44,9 @@ RSpec.describe StockPrice, type: :model do
 
     describe '.grouped_by_code' do
       it '指定した企業コードの株価データを企業コードでグループ化して返す' do
-        result = StockPrice.grouped_by_code([company.code])
+        result = StockPrice.grouped_by_code([ company.code ])
         expect(result[company.code].size).to eq(2)
-        expect(result[company.code].map(&:close_price)).to eq([1000, 1200])
+        expect(result[company.code].map(&:close_price)).to eq([ 1000, 1200 ])
       end
     end
   end
