@@ -8,49 +8,49 @@ class AccumulatedSimulator
   def initialize(quantity, prices)
     @quantity = quantity
     @prices = prices.sort_by(&:date)
-    @latest_price = @prices.last.close_price
-    @monthly_deposit = @latest_price * @quantity
+    @purchase_price = @prices.last.close_price
+    @monthly_purchase_amount = @purchase_price * @quantity
   end
 
   def call
-    monthly_growth_rates = calculate_monthly_growth_rates
-    TARGET_PERIODS.map { |month| build_monthly_result(month, monthly_growth_rates) }
+    growth_rates = calculate_growth_rates
+    TARGET_PERIODS.map { |month| create_monthly_result(month, growth_rates) }
   end
 
   private
 
-  def build_monthly_result(month, monthly_growth_rates)
+  def create_monthly_result(month, growth_rates)
     {
       period: "#{month}_month",
-      value: calculate_total_value(month, monthly_growth_rates).round,
-      deposit: @monthly_deposit * month
+      value: calculate_monthly_value(month, growth_rates),
+      deposit: @monthly_purchase_amount * month
     }
   end
 
-  def calculate_total_value(month, monthly_growth_rates)
-    total_value = 0
+  def calculate_monthly_value(month, growth_rates)
+    accumulated_value = 0
 
-    month.times do |i|
-      total_value += @monthly_deposit
-      growth_rate = monthly_growth_rates[i]
-      total_value *= growth_rate
+    month.times do |month_index|
+      accumulated_value += @monthly_purchase_amount
+      growth_rate = growth_rates[month_index]
+      accumulated_value *= growth_rate
     end
 
-    total_value
+    accumulated_value.round
   end
 
-  def calculate_monthly_growth_rates
-    monthly_averages = TARGET_PERIODS.map { |month| calculate_monthly_average_price(month) }
-    monthly_averages.unshift(@latest_price)
+  def calculate_growth_rates
+    historical_averages = TARGET_PERIODS.map { |month| calculate_average_price_for_month(month) }
+    historical_averages.unshift(@purchase_price)
 
-    monthly_averages.each_cons(2).map { |current, previous| current.to_f / previous }.reverse
+    historical_averages.each_cons(2).map { |current_price, previous_price| current_price.to_f / previous_price }.reverse
   end
 
-  def calculate_monthly_average_price(month)
-    start_date = month.months.ago
-    end_date = (month - 1).months.ago
+  def calculate_average_price_for_month(month)
+    period_start = month.months.ago
+    period_end = (month - 1).months.ago
 
-    month_prices = @prices.select { |p| p.date >= start_date && p.date < end_date }
-    month_prices.sum(&:close_price).to_f / month_prices.count
+    prices_in_period = @prices.select { |price| price.date >= period_start && price.date < period_end }
+    prices_in_period.sum(&:close_price).to_f / prices_in_period.count
   end
 end

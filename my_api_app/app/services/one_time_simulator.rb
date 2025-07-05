@@ -8,45 +8,40 @@ class OneTimeSimulator
   def initialize(quantity, prices)
     @quantity = quantity
     @prices = prices.sort_by(&:date)
-    @current_price = @prices.last.close_price
-    @fixed_deposit = @current_price * @quantity
+    @purchase_price = @prices.last.close_price
+    @purchase_amount = @purchase_price * @quantity
   end
 
   def call
-    monthly_growth_rates = calculate_monthly_growth_rates
-    TARGET_PERIODS.map { |month| build_monthly_result(month, monthly_growth_rates) }
+    growth_rates = calculate_growth_rates
+    TARGET_PERIODS.map { |month| create_monthly_result(month, growth_rates) }
   end
 
   private
 
-  def build_monthly_result(month, monthly_growth_rates)
+  def create_monthly_result(month, growth_rates)
     {
       period: "#{month}_month",
-      value: calculate_investment_value(month, monthly_growth_rates),
-      deposit: @fixed_deposit.round
+      value: calculate_monthly_value(month, growth_rates),
+      deposit: @purchase_amount
     }
   end
 
-  def calculate_investment_value(month, monthly_growth_rates)
-    value = @fixed_deposit
-    month.times do |i|
-      growth_rate = monthly_growth_rates[i]
-      value *= growth_rate
-    end
-    value.round
+  def calculate_monthly_value(month, growth_rates)
+    month.times.reduce(@purchase_amount) { |current_value, month_index| current_value * growth_rates[month_index] }.round
   end
 
-  def calculate_monthly_growth_rates
-    monthly_prices = TARGET_PERIODS.map { |month| find_monthly_price(month) }
-    monthly_prices.unshift(@current_price)
+  def calculate_growth_rates
+    historical_prices = TARGET_PERIODS.map { |month| find_price_at_months_ago(month) }
+    historical_prices.unshift(@purchase_price)
 
-    monthly_prices.each_cons(2).map { |current, previous| current.to_f / previous }.reverse
+    historical_prices.each_cons(2).map { |current_price, previous_price| current_price.to_f / previous_price }.reverse
   end
 
 
 
-  def find_monthly_price(month)
-    start_date = month.months.ago
-    @prices.find { |p| p.date >= start_date }&.close_price
+  def find_price_at_months_ago(month)
+    target_date = month.months.ago
+    @prices.find { |price| price.date >= target_date }.close_price
   end
 end
