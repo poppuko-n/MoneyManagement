@@ -6,10 +6,9 @@ class AccumulatedProjectionGenerator
   # @param quantity [Integer] 毎月の投資数量
   # @param prices [Array<StockPrice>] 株価データの配列
   def initialize(quantity, prices)
-    @quantity = quantity
     @prices = prices.sort_by(&:date)
     @purchase_price = @prices.last.close_price
-    @monthly_purchase_amount = @purchase_price * @quantity
+    @monthly_purchase_amount = @purchase_price * quantity
   end
 
   def call
@@ -42,8 +41,8 @@ class AccumulatedProjectionGenerator
   def calculate_growth_rates
     historical_averages = TARGET_PERIODS.map { |month| calculate_average_price_for_month(month) }
     historical_averages.unshift(@purchase_price)
-
-    historical_averages.each_cons(2).map { |current_price, previous_price| current_price.to_f / previous_price }.reverse
+   # 過去1年の成長パターンが今後も続くと仮定し、時系列を古い順に(reverse)
+    historical_averages.each_cons(2).map { |current, previous| current.to_f / previous }.reverse
   end
 
   def calculate_average_price_for_month(month)
