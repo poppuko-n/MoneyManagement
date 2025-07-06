@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   before_action :authenticate_user, only: [ :show, :destroy ]
+  before_action :check_xhr_header
 
   def show
     render json: { logged_in: true }, status: :ok

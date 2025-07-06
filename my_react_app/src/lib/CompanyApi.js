@@ -4,8 +4,8 @@ class CompanyApi {
   static apiBaseUrl = window.env?.API_BASE_URL || "http://localhost:3000"
 
   static async getCompanies() {
-    const response = await axios.get(`${this.apiBaseUrl}/companies`)
-    return response.data
+    const response = await axios.get(`${this.apiBaseUrl}/companies`);
+    return response.data;
   }
 
   static async getProjections(payload) {

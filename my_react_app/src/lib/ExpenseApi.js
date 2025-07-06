@@ -4,8 +4,10 @@ class ExpenseApi {
   static apiBaseUrl = window.env?.API_BASE_URL || "http://localhost:3000";
 
   static async getCategories() {
-    const response = await axios.get(`${this.apiBaseUrl}/categories`, {withCredentials: true})
-    return response.data
+    const response = await axios.get(`${this.apiBaseUrl}/categories`, {
+      withCredentials: true
+    });
+    return response.data;
   }
 
   static async getExpenseLogs(year, month) {
@@ -13,7 +15,8 @@ class ExpenseApi {
       `${this.apiBaseUrl}/expense_logs`,
       {
         params: { year, month },
-        withCredentials: true
+        withCredentials: true,
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
       }
     );
     return response.data;
@@ -23,7 +26,10 @@ class ExpenseApi {
     const response = await axios.post(
       `${this.apiBaseUrl}/expense_logs`,
       expenseLog,
-      {withCredentials: true}
+      { 
+        withCredentials: true,
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      }
     );
     return response.data;
   }
@@ -31,8 +37,11 @@ class ExpenseApi {
   static async showExpenseLog(expenseId) {
     const response = await axios.get(
       `${this.apiBaseUrl}/expense_logs/${expenseId}`,
-      { withCredentials: true}
-    )
+      { 
+        withCredentials: true,
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      }
+    );
     return response.data;
   }
 
@@ -40,14 +49,18 @@ class ExpenseApi {
     const response = await axios.patch(
       `${this.apiBaseUrl}/expense_logs/${expenseId}`,
       expense,
-      { withCredentials: true }
+      { 
+        withCredentials: true,
+        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+      }
     );
     return response.data;
   }
 
   static async deleteExpenseLog(expenseId) {
     await axios.delete(`${this.apiBaseUrl}/expense_logs/${expenseId}`, {
-      withCredentials: true
+      withCredentials: true,
+      headers: { 'X-Requested-With': 'XMLHttpRequest' }
     });
   }
 }
