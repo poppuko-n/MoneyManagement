@@ -20,12 +20,12 @@ class OneTimeProjectionGenerator
   def create_monthly_result(month, growth_rates)
     {
       period: "#{month}_month",
-      value: calculate_monthly_value(month, growth_rates),
+      value: calculate_monthly_value_for_month(month, growth_rates),
       deposit: @purchase_amount
     }
   end
 
-  def calculate_monthly_value(month, growth_rates)
+  def calculate_monthly_value_for_month(month, growth_rates)
     month.times.reduce(@purchase_amount) do |current_value, index|
       (current_value * growth_rates[index]).round
     end
