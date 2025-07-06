@@ -6,7 +6,7 @@ class ExpenseLog < ApplicationRecord
   validates :item, presence: true
   validates :amount, presence: true, numericality: { greater_than: 0 }
 
-  scope :in_date_range, ->(range) { where(date: range) }
+  scope :by_date_range, ->(range) { where(date: range) }
   scope :with_category, -> { preload(:category) }
 
   def as_json_with_category
