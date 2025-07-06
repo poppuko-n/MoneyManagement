@@ -1,7 +1,7 @@
 class StockPrices::RefreshesController < ApplicationController
   # POST /stock_prices/refreshes
   def create
-    StockPriceRefresher.new.call
+    StockPriceRefresher.call
     render json: { message: "Stock prices refreshed" }, status: :ok
   end
 end

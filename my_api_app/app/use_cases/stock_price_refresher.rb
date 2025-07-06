@@ -1,5 +1,7 @@
-class StockPriceRefresher
-  def  call
+module StockPriceRefresher
+  extend self
+
+  def call
     stock_prices = Company.pluck(:code).flat_map { |code| format_stock_prices(code) }
     StockPrice.import! stock_prices, on_duplicate_key_update: [ :close_price ]
   end
@@ -15,4 +17,4 @@ class StockPriceRefresher
       )
     }
   end
-end
+end 

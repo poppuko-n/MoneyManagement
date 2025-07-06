@@ -26,10 +26,10 @@ class JquantsClient
   private
 
   def id_token
-  response = HTTParty.post(
-    "#{BASE_URL}/token/auth_refresh",
-    query: { refreshtoken: @refresh_token })
-  JSON.parse(response.body)["idToken"]
+    response = HTTParty.post(
+      "#{BASE_URL}/token/auth_refresh",
+      query: { refreshtoken: @refresh_token })
+    JSON.parse(response.body)["idToken"]
   end
 
   def date_before(months_ago)
@@ -39,4 +39,4 @@ class JquantsClient
   def current_date
     Date.today.strftime("%Y%m%d")
   end
-end
+end 
