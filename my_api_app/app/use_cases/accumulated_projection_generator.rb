@@ -31,10 +31,10 @@ class AccumulatedProjectionGenerator
     # 評価額に積立額を加え、成長率をかけて複利運用
     month.times do |month_index|
       value += @monthly_purchase_amount
-      value *= growth_rates[month_index].round
+      value *= growth_rates[month_index]
     end
 
-    value
+    value.round
   end
 
   def calculate_growth_rates
