@@ -11,4 +11,11 @@ class ApplicationController < ActionController::API
   def set_expense_log
     @expense_log = @current_user.expense_logs.find(params[:id])
   end
+
+  private
+
+  def check_xhr_header
+    return if request.xhr?
+    render json: { error: 'forbidden' }, status: :forbidden
+  end
 end

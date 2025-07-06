@@ -1,5 +1,5 @@
 class ExpenseLogsController < ApplicationController
-  before_action :authenticate_user, only: %i[index create show update destroy]
+  before_action :authenticate_user, :check_xhr_header, only: %i[index create show update destroy]
   before_action :set_expense_log, only: %i[show update destroy]
 
   # GET /expense_logs

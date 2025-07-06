@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :check_xhr_header
+
   # POST /users
   def create
     user = User.new(user_params)
