@@ -32,9 +32,10 @@ class AccumulatedProjectionGenerator
     month.times do |month_index|
       value += @monthly_purchase_amount
       value *= growth_rates[month_index]
+      value = value.round
     end
 
-    value.round
+    value
   end
 
   def calculate_growth_rates
