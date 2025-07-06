@@ -27,15 +27,14 @@ class OneTimeProjectionGenerator
 
   def calculate_monthly_value(month, growth_rates)
     month.times.reduce(@purchase_amount) do |current_value, index|
-      current_value * growth_rates[index]
-    end.round
+      (current_value * growth_rates[index]).round
+    end
   end
 
   def calculate_growth_rates
-    historical_prices = TARGET_PERIODS.map { |m| find_price_at_months_ago(m) }
-    historical_prices.unshift(@purchase_price)
+    historical_prices = [ @purchase_price ] + TARGET_PERIODS.map { |m| find_price_at_months_ago(m) }
     # 過去1年の成長パターンが今後も続くと仮定し、時系列を古い順に(reverse)
-    historical_prices.each_cons(2).map { |current, previous| (current.to_f / previous).round(5) }.reverse
+    historical_prices.reverse.each_cons(2).map { |old, new| (new.to_f / old).round(5) }
   end
 
   def find_price_at_months_ago(month)
