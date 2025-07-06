@@ -11,7 +11,7 @@ module StockPriceRefresher
         )
       end
     end
-    
+
     StockPrice.import! all_stock_prices, on_duplicate_key_update: [ :close_price ]
   end
-end 
+end

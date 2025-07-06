@@ -7,10 +7,10 @@ module JquantsClient
   def fetch_daily_quotes(code, months_ago: 1)
     response = HTTParty.get(
       "#{BASE_URL}/prices/daily_quotes",
-      query: { 
-        code: code, 
-        from: (Date.today << months_ago).strftime("%Y%m%d"), 
-        to: Date.today.strftime("%Y%m%d") 
+      query: {
+        code: code,
+        from: (Date.today << months_ago).strftime("%Y%m%d"),
+        to: Date.today.strftime("%Y%m%d")
       },
       headers: { Authorization: id_token }
     )
@@ -34,4 +34,4 @@ module JquantsClient
       query: { refreshtoken: REFRESH_TOKEN })
     JSON.parse(response.body)["idToken"]
   end
-end 
+end

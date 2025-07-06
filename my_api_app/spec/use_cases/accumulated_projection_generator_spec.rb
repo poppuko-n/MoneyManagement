@@ -24,14 +24,14 @@ RSpec.describe AccumulatedProjectionGenerator, type: :model do
     end
 
     let(:historical_averages) do
-      [purchase_price] + (1..12).map do |month|
+      [ purchase_price ] + (1..12).map do |month|
         period_start = month.months.ago
         period_end = (month - 1).months.ago
         prices_in_period = prices.select { |price| price.date >= period_start && price.date < period_end }
         prices_in_period.sum(&:close_price).to_f / prices_in_period.count
       end
     end
-    
+
     let(:growth_rates) do
       historical_averages.reverse.each_cons(2).map { |old, new| (new.to_f / old).round(5) }
     end
