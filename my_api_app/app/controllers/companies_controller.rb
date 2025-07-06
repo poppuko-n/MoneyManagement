@@ -1,6 +1,8 @@
 class CompaniesController < ApplicationController
   # GET /companies
   def index
-    render json: Company.all_with_latest_prices, status: :ok
+    latest_prices_by_code = StockPrice.latest_prices_by_code
+    companies = Company.all.map { |c| c.as_json.merge("latest_price" => latest_prices_by_code[c.code]) }
+    render json: companies, status: :ok
   end
 end

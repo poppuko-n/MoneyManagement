@@ -29,10 +29,8 @@ RSpec.describe StockPrice, type: :model do
 
   describe 'クラスメソッド' do
     before do
-      company2 = create(:company, code: '2001')
       create(:stock_price, company: company, date: '2023-01-01', close_price: 1000)
       create(:stock_price, company: company, date: '2023-01-02', close_price: 1200)
-      create(:stock_price, company: company2, date: '2023-01-01', close_price: 2000)
     end
 
     describe '.latest_prices_by_code' do

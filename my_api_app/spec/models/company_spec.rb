@@ -38,39 +38,4 @@ RSpec.describe Company, type: :model do
       expect(company.stock_prices).to include(stock_price)
     end
   end
-
-  describe 'クラスメソッド' do
-    let(:company1) { create(:company, code: 1001, name: '会社1') }
-    let(:company2) { create(:company, code: 1002, name: '会社2') }
-
-    before do
-      create(:stock_price, company: company1, date: '2023-01-01', close_price: 1000)
-      create(:stock_price, company: company1, date: '2023-01-02', close_price: 1100)
-      create(:stock_price, company: company1, date: '2023-01-03', close_price: 1200)
-
-      create(:stock_price, company: company2, date: '2023-01-01', close_price: 2000)
-      create(:stock_price, company: company2, date: '2023-01-02', close_price: 2500)
-    end
-
-    describe '.all_with_latest_prices' do
-      it '全CompanyオブジェクトをJSONに変換し、最新株価を付与したハッシュの配列を返す' do
-        result = Company.all_with_latest_prices
-
-        expect(result).to be_an(Array)
-        expect(result.size).to eq(2)
-
-        company1_data = result.find { |c| c['code'] == company1.code }
-        expect(company1_data['code']).to eq(company1.code)
-        expect(company1_data['name']).to eq(company1.name)
-        expect(company1_data['sector_name']).to eq(company1.sector_name)
-        expect(company1_data['latest_price']).to eq(1200)
-
-        company2_data = result.find { |c| c['code'] == company2.code }
-        expect(company2_data['code']).to eq(company2.code)
-        expect(company2_data['name']).to eq(company2.name)
-        expect(company2_data['sector_name']).to eq(company2.sector_name)
-        expect(company2_data['latest_price']).to eq(2500)
-      end
-    end
-  end
 end
