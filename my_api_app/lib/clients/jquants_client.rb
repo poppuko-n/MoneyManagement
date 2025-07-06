@@ -1,14 +1,17 @@
-class JquantsClient
-  BASE_URL = "https://api.jquants.com/v1".freeze
+module JquantsClient
+  extend self
 
-  def initialize
-    @refresh_token = Rails.application.credentials.jquants[:refresh_token]
-  end
+  BASE_URL = "https://api.jquants.com/v1".freeze
+  REFRESH_TOKEN = Rails.application.credentials.jquants[:refresh_token].freeze
 
   def fetch_daily_quotes(code, months_ago: 1)
     response = HTTParty.get(
       "#{BASE_URL}/prices/daily_quotes",
-      query: { code: code, from: date_before(months_ago), to: current_date },
+      query: { 
+        code: code, 
+        from: (Date.today << months_ago).strftime("%Y%m%d"), 
+        to: Date.today.strftime("%Y%m%d") 
+      },
       headers: { Authorization: id_token }
     )
     JSON.parse(response.body)["daily_quotes"]
@@ -28,15 +31,7 @@ class JquantsClient
   def id_token
     response = HTTParty.post(
       "#{BASE_URL}/token/auth_refresh",
-      query: { refreshtoken: @refresh_token })
+      query: { refreshtoken: REFRESH_TOKEN })
     JSON.parse(response.body)["idToken"]
-  end
-
-  def date_before(months_ago)
-    (Date.today << months_ago).strftime("%Y%m%d")
-  end
-
-  def current_date
-    Date.today.strftime("%Y%m%d")
   end
 end 
