@@ -16,7 +16,7 @@ const RegisterForm = ({ onBack }) => {
     };
 
   return (
-    <div className="w-full">
+    <>
       <h1 className="text-2xl font-bold mb-6 text-center text-indigo-700">会員登録</h1>
 
       <form onSubmit={(e)=>{
@@ -24,10 +24,10 @@ const RegisterForm = ({ onBack }) => {
         handleCreate();
         }}>
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">名前</label>
+          <label className="text-sm mb-1">名前</label>
           <input
             type="text"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             value={newUser.name}
             onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
             placeholder="ユーザー名を入力"
@@ -36,10 +36,10 @@ const RegisterForm = ({ onBack }) => {
         </div>
 
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-1">パスワード</label>
+          <label className="text-sm mb-1">パスワード</label>
           <input
             type="password"
-            className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             value={newUser.password}
             onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
             placeholder="パスワードを入力"
@@ -50,20 +50,20 @@ const RegisterForm = ({ onBack }) => {
         <div className="flex justify-end gap-4">
           <button
             type="submit"
-            className="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2 px-4 rounded-md transition duration-200"
+            className="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded-md"
           >
             登録
           </button>
           <button
             onClick={onBack}
             type="button"
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded-md transition duration-200"
+            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-md"
           >
             戻る
           </button>
         </div>
       </form>
-    </div>
+    </>
   );
 };
 
