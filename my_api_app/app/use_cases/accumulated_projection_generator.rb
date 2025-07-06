@@ -32,19 +32,19 @@ class AccumulatedProjectionGenerator
     month.times do |month_index|
       value += @monthly_purchase_amount
       value *= growth_rates[month_index]
+      value = value.round
     end
 
-    value.round
+    value
   end
 
   def calculate_growth_rates
-    historical_averages = TARGET_PERIODS.map { |month| calculate_average_price_for_month(month) }
-    historical_averages.unshift(@purchase_price)
-   # 過去1年の成長パターンが今後も続くと仮定し、時系列を古い順に(reverse)
-    historical_averages.each_cons(2).map { |current, previous| current.to_f / previous }.reverse
+    historical_averages = [ @purchase_price ] + TARGET_PERIODS.map { |month| calculate_average_price_at_months_ago(month) }
+    # 過去1年の成長パターンが今後も続くと仮定し、時系列を古い順に(reverse)
+    historical_averages.reverse.each_cons(2).map { |old, new| (new.to_f / old).round(5) }
   end
 
-  def calculate_average_price_for_month(month)
+  def calculate_average_price_at_months_ago(month)
     period_start = month.months.ago
     period_end = (month - 1).months.ago
     # 積立投資の分散効果を表現するため、1ヶ月間の株価の平均を算出

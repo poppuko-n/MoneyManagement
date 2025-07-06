@@ -4,8 +4,10 @@ class StockPrice < ApplicationRecord
   validates :date, presence: true
   validates :close_price, presence: true
 
+  scope :ordered_by_date, -> { order(date: :desc) }
+
   def self.latest_prices_by_code
-    latest_ids = group(:company_code).maximum(:id).values
-    where(id: latest_ids).pluck(:company_code, :close_price).to_h
+    ordered_by_date.group_by(&:company_code)
+      .transform_values { |prices| prices.first.close_price }
   end
 end
