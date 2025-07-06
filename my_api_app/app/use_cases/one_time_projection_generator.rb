@@ -35,7 +35,7 @@ class OneTimeProjectionGenerator
     historical_prices = TARGET_PERIODS.map { |m| find_price_at_months_ago(m) }
     historical_prices.unshift(@purchase_price)
     # 過去1年の成長パターンが今後も続くと仮定し、時系列を古い順に(reverse)
-    historical_prices.each_cons(2).map { |current, previous| (current.to_f / previous).round(3) }.reverse
+    historical_prices.each_cons(2).map { |current, previous| (current.to_f / previous).round(5) }.reverse
   end
 
   def find_price_at_months_ago(month)
