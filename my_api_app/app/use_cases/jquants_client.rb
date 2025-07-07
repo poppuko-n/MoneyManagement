@@ -4,7 +4,7 @@ module JquantsClient
   BASE_URL = "https://api.jquants.com/v1".freeze
   REFRESH_TOKEN = Rails.application.credentials.jquants[:refresh_token].freeze
 
-  def fetch_daily_quotes(code, months_ago: 1)
+  def fetch_daily_quotes(code, months_ago: 2)
     response = HTTParty.get(
       "#{BASE_URL}/prices/daily_quotes",
       query: {
@@ -34,4 +34,4 @@ module JquantsClient
       query: { refreshtoken: REFRESH_TOKEN })
     JSON.parse(response.body)["idToken"]
   end
-end
+end 
