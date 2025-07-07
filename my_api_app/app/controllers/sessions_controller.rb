@@ -18,6 +18,6 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
-    render json: { message: "ログアウトしました。" }, status: :ok
+    head :no_content
   end
 end
