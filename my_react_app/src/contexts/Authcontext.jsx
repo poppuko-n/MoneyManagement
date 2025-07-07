@@ -25,12 +25,8 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(true);
       alert("ログインしました。");
     } catch(error) {
-      if (error.response?.status === 403) {
-        alert("不正なリクエストです。ページを更新してください。");
-      } else {
-        alert(error.response?.data.errors?.join('\n') || "ログインに失敗しました。再度お試しください。");
+        alert(error.response?.data.errors || "ログインに失敗しました。再度お試しください。")
       }
-    }
   };
 
   const logout = async () => {
@@ -42,8 +38,8 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(false);
       alert("ログアウトしました。");
     } catch(error) {
-      alert("ログアウトに失敗しました。再度お試しください。")
-    }
+        alert(error.response?.data.errors || "ログアウトに失敗しました。再度お試しください。");
+      }
   };
 
   const createUser = async(newUser) => {
@@ -55,12 +51,8 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(true);
       alert("登録完了しました。")
     } catch(error) {
-      if (error.response?.status === 403) {
-        alert("不正なリクエストです。ページを更新してください。");
-      } else {
-        alert(error.response?.data.errors?.join('\n') || "登録に失敗しました。再度お試しください。");
+        alert(error.response?.data.errors.join('\n') || "登録に失敗しました。再度お試しください。");
       }
-    }
   };
 
   return (
