@@ -4,8 +4,7 @@ import { useAuth } from "../contexts/Authcontext.jsx"
 const RegisterForm = ({ onBack }) => {
   const [newUser, setNewUser] = useState({
     name: "",
-    password: "",
-    password_confirmation: null
+    password: ""
   });
 
   const { createUser } = useAuth();
