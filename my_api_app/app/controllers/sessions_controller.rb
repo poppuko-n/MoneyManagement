@@ -12,7 +12,7 @@ class SessionsController < ApplicationController
       session[:user_id] = user.id
       render json: user, status: :ok
     else
-      render json: { errors: [ "名前またはパスワードが正しくありません。" ] }, status: :unauthorized
+      render json: { error: [ "名前またはパスワードが正しくありません。" ] }, status: :unauthorized
     end
   end
 

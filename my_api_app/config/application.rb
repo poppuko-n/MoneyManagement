@@ -35,7 +35,10 @@ module MyApiApp
     config.api_only = true
 
     config.middleware.use ActionDispatch::Cookies
-    config.middleware.use ActionDispatch::Session::CookieStore
+    config.middleware.use ActionDispatch::Session::CookieStore, {
+      httponly: true,
+      expire_after: 24.hours
+    }
     config.middleware.use ActionDispatch::ContentSecurityPolicy::Middleware
 
     # CORSの設定を追加

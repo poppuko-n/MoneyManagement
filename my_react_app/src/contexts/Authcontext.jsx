@@ -25,7 +25,7 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(true);
       alert("ログインしました。");
     } catch(error) {
-        alert(error.response?.data.errors || "ログインに失敗しました。再度お試しください。")
+        alert(error.response?.data.error || "ログインに失敗しました。再度お試しください。")
       }
   };
 
@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
       setIsLoggedIn(false);
       alert("ログアウトしました。");
     } catch(error) {
-        alert(error.response?.data.errors || "ログアウトに失敗しました。再度お試しください。");
+        alert(error.response?.data.error || "ログアウトに失敗しました。再度お試しください。");
       }
   };
 
