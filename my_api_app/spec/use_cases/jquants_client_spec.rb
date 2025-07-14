@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe JquantsClient, type: :model do
   let(:mock_response) { double("HTTParty::Response") }
-  let(:mock_body) { { "daily_quotes" => [{"Code" => "1234", "Date" => "20240101", "Close" => 100}] }.to_json }
-  let(:mock_info_body) { { "info" => [{"Code" => "1234", "CompanyName" => "Test Company"}] }.to_json }
+  let(:mock_body) { { "daily_quotes" => [ { "Code" => "1234", "Date" => "20240101", "Close" => 100 } ] }.to_json }
+  let(:mock_info_body) { { "info" => [ { "Code" => "1234", "CompanyName" => "Test Company" } ] }.to_json }
   let(:mock_token_body) { { "idToken" => "test_token_123" }.to_json }
 
   before do
@@ -33,7 +33,7 @@ RSpec.describe JquantsClient, type: :model do
 
     it 'APIから日次株価データを取得する' do
       result = described_class.fetch_daily_quotes(code, months_ago: months_ago)
-      
+
       expect(result).to be_an(Array)
       expect(result.first).to include("Code" => "1234", "Date" => "20240101", "Close" => 100)
     end
@@ -71,7 +71,7 @@ RSpec.describe JquantsClient, type: :model do
 
     it 'APIから企業情報を取得する' do
       result = described_class.fetch_company_info(code)
-      
+
       expect(result).to be_an(Array)
       expect(result.first).to include("Code" => "1234", "CompanyName" => "Test Company")
     end
@@ -87,8 +87,8 @@ RSpec.describe JquantsClient, type: :model do
 
     it 'リフレッシュトークンを使用してIDトークンを取得する' do
       token = described_class.send(:id_token)
-      
+
       expect(token).to eq("test_token_123")
     end
   end
-end 
+end
