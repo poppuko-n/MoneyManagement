@@ -34,4 +34,4 @@ module JquantsClient
       query: { refreshtoken: REFRESH_TOKEN })
     JSON.parse(response.body)["idToken"]
   end
-end 
+end
